@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Stack · José</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Azeret+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f0f2f5; --surf:#fff; --surf2:#f7f8fa; --surf3:#eceef2;
+  --border:#dde0e8; --border2:#c8ccd8;
+  --text:#111827; --text2:#374151; --muted:#6b7280; --dim:#9ca3af;
+  --c1:#6d4ff0; --c2:#2563eb; --c3:#d97706; --c4:#dc2626; --c5:#059669; --c6:#db2777;
+  --paid-bg:#fffbeb; --paid-brd:#f59e0b;
+  --plus-bg:#eff6ff; --plus-brd:#93c5fd;
+  --font-h:'Syne',sans-serif; --font-m:'Azeret Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font-m);background:var(--bg);color:var(--text);font-size:15px}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
+
+/* PAGE SYSTEM */
+.page{display:none;height:100vh;flex-direction:column;overflow:hidden}
+.page.active{display:flex}
+
+/* TOPBAR */
+.topbar{
+  display:flex;align-items:center;gap:0;height:48px;min-height:48px;flex-shrink:0;
+  background:var(--surf);border-bottom:2px solid var(--border);padding:0 16px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+.logo{
+  font-family:var(--font-h);font-size:.95rem;font-weight:800;letter-spacing:-.03em;
+  color:var(--text);cursor:pointer;white-space:nowrap;margin-right:12px;flex-shrink:0;
+}
+.logo em{color:var(--c1);font-style:normal}
+.tnav{display:flex;align-items:center;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+.tnav::-webkit-scrollbar{display:none}
+.tnav-btn{
+  font-family:var(--font-m);font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;
+  padding:5px 9px;border-radius:4px;border:1px solid transparent;
+  color:var(--muted);white-space:nowrap;transition:all .15s;flex-shrink:0;
+  display:flex;align-items:center;gap:4px;cursor:pointer;
+}
+.tnav-btn:hover{background:var(--surf3);color:var(--text2);border-color:var(--border)}
+.tnav-btn.act{border-color:currentColor;background:color-mix(in srgb,currentColor 10%,transparent)}
+.tnav-sep{width:1px;height:16px;background:var(--border);flex-shrink:0;margin:0 3px}
+.tnav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.topbar-date{margin-left:10px;font-size:.57rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+
+/* MAIN AREA — persistent grid, sidebar always present */
+.main-area{display:grid;grid-template-columns:1fr var(--panel-w,380px);flex:1;overflow:hidden;transition:grid-template-columns .25s ease}
+.main-area.collapsed{grid-template-columns:1fr 0px}
+/* views swap inside content col */
+.view{display:none;flex-direction:column;overflow:hidden}
+.view.active{display:flex}
+
+/* DIAGRAM */
+.diagram-area{padding:22px 26px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.sect-title{font-size:.57rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.sect-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.stack{display:flex;flex-direction:column;max-width:640px}
+.lrow{display:grid;grid-template-columns:38px 1fr;cursor:pointer}
+.lconn{display:flex;flex-direction:column;align-items:center;padding-top:11px}
+.ldot{
+  width:24px;height:24px;border-radius:50%;border:2px solid var(--lc);background:var(--surf);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-h);font-size:.56rem;font-weight:800;color:var(--lc);
+  flex-shrink:0;z-index:2;transition:all .18s;
+}
+.lrow:hover .ldot{background:var(--lc);color:#fff;box-shadow:0 0 10px color-mix(in srgb,var(--lc) 30%,transparent)}
+.lline{width:2px;flex:1;min-height:10px;background:var(--border)}
+.lrow:last-child .lline{display:none}
+.lcard{
+  margin:5px 0 5px 10px;background:var(--surf);border:1px solid var(--border);
+  border-left:3px solid var(--lc);border-radius:7px;padding:10px 13px;
+  transition:all .18s;box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+.lrow:hover .lcard{border-color:var(--lc);background:var(--surf2);transform:translateX(4px);box-shadow:0 3px 12px color-mix(in srgb,var(--lc) 12%,transparent)}
+.lc-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:3px}
+.lc-name{font-family:var(--font-h);font-size:.78rem;font-weight:700;color:var(--lc)}
+.lc-tag{font-size:.53rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);background:var(--surf3);padding:2px 6px;border-radius:2px;border:1px solid var(--border)}
+.lc-desc{font-size:.63rem;color:var(--text2);line-height:1.5;margin-bottom:6px}
+.lc-pills{display:flex;flex-wrap:wrap;gap:3px}
+.pill{font-size:.55rem;padding:2px 6px;border-radius:3px;border:1px solid color-mix(in srgb,var(--lc) 22%,transparent);color:var(--lc);background:color-mix(in srgb,var(--lc) 7%,transparent);text-transform:uppercase;letter-spacing:.03em}
+.pill.mine{border-color:color-mix(in srgb,var(--lc) 45%,transparent);background:color-mix(in srgb,var(--lc) 13%,transparent);font-weight:600}
+.pill.st-paid{background:#fffbeb;border-color:#f59e0b;color:#92400e}
+.pill.st-plus{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
+.pill.st-inactive{opacity:.4;filter:grayscale(.4)}
+.lc-cta{font-size:.57rem;color:var(--lc);text-transform:uppercase;letter-spacing:.07em;margin-top:6px;opacity:0;transition:opacity .15s}
+.lrow:hover .lc-cta{opacity:1}
+
+/* SIDEBAR */
+/* SIDEBAR PANEL */
+.sidebar{
+  border-left:1px solid var(--border);display:flex;flex-direction:column;
+  overflow:hidden;background:var(--surf);position:relative;
+  transition:width .25s ease,opacity .25s ease,border-color .25s ease;
+  width:380px;min-width:0;
+}
+#main-area.collapsed .sidebar{width:0;border-color:transparent;opacity:0;pointer-events:none}
+.panel-toggle{
+  position:absolute;left:-15px;top:50%;transform:translateY(-50%);
+  width:15px;height:52px;
+  background:var(--surf);border:1px solid var(--border);border-right:none;
+  border-radius:6px 0 0 6px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10;transition:all .15s;
+  font-size:.7rem;color:var(--muted);writing-mode:horizontal-tb;
+}
+.panel-toggle:hover{background:var(--surf3);color:var(--text)}
+#main-area.collapsed .panel-toggle{
+  left:0;border-right:1px solid var(--border);border-radius:6px;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+/* SIDEBAR TABS — horizontal, always visible */
+.stabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--surf)}
+.stab{
+  flex:1;text-align:center;font-size:.63rem;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--muted);padding:9px 2px;border:none;background:transparent;
+  border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;cursor:pointer;
+}
+.stab.act{color:var(--c1);border-bottom-color:var(--c1);background:color-mix(in srgb,var(--c1) 5%,transparent)}
+.stab:hover:not(.act){color:var(--text)}
+.sbody{display:none;flex-direction:column;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.sbody.act{display:flex}
+.slist{padding:8px;display:flex;flex-direction:column;gap:5px}
+
+/* ACTIVE APP highlight */
+.si.app-active{
+  border-color:var(--c5);background:color-mix(in srgb,var(--c5) 7%,var(--surf));
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--c5) 20%,transparent);
+}
+.si.app-active:hover{border-color:var(--c5);background:color-mix(in srgb,var(--c5) 12%,transparent)}
+.app-active-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--c5);flex-shrink:0;
+  box-shadow:0 0 5px var(--c5);animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 4px var(--c5)}50%{opacity:.6;box-shadow:0 0 8px var(--c5)}}
+
+/* Sidebar items */
+.si{
+  display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:6px;
+  padding:7px 10px;transition:all .15s;background:var(--surf2);
+}
+.si:hover{border-color:var(--border2);transform:translateX(2px);background:var(--surf)}
+.si.paid{border-color:var(--paid-brd);background:var(--paid-bg)}
+.si.plus{border-color:var(--plus-brd);background:var(--plus-bg)}
+.si.free{opacity:.65}
+.si.inactive{opacity:.4;filter:grayscale(.3)}
+.si-icon{font-size:.9rem;width:20px;text-align:center;flex-shrink:0}
+.si-info{flex:1;min-width:0}
+.si-name{font-family:var(--font-h);font-size:.7rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.si-sub{font-size:.55rem;color:var(--muted);margin-top:1px}
+.si-badge{font-size:.5rem;padding:1px 5px;border-radius:2px;flex-shrink:0;white-space:nowrap}
+.bd-paid{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
+.bd-api{background:#ede9fe;color:#5b21b6;border:1px solid #a78bfa}
+.bd-plus{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.bd-free{background:var(--surf3);color:var(--muted);border:1px solid var(--border)}
+.bd-inactive{background:#f9fafb;color:#9ca3af;border:1px solid #e5e7eb}
+.bd-trial{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
+
+/* LAYER DETAIL */
+.det-body{display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden}
+.det-l,.det-r{padding:22px 24px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.det-l{border-right:1px solid var(--border)}
+/* views need to fill their column */
+#view-home{flex:1;overflow:hidden}
+.diagram-area{height:100%;padding:22px 26px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+#view-layer{flex:1}
+#view-summary{flex:1;overflow:hidden}
+.sum-body{flex:1;overflow-y:auto;padding:22px 24px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.det-num{font-family:var(--font-h);font-size:3rem;font-weight:800;line-height:1;color:var(--border2);margin-bottom:2px}
+.det-name{font-family:var(--font-h);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:4px}
+.det-tag{display:inline-block;font-size:.57rem;text-transform:uppercase;letter-spacing:.11em;padding:3px 9px;border-radius:3px;border:1px solid;margin-bottom:12px}
+.det-concept{font-size:.66rem;line-height:1.7;color:var(--text2);margin-bottom:16px;padding:12px 14px;background:var(--surf2);border-radius:6px;border-left:3px solid var(--lc,var(--c1));box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.det-concept strong{color:var(--text)}
+.dsec{font-size:.55rem;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:7px;margin-top:16px;display:flex;align-items:center;gap:7px}
+.dsec::after{content:'';flex:1;height:1px;background:var(--border)}
+.dsec:first-of-type{margin-top:0}
+.tcard{
+  background:var(--surf);border:1px solid var(--border);border-radius:7px;
+  padding:11px 13px;margin-bottom:6px;border-left:3px solid var(--lc,var(--c1));
+  transition:all .15s;box-shadow:0 1px 2px rgba(0,0,0,.03);
+}
+.tcard:hover{background:var(--surf2);transform:translateX(3px)}
+.tcard.paid{border-color:var(--paid-brd);background:var(--paid-bg)}
+.tcard.plus{border-color:var(--plus-brd);background:var(--plus-bg)}
+.tcard.free{} /* full opacity */
+.tcard.inactive{opacity:.5;filter:grayscale(.3)}
+.tc-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:3px}
+.tc-name{font-family:var(--font-h);font-size:.8rem;font-weight:700;color:var(--text)}
+.tc-bds{display:flex;gap:3px;flex-wrap:wrap;justify-content:flex-end}
+.tc-badge{font-size:.5rem;text-transform:uppercase;letter-spacing:.06em;padding:2px 6px;border-radius:2px}
+.tc-desc{font-size:.63rem;color:var(--text2);line-height:1.4;margin-bottom:4px}
+.tc-detail{font-size:.61rem;line-height:1.5;color:var(--muted);margin-bottom:5px}
+.tc-link{font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;display:inline-flex;align-items:center;gap:3px;transition:gap .12s}
+.tc-link:hover{gap:6px}
+.cbox{background:var(--surf2);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:7px}
+.cb-t{font-family:var(--font-h);font-size:.74rem;font-weight:700;margin-bottom:4px}
+.cb-b{font-size:.62rem;color:var(--text2);line-height:1.55}
+.cb-b strong{color:var(--text)}
+.smini{display:flex;flex-direction:column;gap:3px;margin-top:3px}
+.sm-row{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:4px;cursor:pointer;transition:all .15s;border:1px solid var(--border);background:var(--surf2)}
+.sm-row:hover{border-color:var(--border2);background:var(--surf)}
+.sm-row.cur{border-color:var(--lc);background:color-mix(in srgb,var(--lc) 8%,transparent)}
+.sm-n{font-family:var(--font-h);font-size:.59rem;font-weight:800;min-width:16px}
+.sm-label{font-size:.61rem;flex:1;color:var(--text2)}
+.sm-arr{font-size:.58rem}
+
+/* Bottom nav */
+.lnav{display:flex;gap:6px;padding:10px 18px;border-top:1px solid var(--border);flex-shrink:0;background:var(--surf)}
+.lnav-btn{flex:1;display:flex;align-items:center;gap:7px;background:var(--surf2);border:1px solid var(--border) !important;border-radius:6px;padding:8px 11px;transition:all .15s;cursor:pointer}
+.lnav-btn:hover{border-color:var(--border2) !important;background:var(--surf3)}
+.lnav-btn.back{flex:0 0 auto}
+.lnav-lbl{font-size:.53rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.lnav-name{font-family:var(--font-h);font-size:.73rem;font-weight:700;color:var(--text)}
+.lnav-arr{font-size:.8rem;color:var(--muted)}
+
+/* SUMMARY PAGE */
+.sum-body{flex:1;overflow-y:auto;padding:22px 24px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.sum-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}
+.sum-hdr h2{font-family:var(--font-h);font-size:1.05rem;font-weight:800;margin-bottom:3px}
+.sum-hdr p{font-size:.63rem;color:var(--text2);line-height:1.5}
+.sum-hint{font-size:.6rem;color:var(--c5);margin-top:5px;display:flex;align-items:center;gap:4px}
+
+/* Legend */
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:.58rem;color:var(--text2)}
+
+/* Summary layer blocks */
+.sum-layers{display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+.sum-layer{background:var(--surf);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.sum-layer-hdr{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border-bottom:1px solid var(--border);cursor:pointer;
+  background:color-mix(in srgb,var(--lc) 5%,var(--surf));
+}
+.sum-layer-hdr:hover{background:color-mix(in srgb,var(--lc) 9%,var(--surf))}
+.sum-lnum{font-family:var(--font-h);font-size:.62rem;font-weight:800;color:var(--lc);background:color-mix(in srgb,var(--lc) 12%,transparent);border:1px solid color-mix(in srgb,var(--lc) 25%,transparent);padding:2px 7px;border-radius:3px}
+.sum-lname{font-family:var(--font-h);font-size:.82rem;font-weight:700;color:var(--lc);flex:1}
+.sum-lexp{font-size:.58rem;color:var(--muted);}
+.sum-tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;padding:10px 14px}
+
+/* Tool row in summary */
+.stool{
+  display:flex;align-items:center;gap:7px;padding:7px 10px;
+  border-radius:5px;border:1px solid var(--border);background:var(--surf2);
+  transition:all .15s;
+}
+.stool:hover{border-color:var(--border2);background:var(--surf)}
+.stool.paid{border-color:var(--paid-brd);background:var(--paid-bg)}
+.stool.plus{border-color:var(--plus-brd);background:var(--plus-bg)}
+.stool.free{}
+.stool.inactive{opacity:.45;filter:grayscale(.3)}
+.stool-dot{width:7px;height:7px;border-radius:50%;background:var(--lc);flex-shrink:0}
+.stool-name{font-size:.64rem;font-weight:500;color:var(--text);flex:1}
+.stool-sel{
+  font-family:var(--font-m);font-size:.55rem;border:1px solid var(--border);
+  border-radius:3px;background:var(--surf);color:var(--text);padding:2px 5px;cursor:pointer;
+}
+.stool-del{font-size:.7rem;color:var(--dim);padding:0 3px;transition:color .15s;flex-shrink:0}
+.stool-del:hover{color:var(--c4)}
+
+/* Add tool form */
+.add-form{
+  background:var(--surf2);border:1px dashed var(--border2);border-radius:6px;
+  padding:12px 14px;margin-bottom:8px;
+}
+.add-form h4{font-family:var(--font-h);font-size:.75rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+.form-row{display:grid;grid-template-columns:1fr 1fr 120px;gap:6px;margin-bottom:6px}
+.form-input{
+  font-family:var(--font-m);font-size:.62rem;border:1px solid var(--border);
+  border-radius:4px;padding:6px 8px;background:var(--surf);color:var(--text);
+}
+.form-input:focus{outline:none;border-color:var(--c1)}
+.form-select{font-family:var(--font-m);font-size:.62rem;border:1px solid var(--border);border-radius:4px;padding:6px 8px;background:var(--surf);color:var(--text);cursor:pointer}
+.add-btn{
+  font-family:var(--font-m);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;
+  padding:7px 12px;border-radius:4px;background:var(--c1);color:#fff;transition:all .15s;
+  border:none;cursor:pointer;
+}
+.add-btn:hover{background:color-mix(in srgb,var(--c1) 85%,#000)}
+.add-btn.secondary{background:var(--surf3);color:var(--text);border:1px solid var(--border)}
+.add-btn.secondary:hover{background:var(--surf);border-color:var(--border2)}
+.apply-btn{
+  display:block;width:100%;margin-top:12px;font-family:var(--font-m);
+  font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;
+  padding:10px;border-radius:6px;background:var(--c5);color:#fff;transition:all .15s;
+  border:none;cursor:pointer;
+}
+.apply-btn:hover{background:color-mix(in srgb,var(--c5) 85%,#000)}
+
+/* ANIMS */
+.fade-up{opacity:0;transform:translateY(10px);animation:fadeUp .3s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.lrow:nth-child(1) .lcard{animation-delay:.03s}
+.lrow:nth-child(2) .lcard{animation-delay:.06s}
+.lrow:nth-child(3) .lcard{animation-delay:.09s}
+.lrow:nth-child(4) .lcard{animation-delay:.12s}
+.lrow:nth-child(5) .lcard{animation-delay:.15s}
+.lrow:nth-child(6) .lcard{animation-delay:.18s}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- SINGLE PERSISTENT SHELL -->
+<div style="display:flex;flex-direction:column;height:100vh;overflow:hidden">
+
+  <!-- TOPBAR — always visible -->
+  <div class="topbar">
+    <div class="logo" onclick="goHome()">AI<em>·</em>Stack</div>
+    <div class="tnav" id="tnav"></div>
+    <div class="topbar-date" id="td1"></div>
+  </div>
+
+  <!-- MAIN AREA — content col + sidebar col always present -->
+  <div class="main-area" id="main-area">
+
+    <!-- CONTENT VIEWS — only one active at a time -->
+    <div style="display:flex;flex-direction:column;overflow:hidden">
+
+      <!-- VIEW: HOME -->
+      <div class="view active" id="view-home">
+        <div class="diagram-area">
+          <div class="sect-title">Ecosistema IA personal · clic en cada capa para explorar</div>
+          <div class="stack" id="stack-home"></div>
+        </div>
+      </div>
+
+      <!-- VIEW: LAYER DETAIL -->
+      <div class="view" id="view-layer">
+        <div class="det-body">
+          <div class="det-l" id="det-l"></div>
+          <div class="det-r" id="det-r"></div>
+        </div>
+        <div class="lnav" id="lnav"></div>
+      </div>
+
+      <!-- VIEW: SUMMARY -->
+      <div class="view" id="view-summary">
+        <div class="sum-body" id="sum-body"></div>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR — always visible, collapsible -->
+    <div class="sidebar" id="sidebar">
+      <button class="panel-toggle" id="panel-toggle" onclick="togglePanel()" title="Ocultar panel">◀</button>
+      <div class="stabs">
+        <button class="stab act" onclick="showTab('links',this)">Accesos</button>
+        <button class="stab" onclick="showTab('tools',this)">Tools</button>
+        <button class="stab" onclick="showTab('models',this)">Modelos</button>
+        <button class="stab" onclick="showTab('apps',this)">Mis Apps</button>
+      </div>
+      <div class="sbody act" id="sb-links"></div>
+      <div class="sbody" id="sb-tools"></div>
+      <div class="sbody" id="sb-models"></div>
+      <div class="sbody" id="sb-apps"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   STATE — single source of truth
+   status: paid | api | plus | free | inactive | trial
+═══════════════════════════════════════════ */
+let TOOLS = [
+  // L1 Modelo
+  {id:'claude-sonnet', name:'Claude Sonnet 4.6', layer:1, status:'paid',  url:'https://claude.ai',            desc:'Modelo principal. 200K ctx. Código, análisis.'},
+  {id:'claude-opus',   name:'Claude Opus 4.6',   layer:1, status:'paid',  url:'https://claude.ai',            desc:'Razonamiento profundo, tareas críticas.'},
+  {id:'ollama',        name:'Ollama',             layer:1, status:'free',  url:'http://localhost:11434',       desc:'Servidor local de LLMs. API en :11434.'},
+  {id:'llama3',        name:'Llama 3.x (local)',  layer:1, status:'free',  url:'http://localhost:11434',       desc:'Modelo local vía Ollama. Privado, sin coste.'},
+  {id:'gpt4o',         name:'GPT-4o',             layer:1, status:'plus',  url:'https://chatgpt.com',          desc:'OpenAI. Base de Copilot y Codex.'},
+  {id:'gemini',        name:'Gemini 2.0 Pro',     layer:1, status:'free',  url:'https://gemini.google.com',    desc:'Google. 1M tokens ctx. NotebookLM base.'},
+  {id:'groq',          name:'Groq (Llama/Mixtral)',layer:1,status:'free',  url:'https://console.groq.com',     desc:'Inferencia ultrarrápida. Tier gratuito.'},
+  // L2 Interfaz
+  {id:'claudeai',      name:'Claude.ai',          layer:2, status:'paid',  url:'https://claude.ai',            desc:'Interfaz oficial Anthropic. Projects, artefactos.'},
+  {id:'openwebui',     name:'Open WebUI',         layer:2, status:'free',  url:'http://localhost:3000',        desc:'Visor web de Ollama en Docker. localhost:3000.'},
+  {id:'chatgpt',       name:'ChatGPT (web)',       layer:2, status:'plus',  url:'https://chatgpt.com',          desc:'Interfaz OpenAI. GPT-4o, DALL-E, voz.'},
+  {id:'console-ant',   name:'Anthropic Console',  layer:2, status:'paid',  url:'https://console.anthropic.com',desc:'API keys, Workbench, usage. Para tus apps.'},
+  {id:'oai-platform',  name:'OpenAI Platform',    layer:2, status:'plus',  url:'https://platform.openai.com',  desc:'Playground OpenAI. API keys, créditos.'},
+  {id:'gai-studio',    name:'Google AI Studio',   layer:2, status:'free',  url:'https://aistudio.google.com',  desc:'Gemini API. Tier gratuito generoso.'},
+  // L3 Memoria/RAG
+  {id:'notebooklm',    name:'NotebookLM',         layer:3, status:'free',  url:'https://notebooklm.google.com',desc:'RAG automático Google. PDFs, docs, vídeos.'},
+  {id:'claude-proj',   name:'Claude Projects',    layer:3, status:'paid',  url:'https://claude.ai',            desc:'Contexto persistente con docs en claude.ai.'},
+  {id:'owui-rag',      name:'Open WebUI RAG',     layer:3, status:'free',  url:'http://localhost:3000',        desc:'RAG local con modelos Ollama. 100% privado.'},
+  {id:'chromadb',      name:'ChromaDB',           layer:3, status:'inactive',url:'https://trychroma.com',     desc:'Base vectorial local. pip install chromadb.'},
+  {id:'llamaindex',    name:'LlamaIndex',         layer:3, status:'inactive',url:'https://llamaindex.ai',     desc:'Framework Python RAG. Conecta con ChromaDB.'},
+  // L4 Herramientas
+  {id:'mcp',           name:'MCP Protocol',       layer:4, status:'paid',  url:'https://docs.anthropic.com',   desc:'Gmail, Notion, Calendar, M365 conectados.'},
+  {id:'n8n',           name:'n8n self-hosted',    layer:4, status:'free',  url:'http://localhost:5678',        desc:'Automatización flujos IA. localhost:5678.'},
+  {id:'websearch',     name:'Web Search (Claude)',layer:4, status:'paid',  url:'https://claude.ai',            desc:'Búsqueda web integrada en claude.ai.'},
+  {id:'codex-api',     name:'Codex API',          layer:4, status:'plus',  url:'https://platform.openai.com',  desc:'API código OpenAI. Plus web, sin API key.'},
+  {id:'zapier',        name:'Zapier AI',          layer:4, status:'inactive',url:'https://zapier.com',        desc:'Automatización cloud. Alternativa a n8n.'},
+  // L5 Agentes / Vibe Coding
+  {id:'copilot',       name:'GitHub Copilot',     layer:5, status:'paid',  url:'https://copilot.github.com',   desc:'Extensión VS Code. Autocomplete + chat inline.'},
+  {id:'antigravity',   name:'Antigravity',        layer:5, status:'paid',  url:'https://antigravity.dev',      desc:'Agente autónomo multi-archivo. Como Cursor.'},
+  {id:'lovable',       name:'Lovable',            layer:5, status:'free',  url:'https://lovable.dev',          desc:'Genera apps web completas desde prompt.'},
+  {id:'base44',        name:'Base44',             layer:5, status:'free',  url:'https://base44.com',           desc:'Low-code IA para construir apps. Sin código.'},
+  {id:'claude-code',   name:'Claude Code',        layer:5, status:'inactive',url:'https://claude.ai/code',    desc:'CLI agente Anthropic. npm install @anthropic-ai/claude-code.'},
+  {id:'cursor',        name:'Cursor IDE',         layer:5, status:'inactive',url:'https://cursor.sh',         desc:'IDE con agente IA integrado. Alternativa a VS Code.'},
+  {id:'continue-dev',  name:'Continue.dev',       layer:5, status:'inactive',url:'https://continue.dev',      desc:'Copilot open-source. Conecta con Ollama local.'},
+  // L6 Aplicaciones
+  {id:'app-gastos',    name:'app_gastos_familia', layer:6, status:'free',  url:'https://github.com/joseavelsan/app_gastos_familia', desc:'Gestión gastos domésticos. Python.'},
+  {id:'app-jobs',      name:'app_job_tracker',    layer:6, status:'free',  url:'https://github.com/joseavelsan/app_job_tracker',    desc:'Seguimiento búsqueda empleo. Python.'},
+  {id:'app-aparts',    name:'app_apartamentos',   layer:6, status:'free',  url:'https://github.com/joseavelsan/app_gestion_apartamentos',desc:'espacioGijón 2 unidades. Python.'},
+  {id:'web-espacio',   name:'espacioGijón web',   layer:6, status:'free',  url:'#',                            desc:'Web turística. HTML single-file.'},
+  {id:'portfolio',     name:'Portfolio profesional',layer:6,status:'free', url:'#',                            desc:'Portfolio ejecutivo. Timeline industrial.'},
+  {id:'gamma',         name:'Gamma',              layer:6, status:'free',  url:'https://gamma.app',            desc:'Generador de presentaciones y docs con IA.'},
+];
+
+/* ═══════════════════════════════════════════
+   LAYER META
+═══════════════════════════════════════════ */
+const LAYERS = [
+  {id:1,color:'var(--c1)',name:'Modelo · LLM Core',tag:'Núcleo generativo',
+   shortDesc:'El cerebro. Procesa lenguaje, código e imágenes. Todo lo demás se apoya aquí.',
+   concept:`El <strong>LLM</strong> es el motor que genera texto prediciendo el siguiente token. Acceso en la nube (Claude, GPT-4o, Gemini) o en local con <strong>Ollama</strong> (Llama, Mistral — privado, sin coste, en tu máquina).<br><br>El modelo solo no recuerda, no busca en internet, no ejecuta código — eso lo añaden las capas superiores.`,
+   concepts:[
+     {t:'¿Qué es un token?',b:'Fragmento de texto (~4 chars). El contexto máximo (200K en Claude Opus) es cuántos puede "ver" a la vez en una conversación.'},
+     {t:'Local vs Cloud',b:'<strong>Cloud:</strong> potente, actualizado, de pago, tus datos van al servidor.<br><strong>Local (Ollama):</strong> privado, sin coste por token, ideal para datos sensibles de clientes o proyectos confidenciales.'},
+     {t:'¿Por qué Ollama es L1 y Open WebUI es L2?',b:'Ollama es el servidor que ejecuta el modelo. Open WebUI (L2) es la interfaz visual encima. Sin Ollama no hay motor; son capas distintas aunque trabajen juntos.'},
+   ]},
+  {id:2,color:'var(--c2)',name:'Interfaz · Chat & Studios',tag:'Punto de acceso',
+   shortDesc:'Cómo interactúas con el modelo. Chat, playgrounds y paneles de API.',
+   concept:`La capa de interfaz es el <strong>punto de entrada</strong> al modelo. Puede ser chat (claude.ai, Open WebUI) o panel de desarrollo (Anthropic Console).<br><br><strong>Open WebUI en Docker</strong> te da chat, historial y selección de modelo apuntando a tu Ollama local (:11434). Los <strong>Studios</strong> añaden system prompts editables, métricas de tokens y gestión de API keys.`,
+   concepts:[
+     {t:'¿Qué es un system prompt?',b:'Instrucción oculta que define el comportamiento del modelo antes de que el usuario escriba nada. Claude Projects lo usa para dar contexto persistente a cada proyecto.'},
+     {t:'Open WebUI + Ollama',b:'Open WebUI corre en Docker y se conecta a la API de Ollama (:11434). Es como claude.ai pero apuntando a tus modelos locales. Puedes cambiar entre modelos desde la interfaz.'},
+     {t:'Workbench vs Chat',b:'<strong>Chat:</strong> conversación fluida, uso diario.<br><strong>Workbench/Playground:</strong> control granular (temperatura, system prompt editable) para iterar prompts de tus apps Python.'},
+   ]},
+  {id:3,color:'var(--c3)',name:'Memoria · RAG & Conocimiento',tag:'Contexto externo',
+   shortDesc:'Cómo el modelo accede a TUS documentos. RAG, vectores y NotebookLM.',
+   concept:`Un LLM solo conoce su entrenamiento. <strong>RAG (Retrieval-Augmented Generation)</strong> le da acceso a tus documentos en tiempo real: troceas → vectorizas → guardas → recuperas al preguntar.<br><br><strong>NotebookLM</strong> hace esto automáticamente. <strong>Open WebUI RAG</strong> también, con tus modelos locales. Para RAG en tus apps Python usarías ChromaDB + LlamaIndex.`,
+   concepts:[
+     {t:'¿Qué es un embedding?',b:'Representación numérica del texto como vector. Textos con significado similar quedan "cerca" geométricamente. Permite buscar por semántica, no solo palabras exactas.'},
+     {t:'NotebookLM vs RAG propio',b:'<strong>NotebookLM:</strong> sube PDFs, funciona solo, sin código.<br><strong>RAG propio:</strong> integrado en tu app Python, control total sobre qué documentos y cómo se recuperan.'},
+     {t:'Claude Projects como RAG ligero',b:'Sube documentos a un Project y quedan disponibles en todas las conversaciones. Sin código, sin infraestructura.'},
+   ]},
+  {id:4,color:'var(--c4)',name:'Herramientas · Tools & Conexiones',tag:'Extensión del modelo',
+   shortDesc:'El modelo llama funciones externas: web, APIs, apps. MCP conecta Claude con todo.',
+   concept:`Las <strong>herramientas</strong> permiten al modelo actuar: buscar en internet, leer emails, llamar a APIs, ejecutar código.<br><br><strong>MCP (Model Context Protocol)</strong> es el estándar Anthropic para conectar Claude con apps externas. Ya tienes activos: <strong>Gmail, Google Calendar, Notion y Microsoft 365 MCP</strong>.<br><strong>n8n</strong> orquesta flujos entre herramientas sin código.`,
+   concepts:[
+     {t:'¿Cómo funciona una tool call?',b:'1) LLM decide que necesita datos externos. 2) Genera JSON con herramienta + parámetros. 3) Tu código ejecuta la herramienta. 4) Resultado vuelve al LLM. 5) LLM responde con ese contexto.'},
+     {t:'MCP vs Function Calling',b:'<strong>Function Calling:</strong> defines tú las funciones en cada petición API.<br><strong>MCP:</strong> servidores preconstruidos (Gmail MCP, Notion MCP…). Claude se conecta directamente.'},
+     {t:'Tus MCP activos',b:'Gmail, Google Calendar, Notion, Microsoft 365. Claude puede leer emails, crear eventos, actualizar Notion y buscar en Teams/SharePoint desde la conversación.'},
+   ]},
+  {id:5,color:'var(--c5)',name:'Agentes · Vibe Coding',tag:'Autonomía & Código IA',
+   shortDesc:'El modelo planifica, edita archivos y ejecuta. Tu entorno de desarrollo con IA.',
+   concept:`Un <strong>agente</strong> actúa en bucles autónomos: planifica → usa herramientas → observa → repite hasta cumplir el objetivo. <strong>Vibe Coding</strong> es programar en conversación con un agente que entiende tu proyecto entero.<br><br><strong>Copilot:</strong> reactivo, sugiere. <strong>Antigravity:</strong> proactivo, ejecuta cambios multi-archivo. <strong>Lovable/Base44:</strong> generan apps completas desde un prompt.`,
+   concepts:[
+     {t:'Copilot vs Antigravity',b:'<strong>Copilot:</strong> sugiere la siguiente línea, tú controlas cada cambio. Reactivo.<br><strong>Antigravity:</strong> le dices el objetivo y él lee el repo, planifica y aplica cambios en múltiples archivos. Proactivo.'},
+     {t:'Lovable vs Base44',b:'<strong>Lovable:</strong> orientado a apps web con React/Supabase. Genera UI completa desde descripción.<br><strong>Base44:</strong> plataforma low-code, más orientada a herramientas internas y flujos de negocio.'},
+     {t:'¿Dónde encaja Gamma?',b:'Gamma (L6) es un producto final de IA, no un entorno de desarrollo. Genera presentaciones y documentos listos para usar. Usa IA internamente pero tú no programas sobre él.'},
+   ]},
+  {id:6,color:'var(--c6)',name:'Aplicación · Tus Proyectos',tag:'Capa de salida',
+   shortDesc:'Donde vive tu lógica de negocio. Apps, webs y productos que consumen el stack.',
+   concept:`La capa de aplicación es donde todo el stack se materializa en valor real. Tus proyectos Python, webs y herramientas como <strong>Gamma</strong> que usas para generar entregables directos.<br><br>Arquitectura básica: tu app llama a la <strong>API de Claude</strong> (L1 vía L4), opcionalmente recupera contexto de un <strong>vector store</strong> (L3) y usa <strong>agentes</strong> (L5) para tareas complejas.`,
+   concepts:[
+     {t:'Patrón básico de integración',b:'1) Usuario hace acción. 2) Tu app construye prompt con datos de contexto. 3) Llamas a anthropic.messages.create(). 4) Parseas la respuesta y actualizas la UI.'},
+     {t:'Gamma en L6',b:'Gamma es un producto de IA para crear presentaciones y one-pagers. No programas sobre él, lo usas como herramienta final. Por eso vive en L6 junto con tus apps, no en L5.'},
+     {t:'Gestión de API keys',b:'Nunca hardcodear keys. Usa .env con python-dotenv. Una key por proyecto en Anthropic Console para controlar uso y costes por separado.'},
+   ]},
+];
+
+/* ═══════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════ */
+const STATUS_LABELS = {paid:'💳 Pago',api:'🔑 API',plus:'🌐 Plus',free:'🆓 Gratis',trial:'🧪 Prueba',inactive:'⬜ Sin activar'};
+const STATUS_BD = {paid:'bd-paid',api:'bd-api',plus:'bd-plus',free:'bd-free',trial:'bd-trial',inactive:'bd-inactive'};
+const STATUS_CARD = {paid:'paid',api:'paid',plus:'plus',free:'free',trial:'plus',inactive:'inactive'};
+
+function badge(status) {
+  return `<span class="si-badge ${STATUS_BD[status]||'bd-free'}">${STATUS_LABELS[status]||'🆓'}</span>`;
+}
+function tcBadge(status) {
+  const styles={paid:'background:#fef3c7;color:#92400e;border:1px solid #fbbf24',api:'background:#ede9fe;color:#5b21b6;border:1px solid #a78bfa',plus:'background:#dbeafe;color:#1e40af;border:1px solid #93c5fd',free:'background:#f3f4f6;color:#6b7280;border:1px solid #d1d5db',inactive:'background:#f9fafb;color:#9ca3af;border:1px solid #e5e7eb',trial:'background:#fff7ed;color:#9a3412;border:1px solid #fdba74'};
+  return `<span class="tc-badge" style="${styles[status]||styles.free}">${STATUS_LABELS[status]||'🆓'}</span>`;
+}
+function cardClass(status){ return STATUS_CARD[status]||'free'; }
+function layerTools(lid){ return TOOLS.filter(t=>t.layer===lid); }
+function selectOpts(cur){
+  return Object.entries(STATUS_LABELS).map(([v,l])=>`<option value="${v}"${cur===v?' selected':''}>${l}</option>`).join('');
+}
+
+/* ═══════════════════════════════════════════
+   TOP NAV — single instance
+═══════════════════════════════════════════ */
+let currentLayer = 0;
+let currentPage = 'home';
+
+function buildNav() {
+  const el = document.getElementById('tnav');
+  if (!el) return;
+  const items = [
+    ...LAYERS.map((L,i)=>({key:'layer-'+i,label:`${String(i+1).padStart(2,'0')} ${L.name.split('·')[0].trim()}`,color:L.color,action:`openLayer(${i})`})),
+    {key:'summary',label:'Resumen',color:'var(--c6)',action:`showView('summary')`}
+  ];
+  el.innerHTML = items.map((it,i)=>{
+    const isAct = (currentPage==='layer' && it.key==='layer-'+currentLayer) || (currentPage===it.key);
+    const sep = i>0?'<span class="tnav-sep"></span>':'';
+    return `${sep}<button class="tnav-btn${isAct?' act':''}" style="color:${isAct?it.color:'var(--muted)'}" onclick="${it.action}">${isAct?'<span class="tnav-dot"></span>':''}${it.label}</button>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════
+   VIEW NAVIGATION — sidebar stays put
+═══════════════════════════════════════════ */
+function showView(name) {
+  currentPage = name;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  buildNav();
+  if (name==='summary') buildSummary();
+}
+function goHome() {
+  currentPage = 'home';
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-home').classList.add('active');
+  buildNav();
+}
+function openLayer(idx) {
+  currentLayer = idx;
+  currentPage = 'layer';
+  renderLayer(idx);
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-layer').classList.add('active');
+  buildNav();
+}
+
+/* ═══════════════════════════════════════════
+   HOME
+═══════════════════════════════════════════ */
+const HOME_PILLS = [
+  ['Claude Sonnet/Opus','Llama 3 (Ollama)','GPT-4o','Gemini'],
+  ['Claude.ai','Open WebUI','Anthropic Console','OpenAI Platform'],
+  ['NotebookLM','Claude Projects','Open WebUI RAG','ChromaDB'],
+  ['MCP Protocol','n8n local','Web Search','Codex API'],
+  ['GitHub Copilot','Antigravity','Lovable','Base44'],
+  ['app_gastos','app_job_tracker','app_apartamentos','Gamma'],
+];
+
+function buildHome() {
+  const stack = document.getElementById('stack-home');
+  stack.innerHTML = '';
+  LAYERS.forEach((L,i)=>{
+    const pills = (HOME_PILLS[i]||[]).map(p=>{
+      const t = TOOLS.find(x=>x.name.toLowerCase().includes(p.toLowerCase().split('(')[0].trim())||p.toLowerCase().includes(x.name.toLowerCase().split(' ')[0]));
+      const st = t?t.status:'free';
+      let cls='pill';
+      if(st==='paid'||st==='api') cls+=' mine st-paid';
+      else if(st==='plus') cls+=' mine st-plus';
+      else if(st==='inactive') cls+=' st-inactive';
+      else cls+=' mine';
+      return `<span class="${cls}">${p}</span>`;
+    }).join('');
+    const row=document.createElement('div');
+    row.className='lrow';
+    row.style.setProperty('--lc',L.color);
+    row.onclick=()=>openLayer(i);
+    row.innerHTML=`
+      <div class="lconn"><div class="ldot">${String(i+1).padStart(2,'0')}</div><div class="lline"></div></div>
+      <div class="lcard fade-up">
+        <div class="lc-top"><span class="lc-name">${L.name}</span><span class="lc-tag">${L.tag}</span></div>
+        <div class="lc-desc">${L.shortDesc}</div>
+        <div class="lc-pills">${pills}</div>
+        <div class="lc-cta">Explorar capa →</div>
+      </div>`;
+    stack.appendChild(row);
+  });
+  buildSidebar();
+  buildNav();
+}
+
+/* ═══════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════ */
+function buildSidebar() {
+  // ACCESOS
+  const links=[
+    {icon:'⚗️',name:'Claude.ai',url:'https://claude.ai',tid:'claudeai'},
+    {icon:'🖥️',name:'Open WebUI',url:'http://localhost:3000',tid:'openwebui'},
+    {icon:'🦙',name:'Ollama API',url:'http://localhost:11434',tid:'ollama'},
+    {icon:'📓',name:'NotebookLM',url:'https://notebooklm.google.com',tid:'notebooklm'},
+    {icon:'🔬',name:'Anthropic Console',url:'https://console.anthropic.com',tid:'console-ant'},
+    {icon:'🧪',name:'OpenAI Platform',url:'https://platform.openai.com',tid:'oai-platform'},
+    {icon:'✨',name:'Google AI Studio',url:'https://aistudio.google.com',tid:'gai-studio'},
+    {icon:'🎯',name:'Gamma',url:'https://gamma.app',tid:'gamma'},
+    {icon:'🔁',name:'n8n local',url:'http://localhost:5678',tid:'n8n'},
+    {icon:'🐙',name:'GitHub joseavelsan',url:'https://github.com/joseavelsan',tid:''},
+  ];
+  document.getElementById('sb-links').innerHTML=`<div class="slist">${links.map(l=>{
+    const t=TOOLS.find(x=>x.id===l.tid);
+    const st=t?t.status:'free';
+    return `<a class="si ${cardClass(st)}" href="${l.url}" target="_blank">
+      <div class="si-icon">${l.icon}</div>
+      <div class="si-info"><div class="si-name">${l.name}</div><div class="si-sub">${l.url.replace(/https?:\/\//,'')}</div></div>
+      ${badge(st)}
+    </a>`;
+  }).join('')}</div>`;
+
+  // TOOLS
+  const toolRows = TOOLS.filter(t=>t.layer<=5).map(t=>`
+    <div class="si ${cardClass(t.status)}">
+      <div class="si-info">
+        <div class="si-name">${t.name}</div>
+        <div class="si-sub">L${t.layer} · ${t.desc.substring(0,40)}…</div>
+      </div>
+      ${badge(t.status)}
+    </div>`).join('');
+  document.getElementById('sb-tools').innerHTML=`<div class="slist">${toolRows}</div>`;
+
+  // MODELS
+  const modelRows = TOOLS.filter(t=>t.layer===1).map(t=>`
+    <div class="si ${cardClass(t.status)}">
+      <div class="si-info"><div class="si-name">${t.name}</div><div class="si-sub">${t.desc}</div></div>
+      ${badge(t.status)}
+    </div>`).join('');
+  document.getElementById('sb-models').innerHTML=`<div class="slist">${modelRows}</div>`;
+
+  // APPS — active ones highlighted
+  const appTools = TOOLS.filter(t=>t.layer===6);
+  const appRows = appTools.map(t=>{
+    const isActive = t.status !== 'inactive';
+    return `
+    <div class="si ${isActive ? 'app-active' : 'inactive'}">
+      ${isActive ? '<div class="app-active-dot"></div>' : '<div style="width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0"></div>'}
+      <div class="si-info">
+        <div class="si-name">${t.name}</div>
+        <div class="si-sub">${t.desc}</div>
+      </div>
+      ${t.url&&t.url!=='#'?`<a href="${t.url}" target="_blank" style="font-size:.62rem;color:var(--c5);font-weight:700;flex-shrink:0">↗</a>`:'<span style="font-size:.55rem;color:var(--dim)">local</span>'}
+    </div>`;
+  }).join('');
+  document.getElementById('sb-apps').innerHTML=`<div class="slist">${appRows}</div>`;
+}
+
+function showTab(id, el) {
+  document.querySelectorAll('.sbody').forEach(b=>b.classList.remove('act'));
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('act'));
+  document.getElementById('sb-'+id).classList.add('act');
+  el.classList.add('act');
+}
+
+/* ═══════════════════════════════════════════
+   LAYER DETAIL
+═══════════════════════════════════════════ */
+function renderLayer(idx) {
+  const L = LAYERS[idx];
+  const tools = layerTools(L.id);
+
+  // LEFT
+  const tcards = tools.map(t=>{
+    const st=t.status;
+    return `<div class="tcard ${cardClass(st)}" style="--lc:${L.color}">
+      <div class="tc-top">
+        <span class="tc-name">${t.name}</span>
+        <div class="tc-bds">
+          <span class="tc-badge" style="color:${L.color};background:color-mix(in srgb,${L.color} 10%,transparent);border:1px solid color-mix(in srgb,${L.color} 25%,transparent)">${t.id.toUpperCase().substring(0,8)}</span>
+          ${tcBadge(st)}
+        </div>
+      </div>
+      <div class="tc-desc">${t.desc}</div>
+      ${t.url&&t.url!=='#'?`<a class="tc-link" href="${t.url}" target="_blank" style="color:${L.color}">Abrir →</a>`:''}
+    </div>`;
+  }).join('');
+
+  document.getElementById('det-l').innerHTML=`
+    <div class="det-num" style="color:color-mix(in srgb,${L.color} 20%,transparent)">L${L.id}</div>
+    <div class="det-name" style="color:${L.color}">${L.name}</div>
+    <div class="det-tag" style="color:${L.color};border-color:color-mix(in srgb,${L.color} 30%,transparent);background:color-mix(in srgb,${L.color} 7%,transparent)">${L.tag}</div>
+    <div class="det-concept" style="--lc:${L.color}">${L.concept}</div>
+    <div class="dsec">Herramientas · ${tools.length} en esta capa</div>
+    ${tcards}`;
+
+  // RIGHT
+  const cboxes = L.concepts.map(c=>`<div class="cbox"><div class="cb-t" style="color:${L.color}">${c.t}</div><div class="cb-b">${c.b}</div></div>`).join('');
+  const minimap = LAYERS.map((l,i)=>`
+    <div class="sm-row ${i===idx?'cur':''}" style="--lc:${l.color}" onclick="${i!==idx?'openLayer('+i+')':''}">
+      <span class="sm-n" style="color:${l.color}">L${l.id}</span>
+      <span class="sm-label" style="color:${i===idx?'var(--text)':'var(--text2)'}">${l.name}</span>
+      ${i===idx?`<span class="sm-arr" style="color:${l.color}">←</span>`:''}
+    </div>`).join('');
+
+  document.getElementById('det-r').innerHTML=`
+    <div class="dsec">Conceptos clave</div>${cboxes}
+    <div class="dsec" style="margin-top:18px">Navegar por el stack</div>
+    <div class="smini">${minimap}</div>`;
+
+  // Bottom nav
+  const prev = idx>0?LAYERS[idx-1]:null;
+  const next = idx<LAYERS.length-1?LAYERS[idx+1]:null;
+  document.getElementById('lnav').innerHTML=`
+    <button class="lnav-btn back" onclick="goHome()"><span class="lnav-arr">←</span><div><div class="lnav-lbl">Volver</div><div class="lnav-name">Mapa general</div></div></button>
+    ${prev?`<button class="lnav-btn" onclick="openLayer(${idx-1})" style="flex-direction:row-reverse;text-align:right"><span class="lnav-arr">←</span><div><div class="lnav-lbl">Capa inferior</div><div class="lnav-name">${prev.name.split('·')[0].trim()}</div></div></button>`:'<div style="flex:1"></div>'}
+    ${next?`<button class="lnav-btn" onclick="openLayer(${idx+1})"><div><div class="lnav-lbl">Capa superior</div><div class="lnav-name">${next.name.split('·')[0].trim()}</div></div><span class="lnav-arr">→</span></button>`:'<div style="flex:1"></div>'}`;
+}
+
+/* ═══════════════════════════════════════════
+   SUMMARY — full editable panel
+═══════════════════════════════════════════ */
+function buildSummary() {
+  const layerBlocks = LAYERS.map((L,i)=>{
+    const tools = layerTools(L.id);
+    const rows = tools.map(t=>`
+      <div class="stool ${cardClass(t.status)}" id="stool-${t.id}" style="--lc:${L.color}">
+        <div class="stool-dot"></div>
+        <span class="stool-name">${t.name}</span>
+        <select class="stool-sel" onchange="updateStatus('${t.id}',this.value)">${selectOpts(t.status)}</select>
+        <button class="stool-del" onclick="deleteTool('${t.id}')" title="Eliminar">✕</button>
+      </div>`).join('');
+    return `
+      <div class="sum-layer" style="--lc:${L.color}">
+        <div class="sum-layer-hdr" onclick="openLayer(${i})">
+          <span class="sum-lnum">L${L.id}</span>
+          <span class="sum-lname">${L.name}</span>
+          <span class="sum-lexp">${tools.length} herramientas · explorar →</span>
+        </div>
+        <div class="sum-tools-grid" id="tgrid-${L.id}">${rows}</div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('sum-body').innerHTML=`
+    <div class="sum-hdr">
+      <div>
+        <h2>🗺️ Resumen del Stack · José A. Velázquez</h2>
+        <p>Panel de control completo. Cambia el estado de cualquier herramienta aquí y se refleja en todo el dashboard. Añade, edita o elimina herramientas.</p>
+        <div class="sum-hint">✏️ Los cambios se aplican en tiempo real al guardar</div>
+      </div>
+      <div class="legend">
+        <span class="leg-item"><span class="si-badge bd-paid">💳 Pago</span> Suscripción activa</span>
+        <span class="leg-item"><span class="si-badge bd-plus">🌐 Plus</span> Web sin API</span>
+        <span class="leg-item"><span class="si-badge bd-free">🆓 Gratis</span> Sin coste</span>
+        <span class="leg-item"><span class="si-badge bd-inactive">⬜ Sin activar</span> Disponible</span>
+      </div>
+    </div>
+
+    ${layerBlocks}
+
+    <div class="add-form" style="margin-top:6px">
+      <h4>➕ Añadir nueva herramienta</h4>
+      <div class="form-row">
+        <input class="form-input" id="new-name" placeholder="Nombre (ej: Cursor IDE)">
+        <input class="form-input" id="new-desc" placeholder="Descripción corta">
+        <input class="form-input" id="new-url" placeholder="URL (https://…)">
+      </div>
+      <div class="form-row" style="grid-template-columns:120px 120px 1fr auto">
+        <select class="form-select" id="new-layer">
+          ${LAYERS.map(L=>`<option value="${L.id}">L${L.id} · ${L.name.split('·')[0].trim()}</option>`).join('')}
+        </select>
+        <select class="form-select" id="new-status">${selectOpts('free')}</select>
+        <div></div>
+        <button class="add-btn" onclick="addTool()">Añadir herramienta</button>
+      </div>
+    </div>
+
+    <button class="apply-btn" onclick="applyAll()">✓ Guardar y aplicar todos los cambios</button>
+    <div style="height:24px"></div>`;
+
+  buildNav();
+}
+
+/* ═══════════════════════════════════════════
+   EDIT ACTIONS — live update
+═══════════════════════════════════════════ */
+function updateStatus(id, val) {
+  const t = TOOLS.find(x=>x.id===id);
+  if (!t) return;
+  t.status = val;
+  // update the card visually immediately
+  const el = document.getElementById('stool-'+id);
+  if (el) {
+    el.className = `stool ${cardClass(val)}`;
+    el.style.setProperty('--lc', LAYERS.find(L=>L.id===t.layer)?.color||'var(--c1)');
+  }
+}
+
+function deleteTool(id) {
+  if (!confirm('¿Eliminar esta herramienta?')) return;
+  TOOLS = TOOLS.filter(t=>t.id!==id);
+  buildSummary();
+}
+
+function addTool() {
+  const name = document.getElementById('new-name').value.trim();
+  const desc = document.getElementById('new-desc').value.trim();
+  const url  = document.getElementById('new-url').value.trim()||'#';
+  const layer = parseInt(document.getElementById('new-layer').value);
+  const status = document.getElementById('new-status').value;
+  if (!name) { alert('El nombre es obligatorio'); return; }
+  const id = name.toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-');
+  TOOLS.push({id, name, layer, status, url, desc: desc||'Sin descripción.'});
+  buildSummary();
+  document.getElementById('new-name').value='';
+  document.getElementById('new-desc').value='';
+  document.getElementById('new-url').value='';
+}
+
+function applyAll() {
+  buildHome();
+  if (currentPage==='layer') renderLayer(currentLayer);
+  if (currentPage==='summary') buildSummary();
+  buildNav();
+  const btn = document.querySelector('.apply-btn');
+  const orig = btn.textContent;
+  btn.textContent = '✓ Cambios aplicados en todo el dashboard';
+  btn.style.background = '#047857';
+  setTimeout(()=>{ btn.textContent=orig; btn.style.background=''; }, 2000);
+}
+
+/* ═══════════════════════════════════════════
+   PANEL TOGGLE
+═══════════════════════════════════════════ */
+let panelOpen = true;
+function togglePanel() {
+  panelOpen = !panelOpen;
+  const area = document.getElementById('main-area');
+  const btn  = document.getElementById('panel-toggle');
+  if (panelOpen) {
+    area.classList.remove('collapsed');
+    btn.textContent = '◀';
+    btn.title = 'Ocultar panel';
+  } else {
+    area.classList.add('collapsed');
+    btn.textContent = '▶';
+    btn.title = 'Mostrar panel';
+  }
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  const ds = new Date().toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  const td = document.getElementById('td1');
+  if (td) td.textContent = ds;
+  buildHome();
+});
+</script>
+</body>
+</html>
