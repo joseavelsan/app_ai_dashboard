@@ -49,6 +49,19 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .tnav-sep{width:1px;height:16px;background:var(--border);flex-shrink:0;margin:0 3px}
 .tnav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
 .topbar-date{margin-left:10px;font-size:.57rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.topbar-search{position:relative;flex-shrink:0;margin-left:8px}
+.topbar-search input{font-family:var(--font-m);font-size:.6rem;border:1px solid var(--border);border-radius:5px;padding:4px 26px 4px 8px;background:var(--surf2);color:var(--text);width:160px;transition:width .2s,border-color .15s;outline:none}
+.topbar-search input:focus{border-color:var(--c1);width:220px;background:var(--surf)}
+.topbar-search input::placeholder{color:var(--dim)}
+.topbar-search-ico{position:absolute;right:7px;top:50%;transform:translateY(-50%);font-size:.65rem;color:var(--dim);pointer-events:none}
+.search-dropdown{position:absolute;top:calc(100% + 4px);right:0;width:280px;background:var(--surf);border:1px solid var(--border);border-radius:7px;box-shadow:0 6px 20px rgba(0,0,0,.12);z-index:500;overflow:hidden;display:none}
+.search-dropdown.open{display:block}
+.search-item{display:flex;align-items:center;gap:8px;padding:7px 11px;cursor:pointer;transition:background .1s}
+.search-item:hover{background:var(--surf2)}
+.search-item-layer{font-size:.5rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 5px;border-radius:3px;flex-shrink:0;font-weight:600}
+.search-item-name{font-size:.65rem;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-item-desc{font-size:.55rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.search-empty{padding:10px 14px;font-size:.6rem;color:var(--muted);text-align:center}
 
 /* MAIN AREA — persistent grid, sidebar always present */
 .main-area{display:grid;grid-template-columns:1fr var(--panel-w,380px);flex:1;overflow:hidden;transition:grid-template-columns .25s ease}
@@ -302,9 +315,111 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .lrow:nth-child(4) .lcard{animation-delay:.12s}
 .lrow:nth-child(5) .lcard{animation-delay:.15s}
 .lrow:nth-child(6) .lcard{animation-delay:.18s}
+/* TOOL MODAL */
+.tm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.28);z-index:200;display:none;align-items:stretch;justify-content:flex-end;backdrop-filter:blur(1px)}
+.tm-overlay.open{display:flex}
+.tm-panel{width:400px;max-width:92vw;background:var(--surf);border-left:1px solid var(--border);display:flex;flex-direction:column;box-shadow:-6px 0 28px rgba(0,0,0,.13);animation:slideInR .2s ease}
+@keyframes slideInR{from{transform:translateX(24px);opacity:0}to{transform:translateX(0);opacity:1}}
+.tm-hdr{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.tm-lbadge{font-family:var(--font-h);font-size:.56rem;font-weight:800;padding:2px 8px;border-radius:3px}
+.tm-name{font-family:var(--font-h);font-size:.95rem;font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tm-close{font-size:.85rem;color:var(--muted);cursor:pointer;padding:2px 4px;transition:color .12s;border:none;background:none}
+.tm-close:hover{color:var(--text)}
+.tm-body{flex:1;overflow-y:auto;padding:16px 18px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.tm-desc{font-size:.66rem;color:var(--text2);line-height:1.75;padding:10px 12px;background:var(--surf2);border-radius:6px;border-left:3px solid var(--lc,var(--c1));margin-bottom:14px}
+.tm-flabel{font-size:.52rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);display:block;margin-bottom:5px;margin-top:14px}
+.tm-flabel:first-of-type{margin-top:0}
+.tm-notes{width:100%;font-family:var(--font-m);font-size:.63rem;border:1px solid var(--border);border-radius:5px;padding:8px 10px;background:var(--surf);color:var(--text);resize:vertical;min-height:90px;transition:border-color .12s;line-height:1.6}
+.tm-notes:focus{outline:none;border-color:var(--c1)}
+.tm-urlrow{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--surf2);border:1px solid var(--border);border-radius:5px;font-size:.62rem;margin-bottom:4px}
+.tm-url-text{flex:1;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.6rem}
+.tm-url-open{font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;color:var(--c1);font-weight:600;white-space:nowrap;transition:opacity .12s}
+.tm-url-open:hover{opacity:.75}
+.tm-actions{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:6px;flex-shrink:0}
+.tm-btn{flex:1;font-family:var(--font-m);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;padding:8px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surf3);color:var(--text);cursor:pointer;transition:all .12s;white-space:nowrap}
+.tm-btn:hover{background:var(--surf);border-color:var(--border2)}
+.tm-btn.primary{background:var(--c1);color:#fff;border-color:var(--c1);flex:0 0 auto;padding:8px 14px}
+.tm-btn.primary:hover{background:color-mix(in srgb,var(--c1) 85%,#000)}
+.tm-input{width:100%;font-family:var(--font-m);font-size:.64rem;border:1px solid var(--border);border-radius:5px;padding:6px 9px;background:var(--surf);color:var(--text);transition:border-color .12s}
+.tm-input:focus{outline:none;border-color:var(--c1)}
+.tm-grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tm-select{width:100%;font-family:var(--font-m);font-size:.62rem;border:1px solid var(--border);border-radius:5px;padding:6px 8px;background:var(--surf);color:var(--text);cursor:pointer;transition:border-color .12s}
+.tm-select:focus{outline:none;border-color:var(--c1)}
+.tm-url-open-btn{font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;color:var(--c1);font-weight:600;white-space:nowrap;border:none;background:none;cursor:pointer;padding:0;flex-shrink:0}
+.tm-url-open-btn:hover{opacity:.75}
+.stool-edit{font-size:.68rem;color:var(--muted);padding:0 3px;transition:color .15s;flex-shrink:0;border:none;background:none;cursor:pointer}
+.stool-edit:hover{color:var(--c1)}
+/* SUBTYPE SECTION HEADERS */
+.stype-hdr{display:flex;align-items:center;gap:7px;padding:7px 0 4px;margin-top:16px;margin-bottom:6px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
+.stype-hdr:first-child{margin-top:4px}
+.stype-hdr:hover .stype-label{color:var(--lc,var(--c1))}
+.stype-toggle{font-size:.55rem;color:var(--dim);flex-shrink:0;transition:transform .18s;display:inline-block}
+.stype-hdr.collapsed .stype-toggle{transform:rotate(-90deg)}
+.stype-icon{font-size:.82rem;flex-shrink:0}
+.stype-label{font-family:var(--font-h);font-size:.68rem;font-weight:700;color:var(--text);transition:color .15s}
+.stype-desc{font-size:.56rem;color:var(--muted)}
+.stype-count{margin-left:auto;font-size:.52rem;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;flex-shrink:0}
+.stype-body{overflow:hidden;transition:none}
+.stype-body.hidden{display:none}
+
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ─── NEW PAGES ──────────────────────────────── */
+#view-learn{flex:1;overflow:hidden}
+#view-commands{flex:1;overflow:hidden}
+
+/* STAR / FAVORITO */
+.star-btn{background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--border2);transition:all .15s;padding:0 2px;flex-shrink:0;line-height:1}
+.star-btn:hover{color:#f59e0b;transform:scale(1.2)}
+.star-btn.fav{color:#f59e0b}
+
+/* LEARN PAGE */
+.learn-body{flex:1;overflow-y:auto;padding:22px 26px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.learn-inner{max-width:680px;margin:0 auto}
+.learn-intro{font-size:.66rem;color:var(--text2);line-height:1.9;margin-bottom:22px;padding:13px 16px;background:var(--surf);border-radius:7px;border:1px solid var(--border);border-left:4px solid var(--c1)}
+.learn-layer{margin-bottom:18px;background:var(--surf);border-radius:8px;border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.learn-lhdr{display:flex;align-items:center;gap:10px;padding:11px 15px;background:color-mix(in srgb,var(--lc) 7%,var(--surf));border-bottom:1px solid color-mix(in srgb,var(--lc) 12%,var(--border))}
+.learn-lnum{font-family:var(--font-h);font-size:1.25rem;font-weight:800;color:color-mix(in srgb,var(--lc) 28%,transparent);line-height:1;flex-shrink:0}
+.learn-lname{font-family:var(--font-h);font-size:.84rem;font-weight:800;color:var(--lc)}
+.learn-lsub{font-size:.54rem;color:var(--muted);margin-top:1px}
+.learn-ltag{font-size:.52rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-left:auto;background:color-mix(in srgb,var(--lc) 9%,transparent);padding:2px 7px;border-radius:2px;border:1px solid color-mix(in srgb,var(--lc) 18%,transparent);flex-shrink:0;font-style:italic}
+.learn-text{padding:14px 16px;font-size:.67rem;line-height:1.88;color:var(--text2)}
+.learn-text strong{color:var(--text);font-weight:600}
+.learn-gold{margin-top:22px;margin-bottom:8px;padding:15px 18px;background:color-mix(in srgb,var(--c3) 7%,var(--surf));border:1px solid color-mix(in srgb,var(--c3) 22%,var(--border));border-radius:8px;border-left:4px solid var(--c3)}
+.learn-gold h3{font-family:var(--font-h);font-size:.8rem;font-weight:800;color:var(--c3);margin-bottom:7px}
+.learn-gold p{font-size:.66rem;color:var(--text2);line-height:1.85}
+.learn-gold p strong{color:var(--text)}
+
+/* COMMANDS PAGE */
+.cmd-body{flex:1;overflow:hidden;display:flex}
+.cmd-list-col{width:250px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:var(--surf2);scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.cmd-detail-col{flex:1;overflow-y:auto;padding:22px 26px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.cmd-list-hdr{padding:11px 13px 7px;font-size:.54rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surf)}
+.cmd-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s}
+.cmd-item:hover{background:var(--surf)}
+.cmd-item.act{background:color-mix(in srgb,var(--c1) 8%,transparent);border-right:2px solid var(--c1)}
+.cmd-item-icon{font-size:.9rem;width:20px;text-align:center;flex-shrink:0}
+.cmd-item-info{flex:1;min-width:0}
+.cmd-item-name{font-family:var(--font-h);font-size:.69rem;font-weight:700;color:var(--text)}
+.cmd-item-sub{font-size:.54rem;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmd-item-badge{font-size:.46rem;padding:1px 4px;border-radius:2px;background:color-mix(in srgb,var(--c1) 10%,transparent);color:var(--c1);border:1px solid color-mix(in srgb,var(--c1) 22%,transparent);flex-shrink:0}
+.cmd-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:10px;font-size:.66rem;padding:40px;text-align:center}
+.cmd-empty-icon{font-size:2rem;opacity:.45}
+.cmd-ref-hdr{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.cmd-ref-icon{font-size:1.5rem;margin-bottom:5px}
+.cmd-ref-title{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:3px}
+.cmd-ref-sub{font-size:.6rem;color:var(--muted)}
+.cmd-section{margin-bottom:20px}
+.cmd-section-title{font-size:.54rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.cmd-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.cmd-entry{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border-radius:5px;border:1px solid var(--border);background:var(--surf2);margin-bottom:4px;transition:background .12s}
+.cmd-entry:hover{background:var(--surf)}
+.cmd-cmd{font-family:var(--font-m);font-size:.6rem;font-weight:600;color:var(--c1);white-space:nowrap;flex-shrink:0;min-width:150px;background:color-mix(in srgb,var(--c1) 7%,transparent);padding:2px 7px;border-radius:3px;border:1px solid color-mix(in srgb,var(--c1) 15%,transparent);align-self:flex-start;line-height:1.65}
+.cmd-desc{font-size:.61rem;color:var(--text2);line-height:1.55}
+.cmd-desc strong{color:var(--text)}
+.cmd-desc code{font-family:var(--font-m);font-size:.57rem;background:var(--surf3);padding:1px 4px;border-radius:2px;border:1px solid var(--border)}
 </style>
 </head>
 <body>
@@ -316,6 +431,11 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
   <div class="topbar">
     <div class="logo" onclick="goHome()">AI<em>·</em>Stack</div>
     <div class="tnav" id="tnav"></div>
+    <div class="topbar-search">
+      <input type="text" id="topbar-search-input" placeholder="Buscar herramienta…" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Escape')closeSearch()">
+      <span class="topbar-search-ico">🔍</span>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
     <div class="topbar-date" id="td1"></div>
   </div>
 
@@ -347,6 +467,16 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
         <div class="sum-body" id="sum-body"></div>
       </div>
 
+      <!-- VIEW: APRENDER (Formativa) -->
+      <div class="view" id="view-learn">
+        <div class="learn-body" id="learn-body"></div>
+      </div>
+
+      <!-- VIEW: COMANDOS (Referencia de uso) -->
+      <div class="view" id="view-commands">
+        <div class="cmd-body" id="cmd-body"></div>
+      </div>
+
     </div>
 
     <!-- SIDEBAR — always visible, collapsible -->
@@ -370,51 +500,57 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 <script>
 /* ═══════════════════════════════════════════
    STATE — single source of truth
-   status: paid | api | plus | free | inactive | trial
+   status: paid | api | free | inactive | trial
 ═══════════════════════════════════════════ */
 let TOOLS = [
   // L1 Modelo
-  {id:'claude-sonnet', name:'Claude Sonnet 4.6', layer:1, status:'paid',  url:'https://claude.ai',            desc:'Modelo principal. 200K ctx. Código, análisis.'},
-  {id:'claude-opus',   name:'Claude Opus 4.6',   layer:1, status:'paid',  url:'https://claude.ai',            desc:'Razonamiento profundo, tareas críticas.'},
-  {id:'ollama',        name:'Ollama',             layer:1, status:'free',  url:'http://localhost:11434',       desc:'Servidor local de LLMs. API en :11434.'},
-  {id:'llama3',        name:'Llama 3.x (local)',  layer:1, status:'free',  url:'http://localhost:11434',       desc:'Modelo local vía Ollama. Privado, sin coste.'},
-  {id:'gpt4o',         name:'GPT-4o',             layer:1, status:'plus',  url:'https://chatgpt.com',          desc:'OpenAI. Base de Copilot y Codex.'},
-  {id:'gemini',        name:'Gemini 2.0 Pro',     layer:1, status:'free',  url:'https://gemini.google.com',    desc:'Google. 1M tokens ctx. NotebookLM base.'},
-  {id:'groq',          name:'Groq (Llama/Mixtral)',layer:1,status:'free',  url:'https://console.groq.com',     desc:'Inferencia ultrarrápida. Tier gratuito.'},
+  {id:'claude-sonnet', name:'Claude Sonnet 4.6', layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Modelo principal. 200K ctx. Código, análisis.'},
+  {id:'claude-opus',   name:'Claude Opus 4.6',   layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Razonamiento profundo, tareas críticas.'},
+  {id:'ollama',        name:'Ollama',             layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Servidor local de LLMs. API en :11434.'},
+  {id:'llama3',        name:'Llama 3.x (local)',  layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Modelo local vía Ollama. Privado, sin coste.'},
+  {id:'gpt4o',         name:'GPT-4o',             layer:1, status:'paid',  subtype:'openai',    url:'https://chatgpt.com',          desc:'OpenAI. Base de Copilot y Codex.'},
+  {id:'gemini',        name:'Gemini 2.0 Pro',     layer:1, status:'free',  subtype:'google',    url:'https://gemini.google.com',    desc:'Google. 1M tokens ctx. NotebookLM base.'},
+  {id:'groq',          name:'Groq (Llama/Mixtral)',layer:1,status:'free',  subtype:'cloudapi',  url:'https://console.groq.com',     desc:'Inferencia ultrarrápida. Tier gratuito.'},
   // L2 Interfaz
-  {id:'claudeai',      name:'Claude.ai',          layer:2, status:'paid',  url:'https://claude.ai',            desc:'Interfaz oficial Anthropic. Projects, artefactos.'},
-  {id:'openwebui',     name:'Open WebUI',         layer:2, status:'free',  url:'http://localhost:3000',        desc:'Visor web de Ollama en Docker. localhost:3000.'},
-  {id:'chatgpt',       name:'ChatGPT (web)',       layer:2, status:'plus',  url:'https://chatgpt.com',          desc:'Interfaz OpenAI. GPT-4o, DALL-E, voz.'},
-  {id:'console-ant',   name:'Anthropic Console',  layer:2, status:'paid',  url:'https://console.anthropic.com',desc:'API keys, Workbench, usage. Para tus apps.'},
-  {id:'oai-platform',  name:'OpenAI Platform',    layer:2, status:'plus',  url:'https://platform.openai.com',  desc:'Playground OpenAI. API keys, créditos.'},
-  {id:'gai-studio',    name:'Google AI Studio',   layer:2, status:'free',  url:'https://aistudio.google.com',  desc:'Gemini API. Tier gratuito generoso.'},
+  {id:'claudeai',      name:'Claude.ai',          layer:2, status:'paid',  subtype:'webchat',   url:'https://claude.ai',            desc:'Interfaz oficial Anthropic. Projects, artefactos.'},
+  {id:'openwebui',     name:'Open WebUI',         layer:2, status:'free',  subtype:'localui',   url:'http://localhost:3000',        desc:'Visor web de Ollama en Docker. localhost:3000.'},
+  {id:'chatgpt',       name:'ChatGPT (web)',       layer:2, status:'paid',  subtype:'webchat',   url:'https://chatgpt.com',          desc:'Interfaz OpenAI. GPT-4o, DALL-E, voz.'},
+  {id:'console-ant',   name:'Anthropic Console',  layer:2, status:'paid',  subtype:'devcons',   url:'https://console.anthropic.com',desc:'API keys, Workbench, usage. Para tus apps.'},
+  {id:'oai-platform',  name:'OpenAI Platform',    layer:2, status:'api',   subtype:'devcons',   url:'https://platform.openai.com',  desc:'Playground OpenAI. API keys, créditos.'},
+  {id:'gai-studio',    name:'Google AI Studio',   layer:2, status:'free',  subtype:'devcons',   url:'https://aistudio.google.com',  desc:'Gemini API. Tier gratuito generoso.'},
   // L3 Memoria/RAG
-  {id:'notebooklm',    name:'NotebookLM',         layer:3, status:'free',  url:'https://notebooklm.google.com',desc:'RAG automático Google. PDFs, docs, vídeos.'},
-  {id:'claude-proj',   name:'Claude Projects',    layer:3, status:'paid',  url:'https://claude.ai',            desc:'Contexto persistente con docs en claude.ai.'},
-  {id:'owui-rag',      name:'Open WebUI RAG',     layer:3, status:'free',  url:'http://localhost:3000',        desc:'RAG local con modelos Ollama. 100% privado.'},
-  {id:'chromadb',      name:'ChromaDB',           layer:3, status:'inactive',url:'https://trychroma.com',     desc:'Base vectorial local. pip install chromadb.'},
-  {id:'llamaindex',    name:'LlamaIndex',         layer:3, status:'inactive',url:'https://llamaindex.ai',     desc:'Framework Python RAG. Conecta con ChromaDB.'},
+  {id:'notebooklm',    name:'NotebookLM',         layer:3, status:'free',  subtype:'cloudrag',  url:'https://notebooklm.google.com',desc:'RAG automático Google. PDFs, docs, vídeos.'},
+  {id:'claude-proj',   name:'Claude Projects',    layer:3, status:'paid',  subtype:'cloudrag',  url:'https://claude.ai',            desc:'Contexto persistente con docs en claude.ai.'},
+  {id:'owui-rag',      name:'Open WebUI RAG',     layer:3, status:'free',  subtype:'localrag',  url:'http://localhost:3000',        desc:'RAG local con modelos Ollama. 100% privado.'},
+  {id:'chromadb',      name:'ChromaDB',           layer:3, status:'inactive',subtype:'vectordb', url:'https://trychroma.com',      desc:'Base vectorial local. pip install chromadb.'},
+  {id:'llamaindex',    name:'LlamaIndex',         layer:3, status:'inactive',subtype:'framework',url:'https://llamaindex.ai',      desc:'Framework Python RAG. Conecta con ChromaDB.'},
   // L4 Herramientas
-  {id:'mcp',           name:'MCP Protocol',       layer:4, status:'paid',  url:'https://docs.anthropic.com',   desc:'Gmail, Notion, Calendar, M365 conectados.'},
-  {id:'n8n',           name:'n8n self-hosted',    layer:4, status:'free',  url:'http://localhost:5678',        desc:'Automatización flujos IA. localhost:5678.'},
-  {id:'websearch',     name:'Web Search (Claude)',layer:4, status:'paid',  url:'https://claude.ai',            desc:'Búsqueda web integrada en claude.ai.'},
-  {id:'codex-api',     name:'Codex API',          layer:4, status:'plus',  url:'https://platform.openai.com',  desc:'API código OpenAI. Plus web, sin API key.'},
-  {id:'zapier',        name:'Zapier AI',          layer:4, status:'inactive',url:'https://zapier.com',        desc:'Automatización cloud. Alternativa a n8n.'},
-  // L5 Agentes / Vibe Coding
-  {id:'copilot',       name:'GitHub Copilot',     layer:5, status:'paid',  url:'https://copilot.github.com',   desc:'Extensión VS Code. Autocomplete + chat inline.'},
-  {id:'antigravity',   name:'Antigravity',        layer:5, status:'paid',  url:'https://antigravity.dev',      desc:'Agente autónomo multi-archivo. Como Cursor.'},
-  {id:'lovable',       name:'Lovable',            layer:5, status:'free',  url:'https://lovable.dev',          desc:'Genera apps web completas desde prompt.'},
-  {id:'base44',        name:'Base44',             layer:5, status:'free',  url:'https://base44.com',           desc:'Low-code IA para construir apps. Sin código.'},
-  {id:'claude-code',   name:'Claude Code',        layer:5, status:'inactive',url:'https://claude.ai/code',    desc:'CLI agente Anthropic. npm install @anthropic-ai/claude-code.'},
-  {id:'cursor',        name:'Cursor IDE',         layer:5, status:'inactive',url:'https://cursor.sh',         desc:'IDE con agente IA integrado. Alternativa a VS Code.'},
-  {id:'continue-dev',  name:'Continue.dev',       layer:5, status:'inactive',url:'https://continue.dev',      desc:'Copilot open-source. Conecta con Ollama local.'},
+  {id:'mcp',           name:'MCP Protocol',       layer:4, status:'paid',  subtype:'protocol',  url:'https://docs.anthropic.com',   desc:'Gmail, Notion, Calendar, M365 conectados.'},
+  {id:'n8n',           name:'n8n self-hosted',    layer:4, status:'free',  subtype:'automation',url:'http://localhost:5678',        desc:'Automatización flujos IA. localhost:5678.'},
+  {id:'websearch',     name:'Web Search (Claude)',layer:4, status:'paid',  subtype:'search',    url:'https://claude.ai',            desc:'Búsqueda web integrada en claude.ai.'},
+  {id:'codex-api',     name:'Codex API',          layer:4, status:'api',   subtype:'apitools',  url:'https://platform.openai.com',  desc:'API código OpenAI. Acceso vía API key.'},
+  {id:'zapier',        name:'Zapier AI',          layer:4, status:'inactive',subtype:'automation',url:'https://zapier.com',         desc:'Automatización cloud. Alternativa a n8n.'},
+  // L5 Agentes — Vibe Coding (IDE/CLI)
+  {id:'copilot',       name:'GitHub Copilot',     layer:5, status:'paid',     subtype:'coding',  url:'https://copilot.github.com',   desc:'Extensión VS Code. Autocomplete + chat inline.'},
+  {id:'antigravity',   name:'Antigravity',        layer:5, status:'paid',     subtype:'coding',  url:'https://antigravity.dev',      desc:'Agente autónomo multi-archivo. Como Cursor.'},
+  {id:'claude-code',   name:'Claude Code',        layer:5, status:'inactive', subtype:'coding',  url:'https://claude.ai/code',       desc:'CLI agente Anthropic. npm install @anthropic-ai/claude-code.'},
+  {id:'cursor',        name:'Cursor IDE',         layer:5, status:'inactive', subtype:'coding',  url:'https://cursor.sh',            desc:'IDE con agente IA integrado. Alternativa a VS Code.'},
+  {id:'continue-dev',  name:'Continue.dev',       layer:5, status:'inactive', subtype:'coding',  url:'https://continue.dev',         desc:'Copilot open-source. Conecta con Ollama local.'},
+  // L5 Agentes — Web Builders
+  {id:'lovable',       name:'Lovable',            layer:5, status:'free',     subtype:'builder', url:'https://lovable.dev',          desc:'Genera apps web completas con React y Supabase desde prompt.'},
+  {id:'base44',        name:'Base44',             layer:5, status:'free',     subtype:'builder', url:'https://base44.com',           desc:'Low-code IA para construir apps internas. Sin código.'},
+  {id:'bolt',          name:'Bolt.new',           layer:5, status:'free',     subtype:'builder', url:'https://bolt.new',             desc:'Genera y ejecuta apps web completas en el navegador. StackBlitz.'},
+  // L5 Agentes — Browser Agents
+  {id:'browser-use',   name:'Browser Use',        layer:5, status:'free',     subtype:'browser', url:'https://browser-use.com',      desc:'Python: controla el navegador con IA. pip install browser-use.'},
+  {id:'computer-use',  name:'Computer Use',       layer:5, status:'inactive', subtype:'browser', url:'https://docs.anthropic.com',   desc:'API Anthropic para control de escritorio vía visión por computadora.'},
+  {id:'playwright-mcp',name:'Playwright MCP',     layer:5, status:'inactive', subtype:'browser', url:'https://playwright.dev',       desc:'Automatización de navegador vía MCP. Tests y scraping con Claude.'},
   // L6 Aplicaciones
-  {id:'app-gastos',    name:'app_gastos_familia', layer:6, status:'free',  url:'https://github.com/joseavelsan/app_gastos_familia', desc:'Gestión gastos domésticos. Python.'},
-  {id:'app-jobs',      name:'app_job_tracker',    layer:6, status:'free',  url:'https://github.com/joseavelsan/app_job_tracker',    desc:'Seguimiento búsqueda empleo. Python.'},
-  {id:'app-aparts',    name:'app_apartamentos',   layer:6, status:'free',  url:'https://github.com/joseavelsan/app_gestion_apartamentos',desc:'espacioGijón 2 unidades. Python.'},
-  {id:'web-espacio',   name:'espacioGijón web',   layer:6, status:'free',  url:'#',                            desc:'Web turística. HTML single-file.'},
-  {id:'portfolio',     name:'Portfolio profesional',layer:6,status:'free', url:'#',                            desc:'Portfolio ejecutivo. Timeline industrial.'},
-  {id:'gamma',         name:'Gamma',              layer:6, status:'free',  url:'https://gamma.app',            desc:'Generador de presentaciones y docs con IA.'},
+  {id:'app-gastos',    name:'app_gastos_familia', layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_gastos_familia', desc:'Gestión gastos domésticos. Python.'},
+  {id:'app-jobs',      name:'app_job_tracker',    layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_job_tracker',    desc:'Seguimiento búsqueda empleo. Python.'},
+  {id:'app-aparts',    name:'app_apartamentos',   layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_gestion_apartamentos',desc:'espacioGijón 2 unidades. Python.'},
+  {id:'web-espacio',   name:'espacioGijón web',   layer:6, status:'free',  subtype:'myapp',    url:'#',                            desc:'Web turística. HTML single-file.'},
+  {id:'portfolio',     name:'Portfolio profesional',layer:6,status:'free', subtype:'myapp',    url:'#',                            desc:'Portfolio ejecutivo. Timeline industrial.'},
+  {id:'gamma',         name:'Gamma',              layer:6, status:'free',  subtype:'saastool', url:'https://gamma.app',            desc:'Generador de presentaciones y docs con IA.'},
 ];
 
 /* ═══════════════════════════════════════════
@@ -453,9 +589,9 @@ const LAYERS = [
      {t:'MCP vs Function Calling',b:'<strong>Function Calling:</strong> defines tú las funciones en cada petición API.<br><strong>MCP:</strong> servidores preconstruidos (Gmail MCP, Notion MCP…). Claude se conecta directamente.'},
      {t:'Tus MCP activos',b:'Gmail, Google Calendar, Notion, Microsoft 365. Claude puede leer emails, crear eventos, actualizar Notion y buscar en Teams/SharePoint desde la conversación.'},
    ]},
-  {id:5,color:'var(--c5)',name:'Agentes · Vibe Coding',tag:'Autonomía & Código IA',
-   shortDesc:'El modelo planifica, edita archivos y ejecuta. Tu entorno de desarrollo con IA.',
-   concept:`Un <strong>agente</strong> actúa en bucles autónomos: planifica → usa herramientas → observa → repite hasta cumplir el objetivo. <strong>Vibe Coding</strong> es programar en conversación con un agente que entiende tu proyecto entero.<br><br><strong>Copilot:</strong> reactivo, sugiere. <strong>Antigravity:</strong> proactivo, ejecuta cambios multi-archivo. <strong>Lovable/Base44:</strong> generan apps completas desde un prompt.`,
+  {id:5,color:'var(--c5)',name:'Agentes · IA Autónoma',tag:'Coding · Builders · Browser',
+   shortDesc:'Vibe Coding (IDE/CLI), Web Builders (apps desde prompt) y Browser Agents (control del navegador).',
+   concept:`Un <strong>agente</strong> actúa en bucles autónomos: planifica → usa herramientas → observa → repite. Se dividen en tres tipos:<br><br>⌨ <strong>Vibe Coding:</strong> trabajan con tu código. Copilot sugiere inline; Claude Code y Antigravity ejecutan cambios multi-archivo.<br>🏗 <strong>Web Builders:</strong> Lovable, Base44 y Bolt generan apps completas desde un prompt de texto.<br>🌐 <strong>Browser Agents:</strong> controlan el navegador programáticamente. Browser Use con Python; Playwright vía MCP.`,
    concepts:[
      {t:'Copilot vs Antigravity',b:'<strong>Copilot:</strong> sugiere la siguiente línea, tú controlas cada cambio. Reactivo.<br><strong>Antigravity:</strong> le dices el objetivo y él lee el repo, planifica y aplica cambios en múltiples archivos. Proactivo.'},
      {t:'Lovable vs Base44',b:'<strong>Lovable:</strong> orientado a apps web con React/Supabase. Genera UI completa desde descripción.<br><strong>Base44:</strong> plataforma low-code, más orientada a herramientas internas y flujos de negocio.'},
@@ -472,23 +608,408 @@ const LAYERS = [
 ];
 
 /* ═══════════════════════════════════════════
+   SUBTYPES — agent subcategories
+═══════════════════════════════════════════ */
+const SUBTYPES = {
+  // L1 — Modelos
+  anthropic:{layer:1, icon:'⚗️', label:'Anthropic',      desc:'Modelos de la familia Claude'},
+  openai:   {layer:1, icon:'🤖', label:'OpenAI',         desc:'Modelos GPT y Codex de OpenAI'},
+  google:   {layer:1, icon:'✨', label:'Google',         desc:'Modelos Gemini de Google DeepMind'},
+  local:    {layer:1, icon:'🖥️', label:'Local',          desc:'Ejecuta en tu máquina, sin internet'},
+  cloudapi: {layer:1, icon:'⚡', label:'Cloud / API',    desc:'Inferencia cloud con API gratuita'},
+  // L2 — Interfaces
+  webchat:  {layer:2, icon:'💬', label:'Chat Web',        desc:'Interfaz de chat en la nube'},
+  localui:  {layer:2, icon:'🖥️', label:'UI Local',       desc:'Interfaz web desplegada en local'},
+  devcons:  {layer:2, icon:'🔬', label:'Consola Dev',     desc:'API keys, playground y métricas'},
+  // L3 — Memoria
+  cloudrag: {layer:3, icon:'☁️', label:'RAG Cloud',      desc:'Memoria y RAG gestionados en la nube'},
+  localrag: {layer:3, icon:'🗄️', label:'RAG Local',      desc:'Memoria y RAG privados en local'},
+  vectordb: {layer:3, icon:'📊', label:'Base Vectorial',  desc:'Base de datos vectorial embebida'},
+  framework:{layer:3, icon:'🔧', label:'Framework',       desc:'Librería o framework de desarrollo'},
+  // L4 — Herramientas
+  protocol: {layer:4, icon:'🔌', label:'Protocolo',       desc:'Protocolos e integraciones de contexto'},
+  automation:{layer:4,icon:'⚡', label:'Automatización', desc:'Flujos, triggers y automatizaciones'},
+  search:   {layer:4, icon:'🔍', label:'Búsqueda Web',    desc:'Búsqueda e información en tiempo real'},
+  apitools: {layer:4, icon:'🔑', label:'API Tools',       desc:'Herramientas y acceso por API'},
+  // L5 — Agentes
+  coding:   {layer:5, icon:'⌨', label:'Vibe Coding',     desc:'Agentes de código — IDE, CLI y editor'},
+  builder:  {layer:5, icon:'🏗', label:'Web Builders',    desc:'Generan apps web completas desde prompt'},
+  browser:  {layer:5, icon:'🌐', label:'Browser Agents',  desc:'Controlan y automatizan el navegador'},
+  // L6 — Aplicaciones
+  myapp:    {layer:6, icon:'💻', label:'App Propia',       desc:'Desarrollo personal publicado en GitHub'},
+  saastool: {layer:6, icon:'🛠️', label:'SaaS Tool',       desc:'Herramienta SaaS externa'},
+};
+
+function subtypeOptions(selected) {
+  const byLayer = {};
+  Object.entries(SUBTYPES).forEach(([k,v]) => {
+    if (!byLayer[v.layer]) byLayer[v.layer] = [];
+    byLayer[v.layer].push({k, v});
+  });
+  const L = LAYERS.reduce((m,l)=>{m[l.id]=l;return m;},{});
+  return '<option value="">— Sin tipo</option>' +
+    Object.keys(byLayer).sort().map(lid => {
+      const layer = L[lid];
+      const opts = byLayer[lid].map(({k,v}) =>
+        `<option value="${k}"${selected===k?' selected':''}>${v.icon} ${v.label}</option>`
+      ).join('');
+      return `<optgroup label="L${lid} · ${layer?.name.split('·')[0].trim()||'Capa '+lid}">${opts}</optgroup>`;
+    }).join('');
+}
+
+/* ═══════════════════════════════════════════
+   LEARN CONTENT — formative layer guide
+═══════════════════════════════════════════ */
+const LEARN_CONTENT = [
+  {layer:1, subtitle:'Los cimientos',
+   text:`Es el único nivel que genera inteligencia. Todo lo demás es fontanería alrededor. Sin él, nada funciona. Aquí viven <strong>Claude, GPT-4o</strong>, y tu <strong>Llama local en Ollama</strong>. Son "cerebros" sin manos: saben razonar pero no pueden hacer nada por sí solos.`},
+  {layer:2, subtitle:'La ventana',
+   text:`Es simplemente cómo llegas al modelo. <strong>Claude.ai, Open WebUI, el Playground de OpenAI</strong>... son interfaces que envuelven al LLM y lo hacen usable. Sin L1 debajo, no existe. Es la capa más "visible" pero la menos inteligente.`},
+  {layer:3, subtitle:'La biblioteca',
+   text:`El LLM no recuerda nada entre conversaciones y solo conoce lo que aprendió en su entrenamiento. Esta capa le da acceso a tus documentos en tiempo real. <strong>NotebookLM</strong> es L3: subes un PDF, lo trocea, lo vectoriza, y cuando preguntas recupera los fragmentos relevantes antes de responder. Sin L1, no puede responder. Sin L2, no puedes preguntar.`},
+  {layer:4, subtitle:'Las manos',
+   text:`Aquí el modelo deja de solo hablar y empieza a <strong>actuar</strong>: buscar en internet, leer un email, crear un evento, llamar a una API. <strong>MCP</strong> es el protocolo que lo hace posible. <strong>n8n</strong> orquesta esos flujos. Esta capa requiere L1 (para decidir qué herramienta usar) y L2 (para recibir la instrucción).`},
+  {layer:5, subtitle:'El autónomo',
+   text:`Combina todo lo anterior en bucles: el modelo planifica → usa herramientas (L4) → observa el resultado → ajusta → repite. No espera instrucción por instrucción. <strong>Antigravity</strong> hace esto con tu código: recibe un objetivo, lee el repo entero, ejecuta cambios en múltiples archivos. <strong>Copilot</strong> es más simple: sugiere mientras escribes, tú decides.`},
+  {layer:6, subtitle:'Tu negocio',
+   text:`Donde todo el stack se convierte en valor concreto para ti. Tus tres apps Python, la web de <strong>espacioGijón</strong>, el portfolio. Esta capa consume las inferiores según necesite: llama a la API de Claude (L1 vía L4), puede usar RAG (L3), puede lanzar agentes (L5).`},
+];
+
+/* ═══════════════════════════════════════════
+   COMMANDS — reference guide per tool
+═══════════════════════════════════════════ */
+const COMMANDS = {
+  'claude-code':{
+    name:'Claude Code CLI', icon:'🤖', sub:'Agente AI · CLI oficial de Anthropic',
+    sections:[
+      {title:'Comandos slash — dentro de una sesión', items:[
+        {cmd:'/help',            desc:'Ver lista de comandos disponibles. Úsalo al empezar o cuando necesites recordar qué puedes hacer.'},
+        {cmd:'/clear',           desc:'<strong>Limpiar contexto.</strong> Borra el historial de chat pero mantiene los archivos creados en disco. Usar cada ~100 mensajes o al completar una feature.'},
+        {cmd:'/context',         desc:'Ver tokens usados y skills disponibles. Para diagnóstico o verificar cuánto contexto te queda.'},
+        {cmd:'/resume',          desc:'Continuar una conversación anterior. Útil si saliste de Claude Code y quieres volver a donde estabas.'},
+        {cmd:'/login / /logout', desc:'Cambiar cuenta o cerrar sesión. Si trabajas con múltiples cuentas o necesitas cambiar de API key.'},
+        {cmd:'/config',          desc:'Panel interactivo de configuración. Cambia permisos, auto-update, plugins, etc.'},
+        {cmd:'/teleport',        desc:'Mover una sesión entre dispositivos (terminal → web → móvil). Útil al cambiar de plataforma.'},
+        {cmd:'/desktop',         desc:'Enviar sesión terminal a la app desktop de Claude. Para revisar diffs visualmente.'},
+      ]},
+      {title:'Banderas CLI — al invocar desde terminal', items:[
+        {cmd:'claude -p "prompt"',                      desc:'<strong>Modo pipe:</strong> procesar sin modo interactivo. Para scripts y CI/CD.<br>Ej: <code>tail -200 app.log | claude -p "Busca anomalías"</code>'},
+        {cmd:'claude --clear',                          desc:'Iniciar sesión sin contexto previo. Garantiza que no hay historial acumulado.'},
+        {cmd:'claude --add-dir /ruta',                  desc:'Incluir directorios adicionales de contexto (CLAUDE.md, skills). Para proyectos múltiples.'},
+        {cmd:'claude --append-system-prompt "texto"',   desc:'<strong>Recomendado:</strong> añadir instrucciones al system prompt existente sin reemplazarlo.'},
+        {cmd:'claude --model claude-opus-4-6',          desc:'Especificar modelo alternativo. Para optimizar coste o usar modelos específicos.'},
+        {cmd:'claude --system-prompt "texto"',          desc:'Reemplazar completamente el system prompt. <strong>No recomendado</strong> — usar --append-system-prompt mejor.'},
+        {cmd:'claude --agents \'{"name":{...}}\'',      desc:'Crear subagentes especializados que trabajan en paralelo. Para tareas complejas divisibles.'},
+      ]},
+      {title:'Gestión de contexto', items:[
+        {cmd:'/clear regular',          desc:'<strong>El problema:</strong> después de muchas iteraciones Claude Code acumula historial. Úsalo tras completar cada feature o cada ~100 mensajes.'},
+        {cmd:'/context → /clear',       desc:'Flujo cuando el contexto esté cargado: verifica estado → limpia → continúa con sesión fresca.'},
+        {cmd:'claude --clear (al abrir)',desc:'Si quieres empezar una sesión completamente limpia sin historial previo.'},
+      ]},
+      {title:'Mejores prácticas', items:[
+        {cmd:'CLAUDE.md en raíz',       desc:'Archivo que Claude siempre lee al iniciar. Incluye estándares de código, arquitectura, comandos útiles del proyecto y shell preferido.'},
+        {cmd:'Prompts específicos',      desc:'En lugar de "arregla el bug" → "arregla el bug del login donde los usuarios ven pantalla en blanco al introducir credenciales incorrectas".'},
+        {cmd:'@archivo.py',             desc:'Incluir archivo en el contexto. <code>@src/</code> lista la estructura del directorio. <code>@server:slack</code> conecta a un servidor MCP.'},
+        {cmd:'Accept all (sesión)',      desc:'Activa "Accept all" para aprobar todos los cambios de la sesión actual sin confirmar uno a uno.'},
+      ]},
+      {title:'Flujo de trabajo recomendado', items:[
+        {cmd:'1. cd /proyecto && claude',        desc:'Iniciar sesión en el proyecto. Claude cargará automáticamente CLAUDE.md si existe.'},
+        {cmd:'2. "Resumen del proyecto"',        desc:'Primera petición para que Claude entienda el estado actual del código.'},
+        {cmd:'3. "Implementa [feature]"',        desc:'Trabajar en feature/bug. Claude propone cambios, tú los apruebas uno a uno.'},
+        {cmd:'4. /clear al terminar',            desc:'Limpiar al finalizar cada bloque de trabajo. Ahorra tokens en la siguiente sesión.'},
+      ]},
+    ]
+  },
+  'claude-sonnet':{
+    name:'Claude API (Anthropic)', icon:'⚗️', sub:'API REST · SDK Python / TypeScript',
+    sections:[
+      {title:'Inicio rápido — Python SDK', items:[
+        {cmd:'pip install anthropic',                       desc:'Instalar el SDK oficial de Anthropic para Python.'},
+        {cmd:'import anthropic',                            desc:'Importar el cliente en tu script.'},
+        {cmd:'client = anthropic.Anthropic()',              desc:'Crear cliente. Lee ANTHROPIC_API_KEY del entorno automáticamente.'},
+        {cmd:'client.messages.create(...)',                  desc:'Llamada principal. Devuelve un objeto Message con el contenido generado.'},
+      ]},
+      {title:'Parámetros clave de messages.create()', items:[
+        {cmd:'model="claude-sonnet-4-6"',   desc:'Modelo a usar. Opciones: claude-sonnet-4-6, claude-opus-4-6, claude-haiku-4-5.'},
+        {cmd:'max_tokens=1024',             desc:'Máximo de tokens en la respuesta. Ajusta según la longitud esperada.'},
+        {cmd:'messages=[...]',              desc:'Array de mensajes con roles "user" y "assistant". Historial de la conversación.'},
+        {cmd:'system="instrucción"',        desc:'System prompt. Define el comportamiento del modelo para toda la conversación.'},
+        {cmd:'temperature=1',               desc:'Aleatoriedad (0-1). 0 = determinista, 1 = creativo. Por defecto 1.'},
+        {cmd:'stream=True',                 desc:'Activar streaming. Recibe tokens en tiempo real con <code>with client.messages.stream()</code>.'},
+      ]},
+      {title:'Patrones de uso', items:[
+        {cmd:'Conversación simple',         desc:'messages=[{"role":"user","content":"hola"}] → respuesta directa.'},
+        {cmd:'Historial multi-turno',       desc:'Añadir al array messages los turnos anteriores: [user, assistant, user, assistant...].'},
+        {cmd:'Tool use / MCP',              desc:'Definir tools=[] con funciones que el modelo puede llamar. El modelo devuelve tool_use blocks.'},
+        {cmd:'Vision (imágenes)',           desc:'content=[{"type":"image","source":{"type":"base64",...}},{"type":"text","text":"..."}]'},
+      ]},
+      {title:'Gestión de API keys', items:[
+        {cmd:'export ANTHROPIC_API_KEY=sk-...',    desc:'Variable de entorno. Nunca hardcodear en el código.'},
+        {cmd:'python-dotenv + .env',               desc:'<code>from dotenv import load_dotenv</code>. Una key por proyecto para controlar costes.'},
+        {cmd:'Anthropic Console',                  desc:'console.anthropic.com — gestiona keys, ve uso y costes por proyecto.'},
+      ]},
+    ]
+  },
+  'ollama':{
+    name:'Ollama', icon:'🦙', sub:'Servidor LLM local · localhost:11434',
+    sections:[
+      {title:'Comandos principales', items:[
+        {cmd:'ollama run llama3',           desc:'Ejecutar modelo interactivamente en terminal. Primera vez descarga el modelo automáticamente.'},
+        {cmd:'ollama run llama3 "pregunta"',desc:'Ejecutar con prompt directo, sin modo interactivo.'},
+        {cmd:'ollama pull llama3',          desc:'Descargar modelo sin ejecutarlo. Útil para preparar antes de usar.'},
+        {cmd:'ollama list',                 desc:'Ver todos los modelos descargados en tu máquina.'},
+        {cmd:'ollama rm llama3',            desc:'Eliminar un modelo del disco. Libera espacio.'},
+        {cmd:'ollama serve',                desc:'Iniciar el servidor Ollama manualmente (normalmente arranca automático al instalar).'},
+        {cmd:'ollama ps',                   desc:'Ver modelos actualmente cargados en memoria RAM/VRAM.'},
+        {cmd:'ollama show llama3',          desc:'Ver información del modelo: tamaño, parámetros, familia, licencia.'},
+      ]},
+      {title:'API REST — localhost:11434', items:[
+        {cmd:'GET /api/tags',               desc:'Lista todos los modelos disponibles. Compatible con curl o tu app Python.'},
+        {cmd:'POST /api/generate',          desc:'Generar respuesta. Body: <code>{"model":"llama3","prompt":"texto","stream":false}</code>'},
+        {cmd:'POST /api/chat',              desc:'Chat con historial. Formato compatible con OpenAI. Body: <code>{"model":"llama3","messages":[...]}</code>'},
+        {cmd:'POST /api/embeddings',        desc:'Generar embeddings vectoriales. Para RAG con ChromaDB o LlamaIndex.'},
+      ]},
+      {title:'Modelos recomendados', items:[
+        {cmd:'llama3.2:3b',   desc:'Modelo ligero y rápido. Bueno para tareas simples con poca RAM (4 GB).'},
+        {cmd:'llama3.1:8b',   desc:'Balance calidad/velocidad. Requiere ~6 GB RAM. Buen modelo general.'},
+        {cmd:'mistral:7b',    desc:'Muy bueno para código y razonamiento. Similar rendimiento a llama3.1:8b.'},
+        {cmd:'nomic-embed-text',desc:'Modelo de embeddings para RAG. Úsalo con ChromaDB o LlamaIndex.'},
+        {cmd:'codellama:13b', desc:'Especializado en código. Requiere ~10 GB RAM.'},
+      ]},
+      {title:'Integración con Open WebUI', items:[
+        {cmd:'Open WebUI → localhost:3000',  desc:'Interface visual para Ollama. Selecciona modelo desde dropdown. Historial de chats.'},
+        {cmd:'Conexión automática',          desc:'Open WebUI detecta Ollama en localhost:11434 por defecto. Sin configuración adicional.'},
+      ]},
+    ]
+  },
+  'n8n':{
+    name:'n8n self-hosted', icon:'🔁', sub:'Automatización de flujos · localhost:5678',
+    sections:[
+      {title:'Acceso y arranque', items:[
+        {cmd:'localhost:5678',          desc:'URL de acceso a n8n en tu máquina. Asegúrate de que el servicio está activo.'},
+        {cmd:'docker compose up n8n',   desc:'Iniciar n8n con Docker Compose si está configurado así en tu servidor.'},
+        {cmd:'n8n start',               desc:'Iniciar n8n directamente si está instalado con npm globalmente.'},
+      ]},
+      {title:'Nodos de IA más usados', items:[
+        {cmd:'AI Agent',        desc:'Nodo principal para agentes con LLMs. Conecta con Claude, GPT-4 o modelos Ollama. El agente decide qué herramientas usar.'},
+        {cmd:'Anthropic / OpenAI', desc:'Llamadas directas a la API del modelo. Para Claude usa el nodo Anthropic con tu API key.'},
+        {cmd:'HTTP Request',    desc:'Hacer peticiones a cualquier API REST. Combínalo con Claude para workflows personalizados.'},
+        {cmd:'Code (JavaScript)',desc:'Ejecutar código JS en el flujo. Para transformar datos o lógica personalizada compleja.'},
+        {cmd:'Webhook trigger', desc:'Recibir datos externos y disparar el flujo. Para integrar con apps, formularios o eventos.'},
+        {cmd:'Schedule trigger',desc:'Ejecutar el flujo automáticamente a una hora/intervalo. Para tareas periódicas.'},
+      ]},
+      {title:'Patrones comunes', items:[
+        {cmd:'Gmail → Claude → Notion',     desc:'Leer emails, procesar con Claude y guardar resumen en Notion. Flujo básico de resumen automático.'},
+        {cmd:'Webhook → Claude → respuesta',desc:'Chatbot personalizado: recibe mensaje → procesa con Claude → devuelve respuesta.'},
+        {cmd:'Schedule → API → informe',    desc:'Tarea programada: consulta API, analiza con IA, genera informe o notificación automática.'},
+        {cmd:'MCP + n8n',                   desc:'n8n puede orquestar llamadas a servidores MCP para flujos complejos multi-herramienta.'},
+      ]},
+    ]
+  },
+  'mcp':{
+    name:'MCP Protocol', icon:'🔌', sub:'Model Context Protocol · Anthropic',
+    sections:[
+      {title:'¿Qué es MCP?', items:[
+        {cmd:'Estándar Anthropic',  desc:'<strong>MCP (Model Context Protocol)</strong> conecta Claude con aplicaciones externas. Como un "plugin system" universal para LLMs.'},
+        {cmd:'Cliente + Servidor',  desc:'Claude Code / Claude Desktop es el <strong>cliente MCP</strong>. Cada integración (Gmail, Notion...) es un <strong>servidor MCP</strong> independiente.'},
+        {cmd:'vs Function Calling', desc:'<strong>Function Calling:</strong> defines tú las funciones en cada petición API.<br><strong>MCP:</strong> servidores preconstruidos con protocolo estándar. Claude se conecta directamente.'},
+      ]},
+      {title:'Tus servidores MCP activos', items:[
+        {cmd:'Gmail MCP',           desc:'Lee, busca y gestiona emails. "¿Tengo algún email de Anthropic esta semana?" desde la conversación.'},
+        {cmd:'Google Calendar MCP', desc:'Crea y consulta eventos. "Bloquea 2h el jueves para el proyecto X" sin salir de Claude.'},
+        {cmd:'Notion MCP',          desc:'Lee y actualiza páginas Notion. Ideal para actualizar tu sistema de gestión de proyectos.'},
+        {cmd:'Microsoft 365 MCP',   desc:'Acceso a Teams, SharePoint, Outlook. Para contexto del entorno profesional.'},
+      ]},
+      {title:'Configuración en Claude Code', items:[
+        {cmd:'~/.claude/settings.json',     desc:'Archivo donde se registran los servidores MCP. Cada servidor tiene su configuración de conexión.'},
+        {cmd:'/config → MCP Servers',       desc:'Panel en Claude Code para gestionar servidores MCP activos, reiniciarlos o añadir nuevos.'},
+        {cmd:'¿Cómo funciona una tool call?',desc:'1) LLM decide que necesita datos. 2) Genera JSON con herramienta+parámetros. 3) MCP ejecuta la herramienta. 4) Resultado vuelve al LLM. 5) LLM responde con ese contexto.'},
+      ]},
+    ]
+  },
+  'copilot':{
+    name:'GitHub Copilot', icon:'🐙', sub:'Asistente IA inline · VS Code',
+    sections:[
+      {title:'Atajos en VS Code', items:[
+        {cmd:'Tab',             desc:'<strong>Aceptar sugerencia</strong> de Copilot. El atajo más usado. Acepta la sugerencia completa actual.'},
+        {cmd:'Esc',             desc:'Rechazar sugerencia actual.'},
+        {cmd:'Alt + ]',         desc:'Ver siguiente sugerencia alternativa (si hay varias).'},
+        {cmd:'Alt + [',         desc:'Ver sugerencia anterior.'},
+        {cmd:'Ctrl + Enter',    desc:'Abrir panel con todas las sugerencias. Ver múltiples opciones a la vez.'},
+        {cmd:'Ctrl + I',        desc:'Abrir Copilot Chat inline. Puedes preguntar sobre el código seleccionado directamente.'},
+        {cmd:'Ctrl + Shift + I',desc:'Abrir panel de Copilot Chat lateral. Para conversaciones largas o exploración.'},
+      ]},
+      {title:'Comandos de Copilot Chat', items:[
+        {cmd:'/explain',        desc:'Explicar el código seleccionado o el archivo actual.'},
+        {cmd:'/fix',            desc:'Proponer arreglo para un error o problema en el código.'},
+        {cmd:'/tests',          desc:'Generar tests unitarios para el código seleccionado.'},
+        {cmd:'/doc',            desc:'Generar documentación (docstring) para función o clase seleccionada.'},
+        {cmd:'@workspace',      desc:'Dar contexto de todo el proyecto al hacer la pregunta.'},
+        {cmd:'@terminal',       desc:'Dar contexto del terminal (últimos comandos/errores) para diagnosticar problemas.'},
+        {cmd:'#file:nombre.py', desc:'Incluir un archivo específico en el contexto de la pregunta.'},
+      ]},
+      {title:'Mejores prácticas', items:[
+        {cmd:'Comentarios como prompt',     desc:'Escribe un comentario describiendo lo que quieres y Copilot generará el código. Funciona en cualquier lenguaje.'},
+        {cmd:'Nombres descriptivos',        desc:'Funciones y variables con nombres claros mejoran drásticamente la calidad de las sugerencias.'},
+        {cmd:'Copilot + Claude Code',       desc:'<strong>Copilot</strong> para sugerencias inline (reactivo). <strong>Claude Code</strong> para cambios multi-archivo o razonamiento complejo (proactivo).'},
+      ]},
+    ]
+  },
+  'claudeai':{
+    name:'Claude.ai (interfaz)', icon:'💬', sub:'Interfaz web oficial · claude.ai',
+    sections:[
+      {title:'Funciones clave', items:[
+        {cmd:'Projects',        desc:'Agrupa conversaciones. Añade documentos que estarán disponibles en todas las conversaciones del proyecto. RAG ligero sin código.'},
+        {cmd:'Artefactos',      desc:'Código, documentos y visualizaciones en panel lateral separado. Puedes copiar, descargar o iterar.'},
+        {cmd:'Upload archivos', desc:'Sube PDFs, imágenes, CSV, código. Claude los lee y puedes preguntar sobre su contenido.'},
+        {cmd:'Memoria',         desc:'Claude puede recordar preferencias entre conversaciones si activas la memoria en Settings.'},
+        {cmd:'Voz',             desc:'Modo conversación de voz disponible en la app móvil. Habla con Claude sin escribir.'},
+      ]},
+      {title:'Atajos de teclado', items:[
+        {cmd:'Ctrl + Enter',    desc:'Enviar mensaje (alternativa al botón).'},
+        {cmd:'Shift + Enter',   desc:'Nueva línea dentro del mensaje sin enviarlo.'},
+        {cmd:'↑ flecha arriba', desc:'Editar el último mensaje enviado.'},
+        {cmd:'Ctrl + K',        desc:'Abrir búsqueda de conversaciones (en sidebar).'},
+      ]},
+      {title:'Tips de uso avanzado', items:[
+        {cmd:'System prompt en Projects',   desc:'Cada Project puede tener instrucciones persistentes. Ideal para definir rol, contexto y preferencias por proyecto.'},
+        {cmd:'Mencionar documentos',        desc:'En la conversación puedes mencionar documentos del proyecto con @ para que Claude los incluya en el contexto.'},
+        {cmd:'Exportar conversación',       desc:'Menú (···) → Exportar. Guarda la conversación como markdown o texto plano.'},
+        {cmd:'Compartir artefactos',        desc:'Los artefactos generados se pueden publicar con un link público para compartir con otros.'},
+      ]},
+    ]
+  },
+};
+
+/* ═══════════════════════════════════════════
    HELPERS
 ═══════════════════════════════════════════ */
-const STATUS_LABELS = {paid:'💳 Pago',api:'🔑 API',plus:'🌐 Plus',free:'🆓 Gratis',trial:'🧪 Prueba',inactive:'⬜ Sin activar'};
-const STATUS_BD = {paid:'bd-paid',api:'bd-api',plus:'bd-plus',free:'bd-free',trial:'bd-trial',inactive:'bd-inactive'};
-const STATUS_CARD = {paid:'paid',api:'paid',plus:'plus',free:'free',trial:'plus',inactive:'inactive'};
+const STATUS_LABELS = {paid:'💳 Suscripción',api:'🔑 API',free:'🆓 Gratis',trial:'🧪 Prueba',inactive:'⬜ Sin activar'};
+const STATUS_BD = {paid:'bd-paid',api:'bd-api',free:'bd-free',trial:'bd-trial',inactive:'bd-inactive'};
+const STATUS_CARD = {paid:'paid',api:'api',free:'free',trial:'trial',inactive:'inactive'};
 
 function badge(status) {
   return `<span class="si-badge ${STATUS_BD[status]||'bd-free'}">${STATUS_LABELS[status]||'🆓'}</span>`;
 }
 function tcBadge(status) {
-  const styles={paid:'background:#fef3c7;color:#92400e;border:1px solid #fbbf24',api:'background:#ede9fe;color:#5b21b6;border:1px solid #a78bfa',plus:'background:#dbeafe;color:#1e40af;border:1px solid #93c5fd',free:'background:#f3f4f6;color:#6b7280;border:1px solid #d1d5db',inactive:'background:#f9fafb;color:#9ca3af;border:1px solid #e5e7eb',trial:'background:#fff7ed;color:#9a3412;border:1px solid #fdba74'};
+  const styles={paid:'background:#fef3c7;color:#92400e;border:1px solid #fbbf24',api:'background:#ede9fe;color:#5b21b6;border:1px solid #a78bfa',free:'background:#f3f4f6;color:#6b7280;border:1px solid #d1d5db',inactive:'background:#f9fafb;color:#9ca3af;border:1px solid #e5e7eb',trial:'background:#fff7ed;color:#9a3412;border:1px solid #fdba74'};
   return `<span class="tc-badge" style="${styles[status]||styles.free}">${STATUS_LABELS[status]||'🆓'}</span>`;
 }
 function cardClass(status){ return STATUS_CARD[status]||'free'; }
 function layerTools(lid){ return TOOLS.filter(t=>t.layer===lid); }
 function selectOpts(cur){
   return Object.entries(STATUS_LABELS).map(([v,l])=>`<option value="${v}"${cur===v?' selected':''}>${l}</option>`).join('');
+}
+
+/* ═══════════════════════════════════════════
+   FAVORITES — star system
+═══════════════════════════════════════════ */
+const FAVORITES = new Set();
+const COLLAPSED_STYPES = new Set();
+const COLLAPSED_SB = new Set();
+
+function toggleStype(stype, event) {
+  event.stopPropagation();
+  if (COLLAPSED_STYPES.has(stype)) COLLAPSED_STYPES.delete(stype);
+  else COLLAPSED_STYPES.add(stype);
+  const collapsed = COLLAPSED_STYPES.has(stype);
+  const body = document.getElementById('stype-body-'+stype);
+  const hdr  = document.getElementById('stype-hdr-'+stype);
+  if (body) body.classList.toggle('hidden', collapsed);
+  if (hdr)  hdr.classList.toggle('collapsed', collapsed);
+}
+
+function starBtn(id) {
+  const fav = FAVORITES.has(id);
+  return `<button class="star-btn${fav?' fav':''}" data-id="${id}" onclick="toggleFav('${id}',event)" title="${fav?'Quitar de favoritos':'Marcar como favorito'}">${fav?'★':'☆'}</button>`;
+}
+
+function toggleSbGroup(uid, event) {
+  event.stopPropagation();
+  if (COLLAPSED_SB.has(uid)) COLLAPSED_SB.delete(uid);
+  else COLLAPSED_SB.add(uid);
+  const c = COLLAPSED_SB.has(uid);
+  document.getElementById('sbg-body-'+uid)?.classList.toggle('hidden', c);
+  document.getElementById('sbg-hdr-'+uid)?.classList.toggle('collapsed', c);
+}
+
+function buildSbGroups(groups) {
+  return groups.map(g => {
+    const c = COLLAPSED_SB.has(g.uid);
+    return `<div class="stype-hdr${c?' collapsed':''}" id="sbg-hdr-${g.uid}" style="--lc:${g.color};margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('${g.uid}',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">${g.icon}</span>
+      <span class="stype-label">${g.label}</span>
+      <span class="stype-count">${g.n} herramienta${g.n!==1?'s':''}</span>
+    </div>
+    <div class="stype-body${c?' hidden':''}" id="sbg-body-${g.uid}">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px">${g.items.join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderSiTool(t) {
+  return `<div class="si ${cardClass(t.status)}" style="cursor:pointer" onclick="openToolModal('${t.id}')">
+    <div class="si-info">
+      <div class="si-name">${t.name}</div>
+      <div class="si-sub">${t.desc.length>48?t.desc.substring(0,48)+'…':t.desc}</div>
+    </div>
+    ${starBtn(t.id)}${badge(t.status)}
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════
+   TOPBAR SEARCH
+═══════════════════════════════════════════ */
+function handleSearch(q) {
+  const dd = document.getElementById('search-dropdown');
+  q = q.trim().toLowerCase();
+  if (!q) { dd.classList.remove('open'); dd.innerHTML=''; return; }
+  const results = TOOLS.filter(t =>
+    t.name.toLowerCase().includes(q) ||
+    t.desc.toLowerCase().includes(q) ||
+    (t.notes||'').toLowerCase().includes(q)
+  ).slice(0, 8);
+  if (!results.length) {
+    dd.innerHTML = '<div class="search-empty">Sin resultados</div>';
+  } else {
+    dd.innerHTML = results.map(t => {
+      const L = LAYERS.find(l=>l.id===t.layer);
+      const lc = L?.color||'var(--c1)';
+      return `<div class="search-item" onclick="pickSearch('${t.id}')">
+        <span class="search-item-layer" style="color:${lc};background:color-mix(in srgb,${lc} 12%,transparent)">L${t.layer}</span>
+        <span class="search-item-name">${t.name}</span>
+        <span class="search-item-desc">${t.desc}</span>
+      </div>`;
+    }).join('');
+  }
+  dd.classList.add('open');
+}
+function pickSearch(id) {
+  closeSearch();
+  openToolModal(id);
+}
+function closeSearch() {
+  const input = document.getElementById('topbar-search-input');
+  const dd = document.getElementById('search-dropdown');
+  if (input) input.value = '';
+  dd.classList.remove('open');
+  dd.innerHTML = '';
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.topbar-search')) closeSearch();
+});
+
+function toggleFav(id, event) {
+  event.stopPropagation();
+  if (FAVORITES.has(id)) FAVORITES.delete(id); else FAVORITES.add(id);
+  const fav = FAVORITES.has(id);
+  document.querySelectorAll(`.star-btn[data-id="${id}"]`).forEach(btn => {
+    btn.classList.toggle('fav', fav);
+    btn.textContent = fav ? '★' : '☆';
+    btn.title = fav ? 'Quitar de favoritos' : 'Marcar como favorito';
+  });
+  saveState();
 }
 
 /* ═══════════════════════════════════════════
@@ -502,7 +1023,9 @@ function buildNav() {
   if (!el) return;
   const items = [
     ...LAYERS.map((L,i)=>({key:'layer-'+i,label:`${String(i+1).padStart(2,'0')} ${L.name.split('·')[0].trim()}`,color:L.color,action:`openLayer(${i})`})),
-    {key:'summary',label:'Resumen',color:'var(--c6)',action:`showView('summary')`}
+    {key:'summary',  label:'Resumen',   color:'var(--c6)', action:`showView('summary')`},
+    {key:'learn',    label:'Aprender',  color:'var(--c3)', action:`showView('learn')`},
+    {key:'commands', label:'Comandos',  color:'var(--c2)', action:`showView('commands')`},
   ];
   el.innerHTML = items.map((it,i)=>{
     const isAct = (currentPage==='layer' && it.key==='layer-'+currentLayer) || (currentPage===it.key);
@@ -520,6 +1043,8 @@ function showView(name) {
   document.getElementById('view-'+name).classList.add('active');
   buildNav();
   if (name==='summary') buildSummary();
+  else if (name==='learn') buildLearn();
+  else if (name==='commands') buildCommands();
 }
 function goHome() {
   currentPage = 'home';
@@ -544,7 +1069,7 @@ const HOME_PILLS = [
   ['Claude.ai','Open WebUI','Anthropic Console','OpenAI Platform'],
   ['NotebookLM','Claude Projects','Open WebUI RAG','ChromaDB'],
   ['MCP Protocol','n8n local','Web Search','Codex API'],
-  ['GitHub Copilot','Antigravity','Lovable','Base44'],
+  ['GitHub Copilot (coding)','Lovable (builder)','Bolt.new (builder)','Browser Use (browser)'],
   ['app_gastos','app_job_tracker','app_apartamentos','Gamma'],
 ];
 
@@ -557,7 +1082,6 @@ function buildHome() {
       const st = t?t.status:'free';
       let cls='pill';
       if(st==='paid'||st==='api') cls+=' mine st-paid';
-      else if(st==='plus') cls+=' mine st-plus';
       else if(st==='inactive') cls+=' st-inactive';
       else cls+=' mine';
       return `<span class="${cls}">${p}</span>`;
@@ -584,63 +1108,100 @@ function buildHome() {
    SIDEBAR
 ═══════════════════════════════════════════ */
 function buildSidebar() {
-  // ACCESOS
+  // ── ACCESOS — grouped by layer ──────────────────────────
   const links=[
-    {icon:'⚗️',name:'Claude.ai',url:'https://claude.ai',tid:'claudeai'},
-    {icon:'🖥️',name:'Open WebUI',url:'http://localhost:3000',tid:'openwebui'},
-    {icon:'🦙',name:'Ollama API',url:'http://localhost:11434',tid:'ollama'},
-    {icon:'📓',name:'NotebookLM',url:'https://notebooklm.google.com',tid:'notebooklm'},
-    {icon:'🔬',name:'Anthropic Console',url:'https://console.anthropic.com',tid:'console-ant'},
-    {icon:'🧪',name:'OpenAI Platform',url:'https://platform.openai.com',tid:'oai-platform'},
-    {icon:'✨',name:'Google AI Studio',url:'https://aistudio.google.com',tid:'gai-studio'},
-    {icon:'🎯',name:'Gamma',url:'https://gamma.app',tid:'gamma'},
-    {icon:'🔁',name:'n8n local',url:'http://localhost:5678',tid:'n8n'},
-    {icon:'🐙',name:'GitHub joseavelsan',url:'https://github.com/joseavelsan',tid:''},
+    {icon:'⚗️',name:'Claude.ai',         url:'https://claude.ai',              tid:'claudeai'},
+    {icon:'💬',name:'ChatGPT',            url:'https://chatgpt.com',            tid:'chatgpt'},
+    {icon:'🖥️',name:'Open WebUI',         url:'http://localhost:3000',          tid:'openwebui'},
+    {icon:'🦙',name:'Ollama API',         url:'http://localhost:11434',         tid:'ollama'},
+    {icon:'📓',name:'NotebookLM',         url:'https://notebooklm.google.com',  tid:'notebooklm'},
+    {icon:'🔬',name:'Anthropic Console',  url:'https://console.anthropic.com',  tid:'console-ant'},
+    {icon:'🧪',name:'OpenAI Platform',    url:'https://platform.openai.com',    tid:'oai-platform'},
+    {icon:'✨',name:'Google AI Studio',   url:'https://aistudio.google.com',    tid:'gai-studio'},
+    {icon:'🔁',name:'n8n local',          url:'http://localhost:5678',          tid:'n8n'},
+    {icon:'🎯',name:'Gamma',              url:'https://gamma.app',              tid:'gamma'},
+    {icon:'🐙',name:'GitHub joseavelsan', url:'https://github.com/joseavelsan', tid:''},
   ];
-  document.getElementById('sb-links').innerHTML=`<div class="slist">${links.map(l=>{
-    const t=TOOLS.find(x=>x.id===l.tid);
-    const st=t?t.status:'free';
-    return `<a class="si ${cardClass(st)}" href="${l.url}" target="_blank">
+  const linksByLayer = {};
+  links.forEach(l => {
+    const t = TOOLS.find(x=>x.id===l.tid);
+    const lid = t ? t.layer : 0;
+    if (!linksByLayer[lid]) linksByLayer[lid] = [];
+    linksByLayer[lid].push({...l, toolStatus: t ? t.status : 'free'});
+  });
+  const layerLinkGroups = Object.keys(linksByLayer).sort((a,b)=>a-b).map(lid => {
+    const L = LAYERS.find(l=>l.id===+lid);
+    const color = L ? L.color : 'var(--muted)';
+    const label = L ? `L${lid} · ${L.name.split('·')[0].trim()}` : 'Otros';
+    const items = linksByLayer[lid].map(l => `<a class="si ${cardClass(l.toolStatus)}" href="${l.url}" target="_blank">
       <div class="si-icon">${l.icon}</div>
       <div class="si-info"><div class="si-name">${l.name}</div><div class="si-sub">${l.url.replace(/https?:\/\//,'')}</div></div>
-      ${badge(st)}
-    </a>`;
-  }).join('')}</div>`;
+      ${badge(l.toolStatus)}
+    </a>`);
+    return {uid:`links-L${lid}`, icon: L?`<span style="font-size:.6rem;font-weight:800;color:${color}">L${lid}</span>`:'🔗', label, color, n:items.length, items};
+  });
+  document.getElementById('sb-links').innerHTML=`<div style="padding:8px 8px 0">${buildSbGroups(layerLinkGroups)}<div style="height:12px"></div></div>`;
 
-  // TOOLS
-  const toolRows = TOOLS.filter(t=>t.layer<=5).map(t=>`
-    <div class="si ${cardClass(t.status)}">
-      <div class="si-info">
-        <div class="si-name">${t.name}</div>
-        <div class="si-sub">L${t.layer} · ${t.desc.substring(0,40)}…</div>
-      </div>
-      ${badge(t.status)}
-    </div>`).join('');
-  document.getElementById('sb-tools').innerHTML=`<div class="slist">${toolRows}</div>`;
+  // ── TOOLS (L1–L5) — grouped by subtype ──────────────────
+  const toolsL15 = TOOLS.filter(t=>t.layer<=5);
+  const toolsBySubtype = {};
+  const toolsUngrouped = [];
+  toolsL15.forEach(t => {
+    if (t.subtype) { if (!toolsBySubtype[t.subtype]) toolsBySubtype[t.subtype]=[]; toolsBySubtype[t.subtype].push(t); }
+    else toolsUngrouped.push(t);
+  });
+  const toolGroups = Object.entries(SUBTYPES)
+    .filter(([k]) => toolsBySubtype[k])
+    .map(([k,v]) => {
+      const lc = LAYERS.find(l=>l.id===v.layer)?.color||'var(--c1)';
+      return {uid:'tools-'+k, icon:v.icon, label:`L${v.layer} · ${v.label}`, color:lc, n:toolsBySubtype[k].length,
+        items: toolsBySubtype[k].map(t=>renderSiTool(t))};
+    });
+  const toolUngroupedHtml = toolsUngrouped.length ? `<div class="slist">${toolsUngrouped.map(t=>renderSiTool(t)).join('')}</div>` : '';
+  document.getElementById('sb-tools').innerHTML=`<div style="padding:8px 8px 0">${buildSbGroups(toolGroups)}${toolUngroupedHtml}<div style="height:12px"></div></div>`;
 
-  // MODELS
-  const modelRows = TOOLS.filter(t=>t.layer===1).map(t=>`
-    <div class="si ${cardClass(t.status)}">
-      <div class="si-info"><div class="si-name">${t.name}</div><div class="si-sub">${t.desc}</div></div>
-      ${badge(t.status)}
-    </div>`).join('');
-  document.getElementById('sb-models').innerHTML=`<div class="slist">${modelRows}</div>`;
+  // ── MODELS (L1) — grouped by subtype ────────────────────
+  const models = TOOLS.filter(t=>t.layer===1);
+  const modelsBySubtype = {};
+  const modelsUngrouped = [];
+  models.forEach(t => {
+    if (t.subtype) { if (!modelsBySubtype[t.subtype]) modelsBySubtype[t.subtype]=[]; modelsBySubtype[t.subtype].push(t); }
+    else modelsUngrouped.push(t);
+  });
+  const modelGroups = Object.entries(SUBTYPES)
+    .filter(([k]) => modelsBySubtype[k])
+    .map(([k,v]) => ({uid:'models-'+k, icon:v.icon, label:v.label, color:'var(--c1)', n:modelsBySubtype[k].length,
+      items: modelsBySubtype[k].map(t=>`<div class="si ${cardClass(t.status)}" style="cursor:pointer" onclick="openToolModal('${t.id}')">
+        <div class="si-info"><div class="si-name">${t.name}</div><div class="si-sub">${t.desc.length>48?t.desc.substring(0,48)+'…':t.desc}</div></div>
+        ${starBtn(t.id)}${badge(t.status)}
+      </div>`)
+    }));
+  const modelUngroupedHtml = modelsUngrouped.length ? `<div class="slist">${modelsUngrouped.map(t=>renderSiTool(t)).join('')}</div>` : '';
+  document.getElementById('sb-models').innerHTML=`<div style="padding:8px 8px 0">${buildSbGroups(modelGroups)}${modelUngroupedHtml}<div style="height:12px"></div></div>`;
 
-  // APPS — active ones highlighted
-  const appTools = TOOLS.filter(t=>t.layer===6);
-  const appRows = appTools.map(t=>{
-    const isActive = t.status !== 'inactive';
-    return `
-    <div class="si ${isActive ? 'app-active' : 'inactive'}">
-      ${isActive ? '<div class="app-active-dot"></div>' : '<div style="width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0"></div>'}
-      <div class="si-info">
-        <div class="si-name">${t.name}</div>
-        <div class="si-sub">${t.desc}</div>
-      </div>
-      ${t.url&&t.url!=='#'?`<a href="${t.url}" target="_blank" style="font-size:.62rem;color:var(--c5);font-weight:700;flex-shrink:0">↗</a>`:'<span style="font-size:.55rem;color:var(--dim)">local</span>'}
-    </div>`;
-  }).join('');
-  document.getElementById('sb-apps').innerHTML=`<div class="slist">${appRows}</div>`;
+  // ── APPS (L6) — grouped by subtype ──────────────────────
+  const apps = TOOLS.filter(t=>t.layer===6);
+  const appsBySubtype = {};
+  const appsUngrouped = [];
+  apps.forEach(t => {
+    if (t.subtype) { if (!appsBySubtype[t.subtype]) appsBySubtype[t.subtype]=[]; appsBySubtype[t.subtype].push(t); }
+    else appsUngrouped.push(t);
+  });
+  const appGroups = Object.entries(SUBTYPES)
+    .filter(([k]) => appsBySubtype[k])
+    .map(([k,v]) => {
+      const items = appsBySubtype[k].map(t => {
+        const isActive = t.status !== 'inactive';
+        return `<div class="si ${isActive?'app-active':'inactive'}" style="cursor:pointer" onclick="openToolModal('${t.id}')">
+          ${isActive?'<div class="app-active-dot"></div>':'<div style="width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0"></div>'}
+          <div class="si-info"><div class="si-name">${t.name}</div><div class="si-sub">${t.desc.length>48?t.desc.substring(0,48)+'…':t.desc}</div></div>
+          ${t.url&&t.url!=='#'?`<a href="${t.url}" target="_blank" style="font-size:.62rem;color:var(--c5);font-weight:700;flex-shrink:0" onclick="event.stopPropagation()">↗</a>`:'<span style="font-size:.55rem;color:var(--dim)">local</span>'}
+        </div>`;
+      });
+      return {uid:'apps-'+k, icon:v.icon, label:v.label, color:'var(--c6)', n:items.length, items};
+    });
+  const appUngroupedHtml = appsUngrouped.length ? `<div class="slist">${appsUngrouped.map(t=>renderSiTool(t)).join('')}</div>` : '';
+  document.getElementById('sb-apps').innerHTML=`<div style="padding:8px 8px 0">${buildSbGroups(appGroups)}${appUngroupedHtml}<div style="height:12px"></div></div>`;
 }
 
 function showTab(id, el) {
@@ -653,25 +1214,57 @@ function showTab(id, el) {
 /* ═══════════════════════════════════════════
    LAYER DETAIL
 ═══════════════════════════════════════════ */
+function renderTcard(t, L) {
+  const st = t.status;
+  return `<div class="tcard ${cardClass(st)}" style="--lc:${L.color};cursor:pointer" onclick="openToolModal('${t.id}')">
+    <div class="tc-top">
+      <span class="tc-name">${t.name}</span>
+      ${starBtn(t.id)}
+      <div class="tc-bds">
+        <span class="tc-badge" style="color:${L.color};background:color-mix(in srgb,${L.color} 10%,transparent);border:1px solid color-mix(in srgb,${L.color} 25%,transparent)">${t.id.toUpperCase().substring(0,8)}</span>
+        ${tcBadge(st)}
+      </div>
+    </div>
+    <div class="tc-desc">${t.desc}</div>
+    ${t.url&&t.url!=='#'?`<a class="tc-link" href="${t.url}" target="_blank" style="color:${L.color}" onclick="event.stopPropagation()">Abrir →</a>`:''}
+  </div>`;
+}
+
+function buildToolsSection(tools, L) {
+  const hasSubtypes = tools.some(t => t.subtype);
+  if (!hasSubtypes) return tools.map(t => renderTcard(t, L)).join('');
+
+  // Group tools preserving SUBTYPES order, then any unknown subtypes, then ungrouped
+  const grouped = {};
+  const ungrouped = [];
+  tools.forEach(t => {
+    if (t.subtype) { if (!grouped[t.subtype]) grouped[t.subtype]=[]; grouped[t.subtype].push(t); }
+    else ungrouped.push(t);
+  });
+  const order = [...Object.keys(SUBTYPES), ...Object.keys(grouped).filter(k=>!SUBTYPES[k])];
+  return order.filter(k => grouped[k]?.length).map(stype => {
+    const st = SUBTYPES[stype] || {icon:'·', label:stype, desc:''};
+    const n = grouped[stype].length;
+    const collapsed = COLLAPSED_STYPES.has(stype);
+    return `<div class="stype-hdr${collapsed?' collapsed':''}" id="stype-hdr-${stype}" style="--lc:${L.color}" onclick="toggleStype('${stype}',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">${st.icon}</span>
+      <span class="stype-label">${st.label}</span>
+      <span class="stype-desc">${st.desc}</span>
+      <span class="stype-count">${n} herramienta${n!==1?'s':''}</span>
+    </div>
+    <div class="stype-body${collapsed?' hidden':''}" id="stype-body-${stype}">
+      ${grouped[stype].map(t => renderTcard(t, L)).join('')}
+    </div>`;
+  }).join('') + ungrouped.map(t => renderTcard(t, L)).join('');
+}
+
 function renderLayer(idx) {
   const L = LAYERS[idx];
   const tools = layerTools(L.id);
 
   // LEFT
-  const tcards = tools.map(t=>{
-    const st=t.status;
-    return `<div class="tcard ${cardClass(st)}" style="--lc:${L.color}">
-      <div class="tc-top">
-        <span class="tc-name">${t.name}</span>
-        <div class="tc-bds">
-          <span class="tc-badge" style="color:${L.color};background:color-mix(in srgb,${L.color} 10%,transparent);border:1px solid color-mix(in srgb,${L.color} 25%,transparent)">${t.id.toUpperCase().substring(0,8)}</span>
-          ${tcBadge(st)}
-        </div>
-      </div>
-      <div class="tc-desc">${t.desc}</div>
-      ${t.url&&t.url!=='#'?`<a class="tc-link" href="${t.url}" target="_blank" style="color:${L.color}">Abrir →</a>`:''}
-    </div>`;
-  }).join('');
+  const tcards = buildToolsSection(tools, L);
 
   document.getElementById('det-l').innerHTML=`
     <div class="det-num" style="color:color-mix(in srgb,${L.color} 20%,transparent)">L${L.id}</div>
@@ -705,6 +1298,107 @@ function renderLayer(idx) {
 }
 
 /* ═══════════════════════════════════════════
+   LEARN PAGE — formative guide
+═══════════════════════════════════════════ */
+function buildLearn() {
+  const el = document.getElementById('learn-body');
+  const layers = LEARN_CONTENT.map(item => {
+    const L = LAYERS[item.layer - 1];
+    return `
+      <div class="learn-layer" style="--lc:${L.color}">
+        <div class="learn-lhdr">
+          <div class="learn-lnum">L${item.layer}</div>
+          <div>
+            <div class="learn-lname">${L.name}</div>
+            <div class="learn-lsub">${L.tag}</div>
+          </div>
+          <span class="learn-ltag">${item.subtitle}</span>
+        </div>
+        <div class="learn-text">${item.text}</div>
+      </div>`;
+  }).join('');
+
+  el.innerHTML = `<div class="learn-inner">
+    <div class="sect-title" style="margin-bottom:18px">Guía formativa · El stack de abajo a arriba</div>
+    <div class="learn-intro">El diagrama va <strong>de abajo a arriba</strong> — como los pisos de un edificio: los cimientos sostienen todo lo demás. Cada capa depende de las que tiene debajo, pero no necesita las de arriba. <strong>L1 funciona sola. L6 necesita a todas.</strong></div>
+    ${layers}
+    <div class="learn-gold">
+      <h3>⚡ La regla de oro</h3>
+      <p>Cada capa depende de las que tiene debajo, pero <strong>no necesita las de arriba</strong>. <strong>L1</strong> funciona sola — es el único nivel que genera inteligencia. <strong>L6</strong> necesita a todas — es donde el stack se convierte en valor real. Puedes usar solo L1+L2 para el 80% de los casos de uso diarios.</p>
+    </div>
+    <div style="height:28px"></div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════
+   COMMANDS PAGE — reference guide per tool
+═══════════════════════════════════════════ */
+let currentCmdTool = null;
+
+function buildCommands() {
+  const el = document.getElementById('cmd-body');
+  const listItems = Object.keys(COMMANDS).map(id => {
+    const c = COMMANDS[id];
+    const t = TOOLS.find(x => x.id === id);
+    const st = t ? t.status : 'free';
+    return `<div class="cmd-item${currentCmdTool===id?' act':''}" data-cmd-id="${id}" onclick="openCmdDetail('${id}')">
+      <div class="cmd-item-icon">${c.icon}</div>
+      <div class="cmd-item-info">
+        <div class="cmd-item-name">${c.name}</div>
+        <div class="cmd-item-sub">${c.sub}</div>
+      </div>
+      <span class="cmd-item-badge">CMD</span>
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="cmd-list-col">
+      <div class="cmd-list-hdr">Referencia de comandos</div>
+      ${listItems}
+    </div>
+    <div class="cmd-detail-col" id="cmd-detail">
+      <div class="cmd-empty">
+        <div class="cmd-empty-icon">📋</div>
+        <div>Selecciona una herramienta<br>para ver sus comandos</div>
+      </div>
+    </div>`;
+
+  if (currentCmdTool) openCmdDetail(currentCmdTool);
+}
+
+function openCmdDetail(id) {
+  currentCmdTool = id;
+  const c = COMMANDS[id];
+  if (!c) return;
+
+  document.querySelectorAll('.cmd-item').forEach(el => el.classList.remove('act'));
+  document.querySelector(`.cmd-item[data-cmd-id="${id}"]`)?.classList.add('act');
+
+  const sections = c.sections.map(sec => {
+    const items = sec.items.map(item =>
+      `<div class="cmd-entry">
+        <span class="cmd-cmd">${item.cmd}</span>
+        <div class="cmd-desc">${item.desc}</div>
+      </div>`).join('');
+    return `<div class="cmd-section">
+      <div class="cmd-section-title">${sec.title}</div>
+      ${items}
+    </div>`;
+  }).join('');
+
+  const det = document.getElementById('cmd-detail');
+  if (!det) return;
+  det.innerHTML = `
+    <div class="cmd-ref-hdr">
+      <div class="cmd-ref-icon">${c.icon}</div>
+      <div class="cmd-ref-title">${c.name}</div>
+      <div class="cmd-ref-sub">${c.sub}</div>
+    </div>
+    ${sections}
+    <div style="height:24px"></div>`;
+}
+
+/* ═══════════════════════════════════════════
    SUMMARY — full editable panel
 ═══════════════════════════════════════════ */
 function buildSummary() {
@@ -714,7 +1408,9 @@ function buildSummary() {
       <div class="stool ${cardClass(t.status)}" id="stool-${t.id}" style="--lc:${L.color}">
         <div class="stool-dot"></div>
         <span class="stool-name">${t.name}</span>
+        ${starBtn(t.id)}
         <select class="stool-sel" onchange="updateStatus('${t.id}',this.value)">${selectOpts(t.status)}</select>
+        <button class="stool-edit" onclick="openToolModal('${t.id}')" title="Editar">✏</button>
         <button class="stool-del" onclick="deleteTool('${t.id}')" title="Eliminar">✕</button>
       </div>`).join('');
     return `
@@ -736,8 +1432,8 @@ function buildSummary() {
         <div class="sum-hint">✏️ Los cambios se aplican en tiempo real al guardar</div>
       </div>
       <div class="legend">
-        <span class="leg-item"><span class="si-badge bd-paid">💳 Pago</span> Suscripción activa</span>
-        <span class="leg-item"><span class="si-badge bd-plus">🌐 Plus</span> Web sin API</span>
+        <span class="leg-item"><span class="si-badge bd-paid">💳 Suscripción</span> Pago mensual</span>
+        <span class="leg-item"><span class="si-badge bd-api">🔑 API</span> Acceso vía API key</span>
         <span class="leg-item"><span class="si-badge bd-free">🆓 Gratis</span> Sin coste</span>
         <span class="leg-item"><span class="si-badge bd-inactive">⬜ Sin activar</span> Disponible</span>
       </div>
@@ -752,17 +1448,29 @@ function buildSummary() {
         <input class="form-input" id="new-desc" placeholder="Descripción corta">
         <input class="form-input" id="new-url" placeholder="URL (https://…)">
       </div>
-      <div class="form-row" style="grid-template-columns:120px 120px 1fr auto">
+      <div class="form-row" style="grid-template-columns:120px 120px 160px 1fr auto">
         <select class="form-select" id="new-layer">
           ${LAYERS.map(L=>`<option value="${L.id}">L${L.id} · ${L.name.split('·')[0].trim()}</option>`).join('')}
         </select>
         <select class="form-select" id="new-status">${selectOpts('free')}</select>
+        <select class="form-select" id="new-subtype">
+          ${subtypeOptions('')}
+        </select>
         <div></div>
         <button class="add-btn" onclick="addTool()">Añadir herramienta</button>
       </div>
     </div>
 
-    <button class="apply-btn" onclick="applyAll()">✓ Guardar y aplicar todos los cambios</button>
+    <button class="apply-btn" onclick="applyAll()">✓ Aplicar cambios de vista</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:0 2px">
+      <span style="font-size:.57rem;color:var(--c5);display:flex;align-items:center;gap:4px">💾 Los cambios se guardan automáticamente en este navegador</span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onclick="exportData()" style="font-size:.55rem;color:var(--c2);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font-m)">↓ Exportar</button>
+        <button onclick="importData()" style="font-size:.55rem;color:var(--c2);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font-m)">↑ Importar</button>
+        <button onclick="resetState()" style="font-size:.55rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font-m)">Restablecer valores</button>
+      </div>
+    </div>
+    <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="handleImportFile(event)">
     <div style="height:24px"></div>`;
 
   buildNav();
@@ -775,18 +1483,20 @@ function updateStatus(id, val) {
   const t = TOOLS.find(x=>x.id===id);
   if (!t) return;
   t.status = val;
-  // update the card visually immediately
   const el = document.getElementById('stool-'+id);
   if (el) {
     el.className = `stool ${cardClass(val)}`;
     el.style.setProperty('--lc', LAYERS.find(L=>L.id===t.layer)?.color||'var(--c1)');
   }
+  saveState();
 }
 
 function deleteTool(id) {
   if (!confirm('¿Eliminar esta herramienta?')) return;
   TOOLS = TOOLS.filter(t=>t.id!==id);
   buildSummary();
+  buildHome();
+  saveState();
 }
 
 function addTool() {
@@ -795,13 +1505,113 @@ function addTool() {
   const url  = document.getElementById('new-url').value.trim()||'#';
   const layer = parseInt(document.getElementById('new-layer').value);
   const status = document.getElementById('new-status').value;
+  const subtype = document.getElementById('new-subtype').value || undefined;
   if (!name) { alert('El nombre es obligatorio'); return; }
   const id = name.toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-');
-  TOOLS.push({id, name, layer, status, url, desc: desc||'Sin descripción.'});
+  TOOLS.push({id, name, layer, status, url, desc: desc||'Sin descripción.', notes:'', subtype});
   buildSummary();
+  buildHome();
+  if (currentPage==='layer') renderLayer(currentLayer);
+  saveState();
   document.getElementById('new-name').value='';
   document.getElementById('new-desc').value='';
   document.getElementById('new-url').value='';
+}
+
+/* ═══════════════════════════════════════════
+   TOOL DETAIL MODAL
+═══════════════════════════════════════════ */
+let currentModalId = null;
+
+function openToolModal(id) {
+  const t = TOOLS.find(x=>x.id===id);
+  if (!t) return;
+  currentModalId = id;
+  const isFav = FAVORITES.has(id);
+
+  const star = document.getElementById('tm-star');
+  star.className = `star-btn${isFav?' fav':''}`;
+  star.setAttribute('data-id', id);
+  star.textContent = isFav ? '★' : '☆';
+
+  // Populate layer select
+  const layerSel = document.getElementById('tm-layer-sel');
+  layerSel.innerHTML = LAYERS.map(L=>`<option value="${L.id}"${L.id===t.layer?' selected':''}>${L.name}</option>`).join('');
+
+  // Populate status select
+  document.getElementById('tm-status-sel').innerHTML = selectOpts(t.status);
+
+  // Editable fields
+  document.getElementById('tm-name-input').value = t.name;
+  document.getElementById('tm-desc-input').value = t.desc;
+  document.getElementById('tm-url-input').value = (t.url && t.url !== '#') ? t.url : '';
+  document.getElementById('tm-notes').value = t.notes || '';
+
+  document.getElementById('tm-cmd-btn').style.display = COMMANDS[id] ? 'block' : 'none';
+
+  // Populate subtype select
+  document.getElementById('tm-subtype-sel').innerHTML = subtypeOptions(t.subtype);
+
+  updateModalBadge();
+  document.getElementById('tm-overlay').classList.add('open');
+}
+
+function updateModalBadge() {
+  const layerId = parseInt(document.getElementById('tm-layer-sel').value);
+  const statusVal = document.getElementById('tm-status-sel')?.value || 'free';
+  const L = LAYERS.find(l=>l.id===layerId);
+  const lc = L?.color || 'var(--c1)';
+  document.querySelector('.tm-panel').style.setProperty('--lc', lc);
+  const lbadge = document.getElementById('tm-lbadge');
+  lbadge.textContent = `L${layerId} · ${L?.name.split('·')[0].trim()||''}`;
+  lbadge.style.cssText = `color:${lc};background:color-mix(in srgb,${lc} 12%,transparent);border:1px solid color-mix(in srgb,${lc} 25%,transparent)`;
+  document.getElementById('tm-status-badge').innerHTML = badge(statusVal);
+}
+
+function closeToolModal() {
+  document.getElementById('tm-overlay').classList.remove('open');
+  currentModalId = null;
+}
+
+function openToolUrl() {
+  const url = document.getElementById('tm-url-input').value.trim();
+  if (url) window.open(url, '_blank');
+}
+
+function saveToolChanges() {
+  if (!currentModalId) return;
+  const t = TOOLS.find(x=>x.id===currentModalId);
+  if (!t) return;
+
+  t.name   = document.getElementById('tm-name-input').value.trim() || t.name;
+  t.layer  = parseInt(document.getElementById('tm-layer-sel').value);
+  t.status = document.getElementById('tm-status-sel').value;
+  t.desc   = document.getElementById('tm-desc-input').value.trim();
+  t.notes  = document.getElementById('tm-notes').value;
+  const sub = document.getElementById('tm-subtype-sel').value;
+  t.subtype = sub || undefined;
+  const rawUrl = document.getElementById('tm-url-input').value.trim();
+  t.url = rawUrl || '#';
+
+  // Re-render all affected views
+  buildHome();
+  if (currentPage === 'layer') renderLayer(currentLayer);
+  if (currentPage === 'summary') buildSummary();
+  saveState();
+
+  // Update badge in modal to reflect saved state
+  updateModalBadge();
+  const btn = event.target;
+  const orig = btn.textContent;
+  btn.textContent = '✓ Guardado';
+  setTimeout(() => btn.textContent = orig, 1500);
+}
+
+function openCmdFromModal() {
+  if (!currentModalId) return;
+  currentCmdTool = currentModalId;
+  closeToolModal();
+  showView('commands');
 }
 
 function applyAll() {
@@ -836,14 +1646,139 @@ function togglePanel() {
 }
 
 /* ═══════════════════════════════════════════
+   LOCALSTORAGE PERSISTENCE
+═══════════════════════════════════════════ */
+const LS_KEY = 'ai-stack-v1';
+
+function saveState() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      tools: TOOLS,
+      favs: [...FAVORITES]
+    }));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (Array.isArray(data.tools) && data.tools.length) {
+      // Merge: fill missing subtypes from defaults
+      const defaults = {};
+      TOOLS.forEach(t => { defaults[t.id] = t; });
+      TOOLS = data.tools.map(t => {
+        if (!t.subtype && defaults[t.id]?.subtype) t.subtype = defaults[t.id].subtype;
+        return t;
+      });
+    }
+    if (Array.isArray(data.favs)) data.favs.forEach(id => FAVORITES.add(id));
+  } catch(e) {}
+}
+
+function resetState() {
+  if (!confirm('¿Restablecer todo a los valores por defecto? Se perderán cambios de estado, herramientas añadidas y notas.')) return;
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+}
+
+function exportData() {
+  const raw = localStorage.getItem(LS_KEY);
+  if (!raw) { alert('No hay datos guardados para exportar.'); return; }
+  const blob = new Blob([raw], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const date = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = `ai-stack-backup-${date}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData() {
+  document.getElementById('import-file-input').click();
+}
+
+function handleImportFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!Array.isArray(data.tools)) throw new Error('Formato inválido');
+      if (!confirm(`¿Importar backup? Se sobreescribirán los datos actuales (${data.tools.length} herramientas).`)) return;
+      localStorage.setItem(LS_KEY, ev.target.result);
+      location.reload();
+    } catch(err) {
+      alert('Error al importar: el archivo no es válido.\n' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+/* ═══════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', ()=>{
   const ds = new Date().toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
   const td = document.getElementById('td1');
   if (td) td.textContent = ds;
+  loadState();
   buildHome();
 });
 </script>
+
+<!-- TOOL DETAIL MODAL -->
+<div id="tm-overlay" class="tm-overlay" onclick="if(event.target===this)closeToolModal()">
+  <div class="tm-panel">
+    <div class="tm-hdr">
+      <span class="tm-lbadge" id="tm-lbadge"></span>
+      <span id="tm-status-badge" style="margin-left:2px"></span>
+      <div style="flex:1"></div>
+      <button class="star-btn" id="tm-star" onclick="toggleFav(this.getAttribute('data-id'),event)">☆</button>
+      <button class="tm-close" onclick="closeToolModal()">✕</button>
+    </div>
+    <div class="tm-body">
+      <label class="tm-flabel">Nombre</label>
+      <input class="tm-input" id="tm-name-input" type="text" placeholder="Nombre de la herramienta">
+
+      <div class="tm-grid2" style="margin-top:8px">
+        <div>
+          <label class="tm-flabel">Capa</label>
+          <select class="tm-select" id="tm-layer-sel" onchange="updateModalBadge()"></select>
+        </div>
+        <div>
+          <label class="tm-flabel">Estado</label>
+          <select class="tm-select" id="tm-status-sel"></select>
+        </div>
+      </div>
+
+      <div style="margin-top:8px">
+        <label class="tm-flabel">Tipo / Subgrupo</label>
+        <select class="tm-select" id="tm-subtype-sel"></select>
+      </div>
+
+      <label class="tm-flabel" style="margin-top:10px">Descripción corta</label>
+      <textarea class="tm-notes" id="tm-desc-input" style="min-height:58px" placeholder="Descripción breve de la herramienta…"></textarea>
+
+      <label class="tm-flabel">URL</label>
+      <div style="display:flex;gap:6px;align-items:center">
+        <input class="tm-input" id="tm-url-input" type="text" placeholder="https://…" style="flex:1">
+        <button class="tm-url-open-btn" id="tm-url-open-btn" onclick="openToolUrl()" title="Abrir enlace">↗</button>
+      </div>
+
+      <label class="tm-flabel" style="margin-top:10px">Notas personales</label>
+      <textarea class="tm-notes" id="tm-notes" placeholder="Casos de uso, configuración, atajos que usas…"></textarea>
+    </div>
+    <div class="tm-actions">
+      <button class="tm-btn" id="tm-cmd-btn" style="display:none" onclick="openCmdFromModal()">📋 Comandos</button>
+      <button class="tm-btn primary" onclick="saveToolChanges()">✓ Guardar</button>
+      <button class="tm-btn" onclick="closeToolModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
