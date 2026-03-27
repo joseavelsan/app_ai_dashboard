@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Stack · José</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Azeret+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=Azeret+Mono:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#f0f2f5; --surf:#fff; --surf2:#f7f8fa; --surf3:#eceef2;
@@ -176,7 +174,7 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .bd-trial{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
 
 /* LAYER DETAIL */
-.det-body{display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden}
+.det-body{display:grid;grid-template-columns:3fr 2fr;flex:1;overflow:hidden}
 .det-l,.det-r{padding:22px 24px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
 .det-l{border-right:1px solid var(--border)}
 /* views need to fill their column */
@@ -211,6 +209,63 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .tc-detail{font-size:.61rem;line-height:1.5;color:var(--muted);margin-bottom:5px}
 .tc-link{font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;display:inline-flex;align-items:center;gap:3px;transition:gap .12s}
 .tc-link:hover{gap:6px}
+/* TOOL DETAIL PANEL */
+.tdp{padding:18px 20px;display:flex;flex-direction:column;gap:0}
+.tdp-header{margin-bottom:14px}
+.tdp-name{font-family:var(--font-h);font-size:1.1rem;font-weight:800;letter-spacing:-.02em;line-height:1.15;color:var(--text);margin-bottom:5px}
+.tdp-badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.tdp-badge{font-size:.5rem;text-transform:uppercase;letter-spacing:.07em;padding:2px 7px;border-radius:3px;border:1px solid;white-space:nowrap}
+.tdp-tags{display:flex;flex-wrap:wrap;gap:3px}
+.tdp-tag{font-size:.5rem;padding:2px 7px;border-radius:10px;border:1px solid var(--border);color:var(--muted);background:var(--surf3);font-family:var(--font-m)}
+.tdp-sec{font-size:.53rem;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin:14px 0 6px;display:flex;align-items:center;gap:6px}
+.tdp-sec::after{content:'';flex:1;height:1px;background:var(--border)}
+.tdp-text{font-size:.63rem;line-height:1.65;color:var(--text2)}
+.tdp-text strong{color:var(--text)}
+.tdp-pills{display:flex;flex-wrap:wrap;gap:4px}
+.tdp-pill{font-size:.52rem;padding:3px 9px;border-radius:12px;border:1px solid var(--border2);color:var(--text2);background:var(--surf2);cursor:pointer;transition:all .12s}
+.tdp-pill:hover{background:var(--surf3);border-color:var(--border2)}
+.tdp-rec{font-size:.62rem;line-height:1.6;padding:10px 12px;border-radius:6px;border-left:3px solid;background:var(--surf2)}
+.tdp-url{display:inline-flex;align-items:center;gap:4px;font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;margin-top:10px;transition:gap .12s}
+.tdp-url:hover{gap:7px}
+.tdp-edit-row{margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;gap:6px}
+.tdp-edit-btn{font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;padding:5px 12px;border-radius:4px;border:1px solid var(--border);color:var(--muted);transition:all .13s}
+.tdp-edit-btn:hover{background:var(--surf3);color:var(--text)}
+.tdp-back{font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border-radius:4px;border:1px solid var(--border);color:var(--dim);transition:all .13s}
+.tdp-back:hover{color:var(--text);background:var(--surf3)}
+/* TOOL FULL EDITOR VIEW */
+#view-tool{flex:1;overflow:hidden}
+.tev-wrap{height:100%;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;padding:22px 28px}
+.tev-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.tev-back{font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;padding:5px 11px;border-radius:4px;border:1px solid var(--border);color:var(--muted);transition:all .13s;flex-shrink:0}
+.tev-back:hover{background:var(--surf3);color:var(--text)}
+.tev-title{font-family:var(--font-h);font-size:1.05rem;font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tev-badge{font-size:.5rem;text-transform:uppercase;letter-spacing:.07em;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap;flex-shrink:0}
+.tev-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+.tev-col{min-width:0}
+.tev-sec{font-size:.52rem;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin:18px 0 8px;display:flex;align-items:center;gap:6px}
+.tev-sec::after{content:'';flex:1;height:1px;background:var(--border)}
+.tev-sec:first-child{margin-top:0}
+.tev-field{margin-bottom:10px}
+.tev-label{font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:4px}
+.tev-input{width:100%;font-family:var(--font-m);font-size:.63rem;border:1px solid var(--border);border-radius:5px;padding:7px 10px;background:var(--surf2);color:var(--text);outline:none;transition:border-color .15s}
+.tev-input:focus{border-color:var(--c1);background:var(--surf)}
+textarea.tev-input{resize:vertical;line-height:1.6}
+.tev-select{width:100%;font-family:var(--font-m);font-size:.63rem;border:1px solid var(--border);border-radius:5px;padding:7px 10px;background:var(--surf2);color:var(--text);outline:none}
+.tev-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tev-tagpicker{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.tev-tagchip{font-size:.54rem;padding:3px 9px;border-radius:12px;border:1px solid var(--border);color:var(--muted);background:var(--surf2);cursor:pointer;transition:all .13s;font-family:var(--font-m);line-height:1.5}
+.tev-tagchip:hover{border-color:var(--border2);color:var(--text)}
+.tev-tagchip.act{border-color:var(--c1);color:var(--c1);background:color-mix(in srgb,var(--c1) 10%,transparent);font-weight:600}
+.tev-actions{display:flex;align-items:center;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.tev-save{font-size:.62rem;padding:7px 20px;border-radius:5px;border:none;background:var(--c1);color:#fff;transition:opacity .13s}
+.tev-save:hover{opacity:.85}
+.tev-cancel{font-size:.62rem;padding:7px 14px;border-radius:5px;border:1px solid var(--border);color:var(--muted);transition:all .13s}
+.tev-cancel:hover{background:var(--surf3);color:var(--text)}
+.tev-del{font-size:.62rem;padding:7px 14px;border-radius:5px;border:1px solid var(--c4);color:var(--c4);transition:all .13s;margin-left:auto}
+.tev-del:hover{background:var(--c4);color:#fff}
+.tev-open{font-size:.62rem;padding:7px 14px;border-radius:5px;border:1px solid var(--border);color:var(--muted);text-decoration:none;transition:all .13s}
+.tev-open:hover{background:var(--surf3);color:var(--text)}
+/* CBOX (pre-existing) */
 .cbox{background:var(--surf2);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:7px}
 .cb-t{font-family:var(--font-h);font-size:.74rem;font-weight:700;margin-bottom:4px}
 .cb-b{font-size:.62rem;color:var(--text2);line-height:1.55}
@@ -420,6 +475,38 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .cmd-desc{font-size:.61rem;color:var(--text2);line-height:1.55}
 .cmd-desc strong{color:var(--text)}
 .cmd-desc code{font-family:var(--font-m);font-size:.57rem;background:var(--surf3);padding:1px 4px;border-radius:2px;border:1px solid var(--border)}
+
+/* USES PAGE */
+#view-uses{flex:1;overflow:hidden}
+.uses-body{flex:1;overflow-y:auto;padding:22px 26px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.uses-tags-bar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;padding:11px 13px;background:var(--surf);border:1px solid var(--border);border-radius:7px}
+.use-tag{font-size:.58rem;padding:4px 10px;border-radius:20px;border:1px solid var(--border);color:var(--muted);background:var(--surf2);cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap}
+.use-tag:hover{border-color:var(--border2);color:var(--text)}
+.use-tag.act{border-color:var(--c1);color:var(--c1);background:color-mix(in srgb,var(--c1) 10%,transparent);font-weight:600}
+.use-tag .use-tag-count{opacity:.55;font-size:.52rem;margin-left:3px}
+.uses-count{font-size:.58rem;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.uses-clear{font-size:.55rem;color:var(--c1);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:var(--font-m)}
+.uses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:7px}
+.use-card{background:var(--surf);border:1px solid var(--border);border-radius:7px;padding:10px 12px;border-left:3px solid var(--lc,var(--c1));cursor:pointer;transition:all .15s}
+.use-card:hover{border-color:var(--lc,var(--c1));background:var(--surf2);transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.07)}
+.use-card.hidden{display:none}
+.use-card.paid{background:var(--paid-bg)}
+.use-card.plus{background:var(--plus-bg)}
+.use-card.inactive{opacity:.42;filter:grayscale(.35)}
+.uc-top{display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.uc-name{font-family:var(--font-h);font-size:.73rem;font-weight:700;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uc-layer{font-size:.48rem;font-weight:800;padding:2px 5px;border-radius:2px;flex-shrink:0}
+.uc-desc{font-size:.6rem;color:var(--text2);line-height:1.45;margin-bottom:6px}
+.uc-tags{display:flex;flex-wrap:wrap;gap:3px}
+.uc-chip{font-size:.5rem;padding:1px 6px;border-radius:10px;border:1px solid var(--border);color:var(--muted);background:var(--surf3);text-transform:lowercase;letter-spacing:.02em;cursor:pointer;transition:all .12s}
+.uc-chip:hover{border-color:var(--border2)}
+.uc-chip.match{border-color:color-mix(in srgb,var(--c1) 40%,transparent);color:var(--c1);background:color-mix(in srgb,var(--c1) 9%,transparent);font-weight:600}
+
+/* MODAL TAG PICKER */
+.tm-tag-picker{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.tm-tag-chip{font-size:.54rem;padding:3px 9px;border-radius:12px;border:1px solid var(--border);color:var(--muted);background:var(--surf2);cursor:pointer;transition:all .13s;font-family:var(--font-m);line-height:1.5}
+.tm-tag-chip:hover{border-color:var(--border2);color:var(--text)}
+.tm-tag-chip.act{border-color:var(--c1);color:var(--c1);background:color-mix(in srgb,var(--c1) 10%,transparent);font-weight:600}
 </style>
 </head>
 <body>
@@ -430,13 +517,13 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
   <!-- TOPBAR — always visible -->
   <div class="topbar">
     <div class="logo" onclick="goHome()">AI<em>·</em>Stack</div>
-    <div class="tnav" id="tnav"></div>
+    <div class="tnav" id="tnav"><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(0)">01 Modelo</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(1)">02 Interfaz</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(2)">03 Memoria</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(3)">04 Herramientas</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(4)">05 Agentes</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(5)">06 Aplicación</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('summary')">Resumen</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('uses')">Usos</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('learn')">Aprender</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('commands')">Comandos</button></div>
     <div class="topbar-search">
       <input type="text" id="topbar-search-input" placeholder="Buscar herramienta…" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Escape')closeSearch()">
       <span class="topbar-search-ico">🔍</span>
       <div class="search-dropdown" id="search-dropdown"></div>
     </div>
-    <div class="topbar-date" id="td1"></div>
+    <div class="topbar-date" id="td1">vie, 27 mar 2026</div>
   </div>
 
   <!-- MAIN AREA — content col + sidebar col always present -->
@@ -449,32 +536,967 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
       <div class="view active" id="view-home">
         <div class="diagram-area">
           <div class="sect-title">Ecosistema IA personal · clic en cada capa para explorar</div>
-          <div class="stack" id="stack-home"></div>
+          <div class="stack" id="stack-home"><div class="lrow" style="--lc: var(--c1);">
+      <div class="lconn"><div class="ldot">01</div><div class="lline"></div></div>
+      <div class="lcard fade-up">
+        <div class="lc-top"><span class="lc-name">Modelo · LLM Core</span><span class="lc-tag">Núcleo generativo</span></div>
+        <div class="lc-desc">El cerebro. Procesa lenguaje, código e imágenes. Todo lo demás se apoya aquí.</div>
+        <div class="lc-pills"><span class="pill mine st-paid">Claude Sonnet/Opus</span><span class="pill mine">Llama 3 (Ollama)</span><span class="pill mine st-paid">GPT-4o</span><span class="pill mine st-paid">Gemini</span></div>
+        <div class="lc-cta">Explorar capa →</div>
+      </div></div><div class="lrow" style="--lc: var(--c2);">
+      <div class="lconn"><div class="ldot">02</div><div class="lline"></div></div>
+      <div class="lcard fade-up">
+        <div class="lc-top"><span class="lc-name">Interfaz · Chat &amp; Studios</span><span class="lc-tag">Punto de acceso</span></div>
+        <div class="lc-desc">Cómo interactúas con el modelo. Chat, playgrounds y paneles de API.</div>
+        <div class="lc-pills"><span class="pill mine st-paid">Claude.ai</span><span class="pill mine">Open WebUI</span><span class="pill mine st-paid">Anthropic Console</span><span class="pill mine">OpenAI Platform</span></div>
+        <div class="lc-cta">Explorar capa →</div>
+      </div></div><div class="lrow" style="--lc: var(--c3);">
+      <div class="lconn"><div class="ldot">03</div><div class="lline"></div></div>
+      <div class="lcard fade-up">
+        <div class="lc-top"><span class="lc-name">Memoria · RAG &amp; Conocimiento</span><span class="lc-tag">Contexto externo</span></div>
+        <div class="lc-desc">Cómo el modelo accede a TUS documentos. RAG, vectores y NotebookLM.</div>
+        <div class="lc-pills"><span class="pill mine">NotebookLM</span><span class="pill mine st-paid">Claude Projects</span><span class="pill mine">Open WebUI RAG</span><span class="pill st-inactive">ChromaDB</span></div>
+        <div class="lc-cta">Explorar capa →</div>
+      </div></div><div class="lrow" style="--lc: var(--c4);">
+      <div class="lconn"><div class="ldot">04</div><div class="lline"></div></div>
+      <div class="lcard fade-up">
+        <div class="lc-top"><span class="lc-name">Herramientas · Tools &amp; Conexiones</span><span class="lc-tag">Extensión del modelo</span></div>
+        <div class="lc-desc">El modelo llama funciones externas: web, APIs, apps. MCP conecta Claude con todo.</div>
+        <div class="lc-pills"><span class="pill mine st-paid">MCP Protocol</span><span class="pill st-inactive">n8n local</span><span class="pill mine st-paid">Web Search</span><span class="pill mine st-paid">Codex API</span></div>
+        <div class="lc-cta">Explorar capa →</div>
+      </div></div><div class="lrow" style="--lc: var(--c5);">
+      <div class="lconn"><div class="ldot">05</div><div class="lline"></div></div>
+      <div class="lcard fade-up">
+        <div class="lc-top"><span class="lc-name">Agentes · IA Autónoma</span><span class="lc-tag">Coding · Builders · Browser</span></div>
+        <div class="lc-desc">Vibe Coding (IDE/CLI), Web Builders (apps desde prompt) y Browser Agents (control del navegador).</div>
+        <div class="lc-pills"><span class="pill mine">GitHub Copilot (coding)</span><span class="pill mine">Lovable (builder)</span><span class="pill mine">Bolt.new (builder)</span><span class="pill mine">Browser Use (browser)</span></div>
+        <div class="lc-cta">Explorar capa →</div>
+      </div></div><div class="lrow" style="--lc: var(--c6);">
+      <div class="lconn"><div class="ldot">06</div><div class="lline"></div></div>
+      <div class="lcard fade-up">
+        <div class="lc-top"><span class="lc-name">Aplicación · Tus Proyectos</span><span class="lc-tag">Capa de salida</span></div>
+        <div class="lc-desc">Donde vive tu lógica de negocio. Apps, webs y productos que consumen el stack.</div>
+        <div class="lc-pills"><span class="pill mine">app_gastos</span><span class="pill mine">app_job_tracker</span><span class="pill mine">app_apartamentos</span><span class="pill mine">Gamma</span></div>
+        <div class="lc-cta">Explorar capa →</div>
+      </div></div></div>
         </div>
       </div>
 
       <!-- VIEW: LAYER DETAIL -->
       <div class="view" id="view-layer">
         <div class="det-body">
-          <div class="det-l" id="det-l"></div>
-          <div class="det-r" id="det-r"></div>
+          <div class="det-l" id="det-l">
+    <div class="det-num" style="color:color-mix(in srgb,var(--c3) 20%,transparent)">L3</div>
+    <div class="det-name" style="color:var(--c3)">Memoria · RAG &amp; Conocimiento</div>
+    <div class="det-tag" style="color:var(--c3);border-color:color-mix(in srgb,var(--c3) 30%,transparent);background:color-mix(in srgb,var(--c3) 7%,transparent)">Contexto externo</div>
+    <div class="det-concept" style="--lc:var(--c3)">Un LLM solo conoce su entrenamiento. <strong>RAG (Retrieval-Augmented Generation)</strong> le da acceso a tus documentos en tiempo real: troceas → vectorizas → guardas → recuperas al preguntar.<br><br><strong>NotebookLM</strong> hace esto automáticamente. <strong>Open WebUI RAG</strong> también, con tus modelos locales. Para RAG en tus apps Python usarías ChromaDB + LlamaIndex.</div>
+    <div class="dsec">Herramientas · 7 en esta capa</div>
+    <div class="stype-hdr" id="stype-hdr-cloudrag" style="--lc:var(--c3)" onclick="toggleStype('cloudrag',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">☁️</span>
+      <span class="stype-label">RAG Cloud</span>
+      <span class="stype-desc">Memoria y RAG gestionados en la nube</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="stype-body-cloudrag">
+      <div class="tcard free" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('notebooklm')">
+    <div class="tc-top">
+      <span class="tc-name">NotebookLM</span>
+      <button class="star-btn fav" data-id="notebooklm" onclick="toggleFav('notebooklm',event)" title="Quitar de favoritos">★</button>
+      <div class="tc-bds">
+        <span class="tc-badge" style="color:var(--c3);background:color-mix(in srgb,var(--c3) 10%,transparent);border:1px solid color-mix(in srgb,var(--c3) 25%,transparent)">NOTEBOOK</span>
+        <span class="tc-badge" style="background:#f3f4f6;color:#6b7280;border:1px solid #d1d5db">🆓 Gratis</span>
+      </div>
+    </div>
+    <div class="tc-desc">RAG automático Google. PDFs, docs, vídeos.</div>
+    <a class="tc-link" href="https://notebooklm.google.com" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
+  </div><div class="tcard paid" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('claude-proj')">
+    <div class="tc-top">
+      <span class="tc-name">Claude Projects</span>
+      <button class="star-btn fav" data-id="claude-proj" onclick="toggleFav('claude-proj',event)" title="Quitar de favoritos">★</button>
+      <div class="tc-bds">
+        <span class="tc-badge" style="color:var(--c3);background:color-mix(in srgb,var(--c3) 10%,transparent);border:1px solid color-mix(in srgb,var(--c3) 25%,transparent)">CLAUDE-P</span>
+        <span class="tc-badge" style="background:#fef3c7;color:#92400e;border:1px solid #fbbf24">💳 Suscripción</span>
+      </div>
+    </div>
+    <div class="tc-desc">Contexto persistente con docs en claude.ai.</div>
+    <a class="tc-link" href="https://claude.ai" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
+  </div>
+    </div><div class="stype-hdr" id="stype-hdr-localrag" style="--lc:var(--c3)" onclick="toggleStype('localrag',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🗄️</span>
+      <span class="stype-label">RAG Local</span>
+      <span class="stype-desc">Memoria y RAG privados en local</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="stype-body-localrag">
+      <div class="tcard free" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('owui-rag')">
+    <div class="tc-top">
+      <span class="tc-name">Open WebUI RAG</span>
+      <button class="star-btn" data-id="owui-rag" onclick="toggleFav('owui-rag',event)" title="Marcar como favorito">☆</button>
+      <div class="tc-bds">
+        <span class="tc-badge" style="color:var(--c3);background:color-mix(in srgb,var(--c3) 10%,transparent);border:1px solid color-mix(in srgb,var(--c3) 25%,transparent)">OWUI-RAG</span>
+        <span class="tc-badge" style="background:#f3f4f6;color:#6b7280;border:1px solid #d1d5db">🆓 Gratis</span>
+      </div>
+    </div>
+    <div class="tc-desc">RAG local con modelos Ollama. 100% privado.</div>
+    <a class="tc-link" href="http://localhost:3000" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
+  </div><div class="tcard free" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('anythingllm')">
+    <div class="tc-top">
+      <span class="tc-name">AnythingLLM</span>
+      <button class="star-btn" data-id="anythingllm" onclick="toggleFav('anythingllm',event)" title="Marcar como favorito">☆</button>
+      <div class="tc-bds">
+        <span class="tc-badge" style="color:var(--c3);background:color-mix(in srgb,var(--c3) 10%,transparent);border:1px solid color-mix(in srgb,var(--c3) 25%,transparent)">ANYTHING</span>
+        <span class="tc-badge" style="background:#f3f4f6;color:#6b7280;border:1px solid #d1d5db">🆓 Gratis</span>
+      </div>
+    </div>
+    <div class="tc-desc">Aplicación de escritorio todo-en-uno para RAG, agentes IA y chat con documentos. Open-source, privada por defecto, funciona con cualquier LLM local o cloud sin configuración de infraestructura.</div>
+    <a class="tc-link" href="anythingllm.com" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
+  </div>
+    </div><div class="stype-hdr" id="stype-hdr-vectordb" style="--lc:var(--c3)" onclick="toggleStype('vectordb',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">📊</span>
+      <span class="stype-label">Base Vectorial</span>
+      <span class="stype-desc">Base de datos vectorial embebida</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="stype-body-vectordb">
+      <div class="tcard inactive" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('chromadb')">
+    <div class="tc-top">
+      <span class="tc-name">ChromaDB</span>
+      <button class="star-btn" data-id="chromadb" onclick="toggleFav('chromadb',event)" title="Marcar como favorito">☆</button>
+      <div class="tc-bds">
+        <span class="tc-badge" style="color:var(--c3);background:color-mix(in srgb,var(--c3) 10%,transparent);border:1px solid color-mix(in srgb,var(--c3) 25%,transparent)">CHROMADB</span>
+        <span class="tc-badge" style="background:#f9fafb;color:#9ca3af;border:1px solid #e5e7eb">⬜ Sin activar</span>
+      </div>
+    </div>
+    <div class="tc-desc">Base vectorial local. pip install chromadb.</div>
+    <a class="tc-link" href="https://trychroma.com" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
+  </div>
+    </div><div class="stype-hdr" id="stype-hdr-framework" style="--lc:var(--c3)" onclick="toggleStype('framework',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🔧</span>
+      <span class="stype-label">Framework</span>
+      <span class="stype-desc">Librería o framework de desarrollo</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="stype-body-framework">
+      <div class="tcard inactive" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('llamaindex')">
+    <div class="tc-top">
+      <span class="tc-name">LlamaIndex</span>
+      <button class="star-btn" data-id="llamaindex" onclick="toggleFav('llamaindex',event)" title="Marcar como favorito">☆</button>
+      <div class="tc-bds">
+        <span class="tc-badge" style="color:var(--c3);background:color-mix(in srgb,var(--c3) 10%,transparent);border:1px solid color-mix(in srgb,var(--c3) 25%,transparent)">LLAMAIND</span>
+        <span class="tc-badge" style="background:#f9fafb;color:#9ca3af;border:1px solid #e5e7eb">⬜ Sin activar</span>
+      </div>
+    </div>
+    <div class="tc-desc">Framework Python RAG. Conecta con ChromaDB.</div>
+    <a class="tc-link" href="https://llamaindex.ai" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
+  </div>
+    </div><div class="tcard free" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('kaggle')">
+    <div class="tc-top">
+      <span class="tc-name">Kaggle</span>
+      <button class="star-btn" data-id="kaggle" onclick="toggleFav('kaggle',event)" title="Marcar como favorito">☆</button>
+      <div class="tc-bds">
+        <span class="tc-badge" style="color:var(--c3);background:color-mix(in srgb,var(--c3) 10%,transparent);border:1px solid color-mix(in srgb,var(--c3) 25%,transparent)">KAGGLE</span>
+        <span class="tc-badge" style="background:#f3f4f6;color:#6b7280;border:1px solid #d1d5db">🆓 Gratis</span>
+      </div>
+    </div>
+    <div class="tc-desc">Plataforma de datasets, notebooks y competiciones de ML</div>
+    <a class="tc-link" href="https://kaggle.com" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
+  </div></div>
+          <div class="det-r" id="det-r">
+    <div class="dsec">Conceptos clave</div><div class="cbox"><div class="cb-t" style="color:var(--c3)">¿Qué es un embedding?</div><div class="cb-b">Representación numérica del texto como vector. Textos con significado similar quedan "cerca" geométricamente. Permite buscar por semántica, no solo palabras exactas.</div></div><div class="cbox"><div class="cb-t" style="color:var(--c3)">NotebookLM vs RAG propio</div><div class="cb-b"><strong>NotebookLM:</strong> sube PDFs, funciona solo, sin código.<br><strong>RAG propio:</strong> integrado en tu app Python, control total sobre qué documentos y cómo se recuperan.</div></div><div class="cbox"><div class="cb-t" style="color:var(--c3)">Claude Projects como RAG ligero</div><div class="cb-b">Sube documentos a un Project y quedan disponibles en todas las conversaciones. Sin código, sin infraestructura.</div></div>
+    <div class="dsec" style="margin-top:18px">Navegar por el stack</div>
+    <div class="smini">
+    <div class="sm-row " style="--lc:var(--c1)" onclick="openLayer(0)">
+      <span class="sm-n" style="color:var(--c1)">L1</span>
+      <span class="sm-label" style="color:var(--text2)">Modelo · LLM Core</span>
+      
+    </div>
+    <div class="sm-row " style="--lc:var(--c2)" onclick="openLayer(1)">
+      <span class="sm-n" style="color:var(--c2)">L2</span>
+      <span class="sm-label" style="color:var(--text2)">Interfaz · Chat &amp; Studios</span>
+      
+    </div>
+    <div class="sm-row cur" style="--lc:var(--c3)" onclick="">
+      <span class="sm-n" style="color:var(--c3)">L3</span>
+      <span class="sm-label" style="color:var(--text)">Memoria · RAG &amp; Conocimiento</span>
+      <span class="sm-arr" style="color:var(--c3)">←</span>
+    </div>
+    <div class="sm-row " style="--lc:var(--c4)" onclick="openLayer(3)">
+      <span class="sm-n" style="color:var(--c4)">L4</span>
+      <span class="sm-label" style="color:var(--text2)">Herramientas · Tools &amp; Conexiones</span>
+      
+    </div>
+    <div class="sm-row " style="--lc:var(--c5)" onclick="openLayer(4)">
+      <span class="sm-n" style="color:var(--c5)">L5</span>
+      <span class="sm-label" style="color:var(--text2)">Agentes · IA Autónoma</span>
+      
+    </div>
+    <div class="sm-row " style="--lc:var(--c6)" onclick="openLayer(5)">
+      <span class="sm-n" style="color:var(--c6)">L6</span>
+      <span class="sm-label" style="color:var(--text2)">Aplicación · Tus Proyectos</span>
+      
+    </div></div></div>
         </div>
-        <div class="lnav" id="lnav"></div>
+        <div class="lnav" id="lnav">
+    <button class="lnav-btn back" onclick="goHome()"><span class="lnav-arr">←</span><div><div class="lnav-lbl">Volver</div><div class="lnav-name">Mapa general</div></div></button>
+    <button class="lnav-btn" onclick="openLayer(1)" style="flex-direction:row-reverse;text-align:right"><span class="lnav-arr">←</span><div><div class="lnav-lbl">Capa inferior</div><div class="lnav-name">Interfaz</div></div></button>
+    <button class="lnav-btn" onclick="openLayer(3)"><div><div class="lnav-lbl">Capa superior</div><div class="lnav-name">Herramientas</div></div><span class="lnav-arr">→</span></button></div>
       </div>
 
       <!-- VIEW: SUMMARY -->
       <div class="view" id="view-summary">
-        <div class="sum-body" id="sum-body"></div>
+        <div class="sum-body" id="sum-body">
+    <div class="sum-hdr">
+      <div>
+        <h2>🗺️ Resumen del Stack · José A. Velázquez</h2>
+        <p>Panel de control completo. Cambia el estado de cualquier herramienta aquí y se refleja en todo el dashboard. Añade, edita o elimina herramientas.</p>
+        <div class="sum-hint">✏️ Los cambios se aplican en tiempo real al guardar</div>
+      </div>
+      <div class="legend">
+        <span class="leg-item"><span class="si-badge bd-paid">💳 Suscripción</span> Pago mensual</span>
+        <span class="leg-item"><span class="si-badge bd-api">🔑 API</span> Acceso vía API key</span>
+        <span class="leg-item"><span class="si-badge bd-free">🆓 Gratis</span> Sin coste</span>
+        <span class="leg-item"><span class="si-badge bd-inactive">⬜ Sin activar</span> Disponible</span>
+      </div>
+    </div>
+
+    
+      <div class="sum-layer" style="--lc:var(--c1)">
+        <div class="sum-layer-hdr" onclick="openLayer(0)">
+          <span class="sum-lnum">L1</span>
+          <span class="sum-lname">Modelo · LLM Core</span>
+          <span class="sum-lexp">6 herramientas · explorar →</span>
+        </div>
+        <div class="sum-tools-grid" id="tgrid-1">
+      <div class="stool paid" id="stool-claude-sonnet" style="--lc:var(--c1)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Claude Sonnet 4.6</span>
+        <button class="star-btn" data-id="claude-sonnet" onclick="toggleFav('claude-sonnet',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('claude-sonnet',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('claude-sonnet')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('claude-sonnet')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-claude-opus" style="--lc:var(--c1)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Claude Opus 4.6</span>
+        <button class="star-btn" data-id="claude-opus" onclick="toggleFav('claude-opus',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('claude-opus',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('claude-opus')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('claude-opus')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-ollama" style="--lc:var(--c1)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">llama 3.x (local) (llama3.1:8b)</span>
+        <button class="star-btn" data-id="ollama" onclick="toggleFav('ollama',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('ollama',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('ollama')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('ollama')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-gpt4o" style="--lc:var(--c1)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">GPT-4o</span>
+        <button class="star-btn" data-id="gpt4o" onclick="toggleFav('gpt4o',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('gpt4o',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('gpt4o')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('gpt4o')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-gemini" style="--lc:var(--c1)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Gemini 2.0 Pro</span>
+        <button class="star-btn" data-id="gemini" onclick="toggleFav('gemini',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('gemini',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('gemini')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('gemini')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-groq" style="--lc:var(--c1)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Groq (Llama/Mixtral)</span>
+        <button class="star-btn" data-id="groq" onclick="toggleFav('groq',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('groq',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('groq')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('groq')" title="Eliminar">✕</button>
+      </div></div>
+      </div>
+      <div class="sum-layer" style="--lc:var(--c2)">
+        <div class="sum-layer-hdr" onclick="openLayer(1)">
+          <span class="sum-lnum">L2</span>
+          <span class="sum-lname">Interfaz · Chat &amp; Studios</span>
+          <span class="sum-lexp">10 herramientas · explorar →</span>
+        </div>
+        <div class="sum-tools-grid" id="tgrid-2">
+      <div class="stool free" id="stool-llama3" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Ollama</span>
+        <button class="star-btn" data-id="llama3" onclick="toggleFav('llama3',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('llama3',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('llama3')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('llama3')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-claudeai" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Claude.ai</span>
+        <button class="star-btn fav" data-id="claudeai" onclick="toggleFav('claudeai',event)" title="Quitar de favoritos">★</button>
+        <select class="stool-sel" onchange="updateStatus('claudeai',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('claudeai')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('claudeai')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-openwebui" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Open WebUI</span>
+        <button class="star-btn" data-id="openwebui" onclick="toggleFav('openwebui',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('openwebui',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('openwebui')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('openwebui')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-chatgpt" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">ChatGPT (web)</span>
+        <button class="star-btn" data-id="chatgpt" onclick="toggleFav('chatgpt',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('chatgpt',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('chatgpt')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('chatgpt')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-console-ant" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Anthropic Console</span>
+        <button class="star-btn" data-id="console-ant" onclick="toggleFav('console-ant',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('console-ant',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('console-ant')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('console-ant')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-oai-platform" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">OpenAI Platform</span>
+        <button class="star-btn" data-id="oai-platform" onclick="toggleFav('oai-platform',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('oai-platform',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('oai-platform')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('oai-platform')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-gai-studio" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Google AI Studio</span>
+        <button class="star-btn" data-id="gai-studio" onclick="toggleFav('gai-studio',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('gai-studio',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('gai-studio')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('gai-studio')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-arena" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Arena</span>
+        <button class="star-btn" data-id="arena" onclick="toggleFav('arena',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('arena',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('arena')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('arena')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool inactive" id="stool-lm-studio" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">LM Studio</span>
+        <button class="star-btn" data-id="lm-studio" onclick="toggleFav('lm-studio',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('lm-studio',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive" selected="">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('lm-studio')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('lm-studio')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool api" id="stool-openrourter" style="--lc:var(--c2)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">OpenRourter</span>
+        <button class="star-btn" data-id="openrourter" onclick="toggleFav('openrourter',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('openrourter',this.value)"><option value="paid">💳 Suscripción</option><option value="api" selected="">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('openrourter')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('openrourter')" title="Eliminar">✕</button>
+      </div></div>
+      </div>
+      <div class="sum-layer" style="--lc:var(--c3)">
+        <div class="sum-layer-hdr" onclick="openLayer(2)">
+          <span class="sum-lnum">L3</span>
+          <span class="sum-lname">Memoria · RAG &amp; Conocimiento</span>
+          <span class="sum-lexp">7 herramientas · explorar →</span>
+        </div>
+        <div class="sum-tools-grid" id="tgrid-3">
+      <div class="stool free" id="stool-notebooklm" style="--lc:var(--c3)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">NotebookLM</span>
+        <button class="star-btn fav" data-id="notebooklm" onclick="toggleFav('notebooklm',event)" title="Quitar de favoritos">★</button>
+        <select class="stool-sel" onchange="updateStatus('notebooklm',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('notebooklm')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('notebooklm')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-claude-proj" style="--lc:var(--c3)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Claude Projects</span>
+        <button class="star-btn fav" data-id="claude-proj" onclick="toggleFav('claude-proj',event)" title="Quitar de favoritos">★</button>
+        <select class="stool-sel" onchange="updateStatus('claude-proj',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('claude-proj')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('claude-proj')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-owui-rag" style="--lc:var(--c3)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Open WebUI RAG</span>
+        <button class="star-btn" data-id="owui-rag" onclick="toggleFav('owui-rag',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('owui-rag',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('owui-rag')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('owui-rag')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool inactive" id="stool-chromadb" style="--lc:var(--c3)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">ChromaDB</span>
+        <button class="star-btn" data-id="chromadb" onclick="toggleFav('chromadb',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('chromadb',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive" selected="">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('chromadb')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('chromadb')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool inactive" id="stool-llamaindex" style="--lc:var(--c3)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">LlamaIndex</span>
+        <button class="star-btn" data-id="llamaindex" onclick="toggleFav('llamaindex',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('llamaindex',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive" selected="">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('llamaindex')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('llamaindex')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-kaggle" style="--lc:var(--c3)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Kaggle</span>
+        <button class="star-btn" data-id="kaggle" onclick="toggleFav('kaggle',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('kaggle',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('kaggle')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('kaggle')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-anythingllm" style="--lc:var(--c3)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">AnythingLLM</span>
+        <button class="star-btn" data-id="anythingllm" onclick="toggleFav('anythingllm',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('anythingllm',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('anythingllm')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('anythingllm')" title="Eliminar">✕</button>
+      </div></div>
+      </div>
+      <div class="sum-layer" style="--lc:var(--c4)">
+        <div class="sum-layer-hdr" onclick="openLayer(3)">
+          <span class="sum-lnum">L4</span>
+          <span class="sum-lname">Herramientas · Tools &amp; Conexiones</span>
+          <span class="sum-lexp">6 herramientas · explorar →</span>
+        </div>
+        <div class="sum-tools-grid" id="tgrid-4">
+      <div class="stool paid" id="stool-mcp" style="--lc:var(--c4)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">MCP Protocol</span>
+        <button class="star-btn" data-id="mcp" onclick="toggleFav('mcp',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('mcp',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('mcp')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('mcp')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool inactive" id="stool-n8n" style="--lc:var(--c4)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">n8n self-hosted</span>
+        <button class="star-btn" data-id="n8n" onclick="toggleFav('n8n',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('n8n',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive" selected="">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('n8n')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('n8n')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-websearch" style="--lc:var(--c4)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Web Search (Claude)</span>
+        <button class="star-btn" data-id="websearch" onclick="toggleFav('websearch',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('websearch',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('websearch')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('websearch')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool inactive" id="stool-zapier" style="--lc:var(--c4)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Zapier AI</span>
+        <button class="star-btn" data-id="zapier" onclick="toggleFav('zapier',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('zapier',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive" selected="">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('zapier')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('zapier')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool inactive" id="stool-make" style="--lc:var(--c4)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Make</span>
+        <button class="star-btn" data-id="make" onclick="toggleFav('make',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('make',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive" selected="">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('make')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('make')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-playwright" style="--lc:var(--c4)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Playwright</span>
+        <button class="star-btn" data-id="playwright" onclick="toggleFav('playwright',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('playwright',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('playwright')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('playwright')" title="Eliminar">✕</button>
+      </div></div>
+      </div>
+      <div class="sum-layer" style="--lc:var(--c5)">
+        <div class="sum-layer-hdr" onclick="openLayer(4)">
+          <span class="sum-lnum">L5</span>
+          <span class="sum-lname">Agentes · IA Autónoma</span>
+          <span class="sum-lexp">9 herramientas · explorar →</span>
+        </div>
+        <div class="sum-tools-grid" id="tgrid-5">
+      <div class="stool paid" id="stool-codex-api" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Codex</span>
+        <button class="star-btn" data-id="codex-api" onclick="toggleFav('codex-api',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('codex-api',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('codex-api')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('codex-api')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-copilot" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">GitHub Copilot</span>
+        <button class="star-btn fav" data-id="copilot" onclick="toggleFav('copilot',event)" title="Quitar de favoritos">★</button>
+        <select class="stool-sel" onchange="updateStatus('copilot',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('copilot')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('copilot')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-antigravity" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Antigravity</span>
+        <button class="star-btn fav" data-id="antigravity" onclick="toggleFav('antigravity',event)" title="Quitar de favoritos">★</button>
+        <select class="stool-sel" onchange="updateStatus('antigravity',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('antigravity')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('antigravity')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-lovable" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Lovable</span>
+        <button class="star-btn" data-id="lovable" onclick="toggleFav('lovable',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('lovable',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('lovable')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('lovable')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-base44" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Base44</span>
+        <button class="star-btn" data-id="base44" onclick="toggleFav('base44',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('base44',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('base44')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('base44')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool paid" id="stool-claude-code" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Claude Code</span>
+        <button class="star-btn fav" data-id="claude-code" onclick="toggleFav('claude-code',event)" title="Quitar de favoritos">★</button>
+        <select class="stool-sel" onchange="updateStatus('claude-code',this.value)"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('claude-code')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('claude-code')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool inactive" id="stool-cursor" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Cursor IDE</span>
+        <button class="star-btn" data-id="cursor" onclick="toggleFav('cursor',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('cursor',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive" selected="">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('cursor')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('cursor')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-continue-dev" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Continue.dev</span>
+        <button class="star-btn" data-id="continue-dev" onclick="toggleFav('continue-dev',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('continue-dev',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('continue-dev')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('continue-dev')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool trial" id="stool-genspark" style="--lc:var(--c5)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Genspark</span>
+        <button class="star-btn fav" data-id="genspark" onclick="toggleFav('genspark',event)" title="Quitar de favoritos">★</button>
+        <select class="stool-sel" onchange="updateStatus('genspark',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial" selected="">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('genspark')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('genspark')" title="Eliminar">✕</button>
+      </div></div>
+      </div>
+      <div class="sum-layer" style="--lc:var(--c6)">
+        <div class="sum-layer-hdr" onclick="openLayer(5)">
+          <span class="sum-lnum">L6</span>
+          <span class="sum-lname">Aplicación · Tus Proyectos</span>
+          <span class="sum-lexp">6 herramientas · explorar →</span>
+        </div>
+        <div class="sum-tools-grid" id="tgrid-6">
+      <div class="stool free" id="stool-app-gastos" style="--lc:var(--c6)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">app_gastos_familia</span>
+        <button class="star-btn" data-id="app-gastos" onclick="toggleFav('app-gastos',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('app-gastos',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('app-gastos')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('app-gastos')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-app-jobs" style="--lc:var(--c6)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">app_job_tracker</span>
+        <button class="star-btn" data-id="app-jobs" onclick="toggleFav('app-jobs',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('app-jobs',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('app-jobs')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('app-jobs')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-app-aparts" style="--lc:var(--c6)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">app_apartamentos</span>
+        <button class="star-btn" data-id="app-aparts" onclick="toggleFav('app-aparts',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('app-aparts',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('app-aparts')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('app-aparts')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-web-espacio" style="--lc:var(--c6)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">espacioGijón web</span>
+        <button class="star-btn" data-id="web-espacio" onclick="toggleFav('web-espacio',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('web-espacio',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('web-espacio')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('web-espacio')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-portfolio" style="--lc:var(--c6)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Portfolio profesional</span>
+        <button class="star-btn" data-id="portfolio" onclick="toggleFav('portfolio',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('portfolio',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('portfolio')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('portfolio')" title="Eliminar">✕</button>
+      </div>
+      <div class="stool free" id="stool-gamma" style="--lc:var(--c6)">
+        <div class="stool-dot"></div>
+        <span class="stool-name">Gamma</span>
+        <button class="star-btn" data-id="gamma" onclick="toggleFav('gamma',event)" title="Marcar como favorito">☆</button>
+        <select class="stool-sel" onchange="updateStatus('gamma',this.value)"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <button class="stool-edit" onclick="openToolModal('gamma')" title="Editar">✏</button>
+        <button class="stool-del" onclick="deleteTool('gamma')" title="Eliminar">✕</button>
+      </div></div>
+      </div>
+
+    <div class="add-form" style="margin-top:6px">
+      <h4>➕ Añadir nueva herramienta</h4>
+      <div class="form-row">
+        <input class="form-input" id="new-name" placeholder="Nombre (ej: Cursor IDE)">
+        <input class="form-input" id="new-desc" placeholder="Descripción corta">
+        <input class="form-input" id="new-url" placeholder="URL (https://…)">
+      </div>
+      <div class="form-row" style="grid-template-columns:120px 120px 160px 1fr auto">
+        <select class="form-select" id="new-layer">
+          <option value="1">L1 · Modelo</option><option value="2">L2 · Interfaz</option><option value="3">L3 · Memoria</option><option value="4">L4 · Herramientas</option><option value="5">L5 · Agentes</option><option value="6">L6 · Aplicación</option>
+        </select>
+        <select class="form-select" id="new-status"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+        <select class="form-select" id="new-subtype">
+          <option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="anthropic">⚗️ Anthropic</option><option value="openai">🤖 OpenAI</option><option value="google">✨ Google</option><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup>
+        </select>
+        <div></div>
+        <button class="add-btn" onclick="addTool()">Añadir herramienta</button>
+      </div>
+    </div>
+
+    <button class="apply-btn" onclick="applyAll()" style="">✓ Aplicar cambios de vista</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:0 2px">
+      <span style="font-size:.57rem;color:var(--c5);display:flex;align-items:center;gap:4px">💾 Los cambios se guardan automáticamente en este navegador</span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onclick="exportData()" style="font-size:.55rem;color:var(--c2);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font-m)">↓ Exportar</button>
+        <button onclick="importData()" style="font-size:.55rem;color:var(--c2);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font-m)">↑ Importar</button>
+        <button onclick="resetState()" style="font-size:.55rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font-m)">Restablecer valores</button>
+      </div>
+    </div>
+    <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="handleImportFile(event)">
+    <div style="height:24px"></div></div>
+      </div>
+
+      <!-- VIEW: TOOL EDITOR -->
+      <div class="view" id="view-tool">
+        <div class="tev-wrap" id="tev-wrap">
+    <div class="tev-header">
+      <button class="tev-back" onclick="backToLayer()">← Capa</button>
+      <div class="tev-title" style="color:var(--c3)">AnythingLLM</div>
+      <span class="tev-badge" style="color:var(--c3);background:color-mix(in srgb,var(--c3) 10%,transparent);border-color:color-mix(in srgb,var(--c3) 30%,transparent)">L3 · Contexto externo</span>
+    </div>
+
+    <div class="tev-grid">
+
+      <!-- LEFT: datos base -->
+      <div class="tev-col">
+        <div class="tev-sec">Datos básicos</div>
+
+        <div class="tev-field">
+          <label class="tev-label">Nombre</label>
+          <input class="tev-input" id="tev-name" value="AnythingLLM">
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">URL</label>
+          <input class="tev-input" id="tev-url" value="anythingllm.com">
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Descripción corta</label>
+          <textarea class="tev-input" id="tev-desc" rows="2">Aplicación de escritorio todo-en-uno para RAG, agentes IA y chat con documentos. Open-source, privada por defecto, funciona con cualquier LLM local o cloud sin configuración de infraestructura.</textarea>
+        </div>
+        <div class="tev-row2">
+          <div class="tev-field">
+            <label class="tev-label">Estado</label>
+            <select class="tev-select" id="tev-status"><option value="paid">💳 Suscripción</option><option value="api">🔑 API</option><option value="free" selected="">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
+          </div>
+          <div class="tev-field">
+            <label class="tev-label">Capa</label>
+            <select class="tev-select" id="tev-layer"><option value="1">Modelo · LLM Core</option><option value="2">Interfaz · Chat &amp; Studios</option><option value="3" selected="">Memoria · RAG &amp; Conocimiento</option><option value="4">Herramientas · Tools &amp; Conexiones</option><option value="5">Agentes · IA Autónoma</option><option value="6">Aplicación · Tus Proyectos</option></select>
+          </div>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Subtipo</label>
+          <select class="tev-select" id="tev-subtype"><option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="anthropic">⚗️ Anthropic</option><option value="openai">🤖 OpenAI</option><option value="google">✨ Google</option><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag" selected="">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup></select>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Casos de uso · tags</label>
+          <div class="tev-tagpicker" id="tev-tagpicker"><button type="button" class="tev-tagchip act" data-tev-tag="chat" onclick="tevToggleTag('chat')">💬 Chat</button><button type="button" class="tev-tagchip" data-tev-tag="escritura" onclick="tevToggleTag('escritura')">✍️ Escritura</button><button type="button" class="tev-tagchip act" data-tev-tag="análisis" onclick="tevToggleTag('análisis')">🔍 Análisis</button><button type="button" class="tev-tagchip" data-tev-tag="código" onclick="tevToggleTag('código')">💻 Código</button><button type="button" class="tev-tagchip" data-tev-tag="imagen" onclick="tevToggleTag('imagen')">🖼️ Imagen</button><button type="button" class="tev-tagchip" data-tev-tag="vídeo" onclick="tevToggleTag('vídeo')">🎬 Vídeo</button><button type="button" class="tev-tagchip" data-tev-tag="presentaciones" onclick="tevToggleTag('presentaciones')">📊 Presentaciones</button><button type="button" class="tev-tagchip" data-tev-tag="automatización" onclick="tevToggleTag('automatización')">⚡ Automatización</button><button type="button" class="tev-tagchip" data-tev-tag="búsqueda" onclick="tevToggleTag('búsqueda')">🌐 Búsqueda</button><button type="button" class="tev-tagchip act" data-tev-tag="RAG" onclick="tevToggleTag('RAG')">📚 RAG / Docs</button><button type="button" class="tev-tagchip act" data-tev-tag="agentes" onclick="tevToggleTag('agentes')">🤖 Agentes</button><button type="button" class="tev-tagchip" data-tev-tag="web apps" onclick="tevToggleTag('web apps')">🏗 Web Apps</button><button type="button" class="tev-tagchip act" data-tev-tag="local" onclick="tevToggleTag('local')">🖥️ Local</button><button type="button" class="tev-tagchip act" data-tev-tag="privacidad" onclick="tevToggleTag('privacidad')">🔒 Privacidad</button><button type="button" class="tev-tagchip" data-tev-tag="APIs" onclick="tevToggleTag('APIs')">🔑 APIs</button></div>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Notas personales</label>
+          <textarea class="tev-input" id="tev-notes" rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- RIGHT: ficha extendida -->
+      <div class="tev-col">
+        <div class="tev-sec">Ficha de conocimiento</div>
+
+        <div class="tev-field">
+          <label class="tev-label">Qué es</label>
+          <textarea class="tev-input" id="tev-whatIs" rows="4"></textarea>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Por qué está en L3 · Memoria</label>
+          <textarea class="tev-input" id="tev-whyLayer" rows="3"></textarea>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Cómo encaja en tu stack</label>
+          <textarea class="tev-input" id="tev-howFits" rows="3"></textarea>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Integraciones relevantes <span style="color:var(--dim)">(separadas por coma)</span></label>
+          <input class="tev-input" id="tev-integrations" value="">
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Precios (2025)</label>
+          <textarea class="tev-input" id="tev-pricing" rows="2"></textarea>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Estado recomendado para tu stack</label>
+          <textarea class="tev-input" id="tev-recommended" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="tev-actions">
+      <button class="tev-save" onclick="saveToolDetail('anythingllm')">✓ Guardar</button>
+      <button class="tev-cancel" onclick="backToLayer()">Cancelar</button>
+      <a class="tev-open" href="anythingllm.com" target="_blank">↗ Abrir</a>
+      <button class="tev-del" onclick="deleteToolFromDetail('anythingllm')">Eliminar</button>
+    </div></div>
       </div>
 
       <!-- VIEW: APRENDER (Formativa) -->
       <div class="view" id="view-learn">
-        <div class="learn-body" id="learn-body"></div>
+        <div class="learn-body" id="learn-body"><div class="learn-inner">
+    <div class="sect-title" style="margin-bottom:18px">Guía formativa · El stack de abajo a arriba</div>
+    <div class="learn-intro">El diagrama va <strong>de abajo a arriba</strong> — como los pisos de un edificio: los cimientos sostienen todo lo demás. Cada capa depende de las que tiene debajo, pero no necesita las de arriba. <strong>L1 funciona sola. L6 necesita a todas.</strong></div>
+    
+      <div class="learn-layer" style="--lc:var(--c1)">
+        <div class="learn-lhdr">
+          <div class="learn-lnum">L1</div>
+          <div>
+            <div class="learn-lname">Modelo · LLM Core</div>
+            <div class="learn-lsub">Núcleo generativo</div>
+          </div>
+          <span class="learn-ltag">Los cimientos</span>
+        </div>
+        <div class="learn-text">Es el único nivel que genera inteligencia. Todo lo demás es fontanería alrededor. Sin él, nada funciona. Aquí viven <strong>Claude, GPT-4o</strong>, y tu <strong>Llama local en Ollama</strong>. Son "cerebros" sin manos: saben razonar pero no pueden hacer nada por sí solos.</div>
+      </div>
+      <div class="learn-layer" style="--lc:var(--c2)">
+        <div class="learn-lhdr">
+          <div class="learn-lnum">L2</div>
+          <div>
+            <div class="learn-lname">Interfaz · Chat &amp; Studios</div>
+            <div class="learn-lsub">Punto de acceso</div>
+          </div>
+          <span class="learn-ltag">La ventana</span>
+        </div>
+        <div class="learn-text">Es simplemente cómo llegas al modelo. <strong>Claude.ai, Open WebUI, el Playground de OpenAI</strong>... son interfaces que envuelven al LLM y lo hacen usable. Sin L1 debajo, no existe. Es la capa más "visible" pero la menos inteligente.</div>
+      </div>
+      <div class="learn-layer" style="--lc:var(--c3)">
+        <div class="learn-lhdr">
+          <div class="learn-lnum">L3</div>
+          <div>
+            <div class="learn-lname">Memoria · RAG &amp; Conocimiento</div>
+            <div class="learn-lsub">Contexto externo</div>
+          </div>
+          <span class="learn-ltag">La biblioteca</span>
+        </div>
+        <div class="learn-text">El LLM no recuerda nada entre conversaciones y solo conoce lo que aprendió en su entrenamiento. Esta capa le da acceso a tus documentos en tiempo real. <strong>NotebookLM</strong> es L3: subes un PDF, lo trocea, lo vectoriza, y cuando preguntas recupera los fragmentos relevantes antes de responder. Sin L1, no puede responder. Sin L2, no puedes preguntar.</div>
+      </div>
+      <div class="learn-layer" style="--lc:var(--c4)">
+        <div class="learn-lhdr">
+          <div class="learn-lnum">L4</div>
+          <div>
+            <div class="learn-lname">Herramientas · Tools &amp; Conexiones</div>
+            <div class="learn-lsub">Extensión del modelo</div>
+          </div>
+          <span class="learn-ltag">Las manos</span>
+        </div>
+        <div class="learn-text">Aquí el modelo deja de solo hablar y empieza a <strong>actuar</strong>: buscar en internet, leer un email, crear un evento, llamar a una API. <strong>MCP</strong> es el protocolo que lo hace posible. <strong>n8n</strong> orquesta esos flujos. Esta capa requiere L1 (para decidir qué herramienta usar) y L2 (para recibir la instrucción).</div>
+      </div>
+      <div class="learn-layer" style="--lc:var(--c5)">
+        <div class="learn-lhdr">
+          <div class="learn-lnum">L5</div>
+          <div>
+            <div class="learn-lname">Agentes · IA Autónoma</div>
+            <div class="learn-lsub">Coding · Builders · Browser</div>
+          </div>
+          <span class="learn-ltag">El autónomo</span>
+        </div>
+        <div class="learn-text">Combina todo lo anterior en bucles: el modelo planifica → usa herramientas (L4) → observa el resultado → ajusta → repite. No espera instrucción por instrucción. <strong>Antigravity</strong> hace esto con tu código: recibe un objetivo, lee el repo entero, ejecuta cambios en múltiples archivos. <strong>Copilot</strong> es más simple: sugiere mientras escribes, tú decides.</div>
+      </div>
+      <div class="learn-layer" style="--lc:var(--c6)">
+        <div class="learn-lhdr">
+          <div class="learn-lnum">L6</div>
+          <div>
+            <div class="learn-lname">Aplicación · Tus Proyectos</div>
+            <div class="learn-lsub">Capa de salida</div>
+          </div>
+          <span class="learn-ltag">Tu negocio</span>
+        </div>
+        <div class="learn-text">Donde todo el stack se convierte en valor concreto para ti. Tus tres apps Python, la web de <strong>espacioGijón</strong>, el portfolio. Esta capa consume las inferiores según necesite: llama a la API de Claude (L1 vía L4), puede usar RAG (L3), puede lanzar agentes (L5).</div>
+      </div>
+    <div class="learn-gold">
+      <h3>⚡ La regla de oro</h3>
+      <p>Cada capa depende de las que tiene debajo, pero <strong>no necesita las de arriba</strong>. <strong>L1</strong> funciona sola — es el único nivel que genera inteligencia. <strong>L6</strong> necesita a todas — es donde el stack se convierte en valor real. Puedes usar solo L1+L2 para el 80% de los casos de uso diarios.</p>
+    </div>
+    <div style="height:28px"></div>
+  </div></div>
       </div>
 
       <!-- VIEW: COMANDOS (Referencia de uso) -->
       <div class="view" id="view-commands">
-        <div class="cmd-body" id="cmd-body"></div>
+        <div class="cmd-body" id="cmd-body">
+    <div class="cmd-list-col">
+      <div class="cmd-list-hdr">Referencia de comandos</div>
+      <div class="cmd-item" data-cmd-id="claude-code" onclick="openCmdDetail('claude-code')">
+      <div class="cmd-item-icon">🤖</div>
+      <div class="cmd-item-info">
+        <div class="cmd-item-name">Claude Code CLI</div>
+        <div class="cmd-item-sub">Agente AI · CLI oficial de Anthropic</div>
+      </div>
+      <span class="cmd-item-badge">CMD</span>
+    </div><div class="cmd-item" data-cmd-id="claude-sonnet" onclick="openCmdDetail('claude-sonnet')">
+      <div class="cmd-item-icon">⚗️</div>
+      <div class="cmd-item-info">
+        <div class="cmd-item-name">Claude API (Anthropic)</div>
+        <div class="cmd-item-sub">API REST · SDK Python / TypeScript</div>
+      </div>
+      <span class="cmd-item-badge">CMD</span>
+    </div><div class="cmd-item" data-cmd-id="ollama" onclick="openCmdDetail('ollama')">
+      <div class="cmd-item-icon">🦙</div>
+      <div class="cmd-item-info">
+        <div class="cmd-item-name">Ollama</div>
+        <div class="cmd-item-sub">Servidor LLM local · localhost:11434</div>
+      </div>
+      <span class="cmd-item-badge">CMD</span>
+    </div><div class="cmd-item" data-cmd-id="n8n" onclick="openCmdDetail('n8n')">
+      <div class="cmd-item-icon">🔁</div>
+      <div class="cmd-item-info">
+        <div class="cmd-item-name">n8n self-hosted</div>
+        <div class="cmd-item-sub">Automatización de flujos · localhost:5678</div>
+      </div>
+      <span class="cmd-item-badge">CMD</span>
+    </div><div class="cmd-item" data-cmd-id="mcp" onclick="openCmdDetail('mcp')">
+      <div class="cmd-item-icon">🔌</div>
+      <div class="cmd-item-info">
+        <div class="cmd-item-name">MCP Protocol</div>
+        <div class="cmd-item-sub">Model Context Protocol · Anthropic</div>
+      </div>
+      <span class="cmd-item-badge">CMD</span>
+    </div><div class="cmd-item act" data-cmd-id="copilot" onclick="openCmdDetail('copilot')">
+      <div class="cmd-item-icon">🐙</div>
+      <div class="cmd-item-info">
+        <div class="cmd-item-name">GitHub Copilot</div>
+        <div class="cmd-item-sub">Asistente IA inline · VS Code</div>
+      </div>
+      <span class="cmd-item-badge">CMD</span>
+    </div><div class="cmd-item" data-cmd-id="claudeai" onclick="openCmdDetail('claudeai')">
+      <div class="cmd-item-icon">💬</div>
+      <div class="cmd-item-info">
+        <div class="cmd-item-name">Claude.ai (interfaz)</div>
+        <div class="cmd-item-sub">Interfaz web oficial · claude.ai</div>
+      </div>
+      <span class="cmd-item-badge">CMD</span>
+    </div>
+    </div>
+    <div class="cmd-detail-col" id="cmd-detail">
+    <div class="cmd-ref-hdr">
+      <div class="cmd-ref-icon">🐙</div>
+      <div class="cmd-ref-title">GitHub Copilot</div>
+      <div class="cmd-ref-sub">Asistente IA inline · VS Code</div>
+    </div>
+    <div class="cmd-section">
+      <div class="cmd-section-title">Atajos en VS Code</div>
+      <div class="cmd-entry">
+        <span class="cmd-cmd">Tab</span>
+        <div class="cmd-desc"><strong>Aceptar sugerencia</strong> de Copilot. El atajo más usado. Acepta la sugerencia completa actual.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">Esc</span>
+        <div class="cmd-desc">Rechazar sugerencia actual.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">Alt + ]</span>
+        <div class="cmd-desc">Ver siguiente sugerencia alternativa (si hay varias).</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">Alt + [</span>
+        <div class="cmd-desc">Ver sugerencia anterior.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">Ctrl + Enter</span>
+        <div class="cmd-desc">Abrir panel con todas las sugerencias. Ver múltiples opciones a la vez.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">Ctrl + I</span>
+        <div class="cmd-desc">Abrir Copilot Chat inline. Puedes preguntar sobre el código seleccionado directamente.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">Ctrl + Shift + I</span>
+        <div class="cmd-desc">Abrir panel de Copilot Chat lateral. Para conversaciones largas o exploración.</div>
+      </div>
+    </div><div class="cmd-section">
+      <div class="cmd-section-title">Comandos de Copilot Chat</div>
+      <div class="cmd-entry">
+        <span class="cmd-cmd">/explain</span>
+        <div class="cmd-desc">Explicar el código seleccionado o el archivo actual.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">/fix</span>
+        <div class="cmd-desc">Proponer arreglo para un error o problema en el código.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">/tests</span>
+        <div class="cmd-desc">Generar tests unitarios para el código seleccionado.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">/doc</span>
+        <div class="cmd-desc">Generar documentación (docstring) para función o clase seleccionada.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">@workspace</span>
+        <div class="cmd-desc">Dar contexto de todo el proyecto al hacer la pregunta.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">@terminal</span>
+        <div class="cmd-desc">Dar contexto del terminal (últimos comandos/errores) para diagnosticar problemas.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">#file:nombre.py</span>
+        <div class="cmd-desc">Incluir un archivo específico en el contexto de la pregunta.</div>
+      </div>
+    </div><div class="cmd-section">
+      <div class="cmd-section-title">Mejores prácticas</div>
+      <div class="cmd-entry">
+        <span class="cmd-cmd">Comentarios como prompt</span>
+        <div class="cmd-desc">Escribe un comentario describiendo lo que quieres y Copilot generará el código. Funciona en cualquier lenguaje.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">Nombres descriptivos</span>
+        <div class="cmd-desc">Funciones y variables con nombres claros mejoran drásticamente la calidad de las sugerencias.</div>
+      </div><div class="cmd-entry">
+        <span class="cmd-cmd">Copilot + Claude Code</span>
+        <div class="cmd-desc"><strong>Copilot</strong> para sugerencias inline (reactivo). <strong>Claude Code</strong> para cambios multi-archivo o razonamiento complejo (proactivo).</div>
+      </div>
+    </div>
+    <div style="height:24px"></div></div></div>
+      </div>
+
+      <!-- VIEW: USOS (Filtro por caso de uso) -->
+      <div class="view" id="view-uses">
+        <div class="uses-body" id="uses-body"></div>
       </div>
 
     </div>
@@ -488,10 +1510,574 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
         <button class="stab" onclick="showTab('models',this)">Modelos</button>
         <button class="stab" onclick="showTab('apps',this)">Mis Apps</button>
       </div>
-      <div class="sbody act" id="sb-links"></div>
-      <div class="sbody" id="sb-tools"></div>
-      <div class="sbody" id="sb-models"></div>
-      <div class="sbody" id="sb-apps"></div>
+      <div class="sbody act" id="sb-links"><div style="padding:8px 8px 0"><div class="stype-hdr" id="sbg-hdr-links-L0" style="--lc:var(--muted);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('links-L0',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🔗</span>
+      <span class="stype-label">Otros</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-links-L0">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si free" href="https://github.com/joseavelsan" target="_blank">
+      <div class="si-icon">🐙</div>
+      <div class="si-info"><div class="si-name">GitHub joseavelsan</div><div class="si-sub">github.com/joseavelsan</div></div>
+      <span class="si-badge bd-free">🆓 Gratis</span>
+    </a></div>
+    </div><div class="stype-hdr" id="sbg-hdr-links-L1" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('links-L1',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon"><span style="font-size:.6rem;font-weight:800;color:var(--c1)">L1</span></span>
+      <span class="stype-label">L1 · Modelo</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-links-L1">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si free" href="http://localhost:11434" target="_blank">
+      <div class="si-icon">🦙</div>
+      <div class="si-info"><div class="si-name">Ollama API</div><div class="si-sub">localhost:11434</div></div>
+      <span class="si-badge bd-free">🆓 Gratis</span>
+    </a></div>
+    </div><div class="stype-hdr" id="sbg-hdr-links-L2" style="--lc:var(--c2);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('links-L2',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon"><span style="font-size:.6rem;font-weight:800;color:var(--c2)">L2</span></span>
+      <span class="stype-label">L2 · Interfaz</span>
+      <span class="stype-count">6 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-links-L2">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si paid" href="https://claude.ai" target="_blank">
+      <div class="si-icon">⚗️</div>
+      <div class="si-info"><div class="si-name">Claude.ai</div><div class="si-sub">claude.ai</div></div>
+      <span class="si-badge bd-paid">💳 Suscripción</span>
+    </a><a class="si paid" href="https://chatgpt.com" target="_blank">
+      <div class="si-icon">💬</div>
+      <div class="si-info"><div class="si-name">ChatGPT</div><div class="si-sub">chatgpt.com</div></div>
+      <span class="si-badge bd-paid">💳 Suscripción</span>
+    </a><a class="si free" href="http://localhost:3000" target="_blank">
+      <div class="si-icon">🖥️</div>
+      <div class="si-info"><div class="si-name">Open WebUI</div><div class="si-sub">localhost:3000</div></div>
+      <span class="si-badge bd-free">🆓 Gratis</span>
+    </a><a class="si paid" href="https://console.anthropic.com" target="_blank">
+      <div class="si-icon">🔬</div>
+      <div class="si-info"><div class="si-name">Anthropic Console</div><div class="si-sub">console.anthropic.com</div></div>
+      <span class="si-badge bd-paid">💳 Suscripción</span>
+    </a><a class="si paid" href="https://platform.openai.com" target="_blank">
+      <div class="si-icon">🧪</div>
+      <div class="si-info"><div class="si-name">OpenAI Platform</div><div class="si-sub">platform.openai.com</div></div>
+      <span class="si-badge bd-paid">💳 Suscripción</span>
+    </a><a class="si paid" href="https://aistudio.google.com" target="_blank">
+      <div class="si-icon">✨</div>
+      <div class="si-info"><div class="si-name">Google AI Studio</div><div class="si-sub">aistudio.google.com</div></div>
+      <span class="si-badge bd-paid">💳 Suscripción</span>
+    </a></div>
+    </div><div class="stype-hdr" id="sbg-hdr-links-L3" style="--lc:var(--c3);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('links-L3',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon"><span style="font-size:.6rem;font-weight:800;color:var(--c3)">L3</span></span>
+      <span class="stype-label">L3 · Memoria</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-links-L3">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si free" href="https://notebooklm.google.com" target="_blank">
+      <div class="si-icon">📓</div>
+      <div class="si-info"><div class="si-name">NotebookLM</div><div class="si-sub">notebooklm.google.com</div></div>
+      <span class="si-badge bd-free">🆓 Gratis</span>
+    </a></div>
+    </div><div class="stype-hdr" id="sbg-hdr-links-L4" style="--lc:var(--c4);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('links-L4',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon"><span style="font-size:.6rem;font-weight:800;color:var(--c4)">L4</span></span>
+      <span class="stype-label">L4 · Herramientas</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-links-L4">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si inactive" href="http://localhost:5678" target="_blank">
+      <div class="si-icon">🔁</div>
+      <div class="si-info"><div class="si-name">n8n local</div><div class="si-sub">localhost:5678</div></div>
+      <span class="si-badge bd-inactive">⬜ Sin activar</span>
+    </a></div>
+    </div><div class="stype-hdr" id="sbg-hdr-links-L6" style="--lc:var(--c6);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('links-L6',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon"><span style="font-size:.6rem;font-weight:800;color:var(--c6)">L6</span></span>
+      <span class="stype-label">L6 · Aplicación</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-links-L6">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si free" href="https://gamma.app" target="_blank">
+      <div class="si-icon">🎯</div>
+      <div class="si-info"><div class="si-name">Gamma</div><div class="si-sub">gamma.app</div></div>
+      <span class="si-badge bd-free">🆓 Gratis</span>
+    </a></div>
+    </div><div style="height:12px"></div></div></div>
+      <div class="sbody" id="sb-tools"><div style="padding:8px 8px 0"><div class="stype-hdr" id="sbg-hdr-tools-anthropic" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-anthropic',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">⚗️</span>
+      <span class="stype-label">L1 · Anthropic</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-anthropic">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-sonnet')">
+    <div class="si-info">
+      <div class="si-name">Claude Sonnet 4.6</div>
+      <div class="si-sub">Modelo principal. 200K ctx. Código, análisis.</div>
+    </div>
+    <button class="star-btn" data-id="claude-sonnet" onclick="toggleFav('claude-sonnet',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-opus')">
+    <div class="si-info">
+      <div class="si-name">Claude Opus 4.6</div>
+      <div class="si-sub">Razonamiento profundo, tareas críticas.</div>
+    </div>
+    <button class="star-btn" data-id="claude-opus" onclick="toggleFav('claude-opus',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-openai" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-openai',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🤖</span>
+      <span class="stype-label">L1 · OpenAI</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-openai">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('gpt4o')">
+    <div class="si-info">
+      <div class="si-name">GPT-4o</div>
+      <div class="si-sub">OpenAI. Base de Copilot y Codex.</div>
+    </div>
+    <button class="star-btn" data-id="gpt4o" onclick="toggleFav('gpt4o',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-google" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-google',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">✨</span>
+      <span class="stype-label">L1 · Google</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-google">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('gemini')">
+    <div class="si-info">
+      <div class="si-name">Gemini 2.0 Pro</div>
+      <div class="si-sub">Google. 1M tokens ctx. NotebookLM base.</div>
+    </div>
+    <button class="star-btn" data-id="gemini" onclick="toggleFav('gemini',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-local" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-local',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🖥️</span>
+      <span class="stype-label">L1 · Local</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-local">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('ollama')">
+    <div class="si-info">
+      <div class="si-name">llama 3.x (local) (llama3.1:8b)</div>
+      <div class="si-sub">Servidor local de LLMs. API en :11434.
+llama3.1:…</div>
+    </div>
+    <button class="star-btn" data-id="ollama" onclick="toggleFav('ollama',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('llama3')">
+    <div class="si-info">
+      <div class="si-name">Ollama</div>
+      <div class="si-sub">Interface oficinal Ollama. Modelos local y cloud</div>
+    </div>
+    <button class="star-btn" data-id="llama3" onclick="toggleFav('llama3',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-cloudapi" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-cloudapi',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">⚡</span>
+      <span class="stype-label">L1 · Cloud / API</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-cloudapi">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('groq')">
+    <div class="si-info">
+      <div class="si-name">Groq (Llama/Mixtral)</div>
+      <div class="si-sub">Inferencia ultrarrápida. Tier gratuito.</div>
+    </div>
+    <button class="star-btn" data-id="groq" onclick="toggleFav('groq',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-webchat" style="--lc:var(--c2);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-webchat',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">💬</span>
+      <span class="stype-label">L2 · Chat Web</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-webchat">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('claudeai')">
+    <div class="si-info">
+      <div class="si-name">Claude.ai</div>
+      <div class="si-sub">Interfaz oficial Anthropic. Projects, artefactos…</div>
+    </div>
+    <button class="star-btn fav" data-id="claudeai" onclick="toggleFav('claudeai',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('chatgpt')">
+    <div class="si-info">
+      <div class="si-name">ChatGPT (web)</div>
+      <div class="si-sub">Interfaz OpenAI. GPT-4o, DALL-E, voz.</div>
+    </div>
+    <button class="star-btn" data-id="chatgpt" onclick="toggleFav('chatgpt',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-localui" style="--lc:var(--c2);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-localui',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🖥️</span>
+      <span class="stype-label">L2 · UI Local</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-localui">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('openwebui')">
+    <div class="si-info">
+      <div class="si-name">Open WebUI</div>
+      <div class="si-sub">Visor web de Ollama en Docker. localhost:3000.</div>
+    </div>
+    <button class="star-btn" data-id="openwebui" onclick="toggleFav('openwebui',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-devcons" style="--lc:var(--c2);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-devcons',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🔬</span>
+      <span class="stype-label">L2 · Consola Dev</span>
+      <span class="stype-count">5 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-devcons">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('console-ant')">
+    <div class="si-info">
+      <div class="si-name">Anthropic Console</div>
+      <div class="si-sub">API keys, Workbench, usage. Para tus apps.</div>
+    </div>
+    <button class="star-btn" data-id="console-ant" onclick="toggleFav('console-ant',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('oai-platform')">
+    <div class="si-info">
+      <div class="si-name">OpenAI Platform</div>
+      <div class="si-sub">Playground OpenAI. API keys, créditos.</div>
+    </div>
+    <button class="star-btn" data-id="oai-platform" onclick="toggleFav('oai-platform',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('gai-studio')">
+    <div class="si-info">
+      <div class="si-name">Google AI Studio</div>
+      <div class="si-sub">Gemini API. Tier gratuito generoso.</div>
+    </div>
+    <button class="star-btn" data-id="gai-studio" onclick="toggleFav('gai-studio',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div><div class="si inactive" style="cursor:pointer" onclick="openToolModal('lm-studio')">
+    <div class="si-info">
+      <div class="si-name">LM Studio</div>
+      <div class="si-sub">App de escritorio para ejecutar LLMs locales. Al…</div>
+    </div>
+    <button class="star-btn" data-id="lm-studio" onclick="toggleFav('lm-studio',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
+  </div><div class="si api" style="cursor:pointer" onclick="openToolModal('openrourter')">
+    <div class="si-info">
+      <div class="si-name">OpenRourter</div>
+      <div class="si-sub">Agregador de +200 modelos con una sola API key. …</div>
+    </div>
+    <button class="star-btn" data-id="openrourter" onclick="toggleFav('openrourter',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-api">🔑 API</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-cloudrag" style="--lc:var(--c3);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-cloudrag',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">☁️</span>
+      <span class="stype-label">L3 · RAG Cloud</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-cloudrag">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('notebooklm')">
+    <div class="si-info">
+      <div class="si-name">NotebookLM</div>
+      <div class="si-sub">RAG automático Google. PDFs, docs, vídeos.</div>
+    </div>
+    <button class="star-btn fav" data-id="notebooklm" onclick="toggleFav('notebooklm',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-proj')">
+    <div class="si-info">
+      <div class="si-name">Claude Projects</div>
+      <div class="si-sub">Contexto persistente con docs en claude.ai.</div>
+    </div>
+    <button class="star-btn fav" data-id="claude-proj" onclick="toggleFav('claude-proj',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-localrag" style="--lc:var(--c3);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-localrag',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🗄️</span>
+      <span class="stype-label">L3 · RAG Local</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-localrag">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('owui-rag')">
+    <div class="si-info">
+      <div class="si-name">Open WebUI RAG</div>
+      <div class="si-sub">RAG local con modelos Ollama. 100% privado.</div>
+    </div>
+    <button class="star-btn" data-id="owui-rag" onclick="toggleFav('owui-rag',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('anythingllm')">
+    <div class="si-info">
+      <div class="si-name">AnythingLLM</div>
+      <div class="si-sub">Aplicación de escritorio todo-en-uno para RAG, a…</div>
+    </div>
+    <button class="star-btn" data-id="anythingllm" onclick="toggleFav('anythingllm',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-vectordb" style="--lc:var(--c3);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-vectordb',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">📊</span>
+      <span class="stype-label">L3 · Base Vectorial</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-vectordb">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si inactive" style="cursor:pointer" onclick="openToolModal('chromadb')">
+    <div class="si-info">
+      <div class="si-name">ChromaDB</div>
+      <div class="si-sub">Base vectorial local. pip install chromadb.</div>
+    </div>
+    <button class="star-btn" data-id="chromadb" onclick="toggleFav('chromadb',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-framework" style="--lc:var(--c3);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-framework',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🔧</span>
+      <span class="stype-label">L3 · Framework</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-framework">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si inactive" style="cursor:pointer" onclick="openToolModal('llamaindex')">
+    <div class="si-info">
+      <div class="si-name">LlamaIndex</div>
+      <div class="si-sub">Framework Python RAG. Conecta con ChromaDB.</div>
+    </div>
+    <button class="star-btn" data-id="llamaindex" onclick="toggleFav('llamaindex',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-protocol" style="--lc:var(--c4);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-protocol',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🔌</span>
+      <span class="stype-label">L4 · Protocolo</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-protocol">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('mcp')">
+    <div class="si-info">
+      <div class="si-name">MCP Protocol</div>
+      <div class="si-sub">Gmail, Notion, Calendar, M365 conectados.</div>
+    </div>
+    <button class="star-btn" data-id="mcp" onclick="toggleFav('mcp',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-automation" style="--lc:var(--c4);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-automation',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">⚡</span>
+      <span class="stype-label">L4 · Automatización</span>
+      <span class="stype-count">4 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-automation">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si inactive" style="cursor:pointer" onclick="openToolModal('n8n')">
+    <div class="si-info">
+      <div class="si-name">n8n self-hosted</div>
+      <div class="si-sub">Automatización flujos IA. localhost:5678.</div>
+    </div>
+    <button class="star-btn" data-id="n8n" onclick="toggleFav('n8n',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
+  </div><div class="si inactive" style="cursor:pointer" onclick="openToolModal('zapier')">
+    <div class="si-info">
+      <div class="si-name">Zapier AI</div>
+      <div class="si-sub">Automatización cloud. Alternativa a n8n.</div>
+    </div>
+    <button class="star-btn" data-id="zapier" onclick="toggleFav('zapier',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
+  </div><div class="si inactive" style="cursor:pointer" onclick="openToolModal('make')">
+    <div class="si-info">
+      <div class="si-name">Make</div>
+      <div class="si-sub">Automatización cloud. Alternativa a n8n y Zapier…</div>
+    </div>
+    <button class="star-btn" data-id="make" onclick="toggleFav('make',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
+  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('playwright')">
+    <div class="si-info">
+      <div class="si-name">Playwright</div>
+      <div class="si-sub">Librería de automatización de navegador. Base té…</div>
+    </div>
+    <button class="star-btn" data-id="playwright" onclick="toggleFav('playwright',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-search" style="--lc:var(--c4);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-search',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🔍</span>
+      <span class="stype-label">L4 · Búsqueda Web</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-search">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('websearch')">
+    <div class="si-info">
+      <div class="si-name">Web Search (Claude)</div>
+      <div class="si-sub">Búsqueda web integrada en claude.ai.</div>
+    </div>
+    <button class="star-btn" data-id="websearch" onclick="toggleFav('websearch',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-coding" style="--lc:var(--c5);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-coding',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">⌨</span>
+      <span class="stype-label">L5 · Vibe Coding</span>
+      <span class="stype-count">6 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-coding">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('codex-api')">
+    <div class="si-info">
+      <div class="si-name">Codex</div>
+      <div class="si-sub">API código OpenAI. Plus web, sin API key.</div>
+    </div>
+    <button class="star-btn" data-id="codex-api" onclick="toggleFav('codex-api',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('copilot')">
+    <div class="si-info">
+      <div class="si-name">GitHub Copilot</div>
+      <div class="si-sub">Extensión VS Code. Autocomplete + chat inline.</div>
+    </div>
+    <button class="star-btn fav" data-id="copilot" onclick="toggleFav('copilot',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('antigravity')">
+    <div class="si-info">
+      <div class="si-name">Antigravity</div>
+      <div class="si-sub">Agente autónomo multi-archivo. Como Cursor.</div>
+    </div>
+    <button class="star-btn fav" data-id="antigravity" onclick="toggleFav('antigravity',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-code')">
+    <div class="si-info">
+      <div class="si-name">Claude Code</div>
+      <div class="si-sub">CLI agente Anthropic. npm install @anthropic-ai/…</div>
+    </div>
+    <button class="star-btn fav" data-id="claude-code" onclick="toggleFav('claude-code',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-paid">💳 Suscripción</span>
+  </div><div class="si inactive" style="cursor:pointer" onclick="openToolModal('cursor')">
+    <div class="si-info">
+      <div class="si-name">Cursor IDE</div>
+      <div class="si-sub">IDE con agente IA integrado. Alternativa a VS Co…</div>
+    </div>
+    <button class="star-btn" data-id="cursor" onclick="toggleFav('cursor',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
+  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('continue-dev')">
+    <div class="si-info">
+      <div class="si-name">Continue.dev</div>
+      <div class="si-sub">Copilot open-source. Conecta con Ollama local.</div>
+    </div>
+    <button class="star-btn" data-id="continue-dev" onclick="toggleFav('continue-dev',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-builder" style="--lc:var(--c5);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-builder',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🏗</span>
+      <span class="stype-label">L5 · Web Builders</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-builder">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('lovable')">
+    <div class="si-info">
+      <div class="si-name">Lovable</div>
+      <div class="si-sub">Genera apps web completas desde prompt.</div>
+    </div>
+    <button class="star-btn" data-id="lovable" onclick="toggleFav('lovable',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('base44')">
+    <div class="si-info">
+      <div class="si-name">Base44</div>
+      <div class="si-sub">Low-code IA para construir apps. Sin código.</div>
+    </div>
+    <button class="star-btn" data-id="base44" onclick="toggleFav('base44',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-tools-browser" style="--lc:var(--c5);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('tools-browser',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🌐</span>
+      <span class="stype-label">L5 · Browser Agents</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-tools-browser">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si trial" style="cursor:pointer" onclick="openToolModal('genspark')">
+    <div class="si-info">
+      <div class="si-name">Genspark</div>
+      <div class="si-sub">Es un agente de búsqueda e investigación autónom…</div>
+    </div>
+    <button class="star-btn fav" data-id="genspark" onclick="toggleFav('genspark',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-trial">🧪 Prueba</span>
+  </div></div>
+    </div><div class="slist"><div class="si free" style="cursor:pointer" onclick="openToolModal('kaggle')">
+    <div class="si-info">
+      <div class="si-name">Kaggle</div>
+      <div class="si-sub">Plataforma de datasets, notebooks y competicione…</div>
+    </div>
+    <button class="star-btn" data-id="kaggle" onclick="toggleFav('kaggle',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('arena')">
+    <div class="si-info">
+      <div class="si-name">Arena</div>
+      <div class="si-sub">Plataforma donde comparas respuestas de múltiple…</div>
+    </div>
+    <button class="star-btn" data-id="arena" onclick="toggleFav('arena',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+  </div></div><div style="height:12px"></div></div></div>
+      <div class="sbody" id="sb-models"><div style="padding:8px 8px 0"><div class="stype-hdr" id="sbg-hdr-models-anthropic" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('models-anthropic',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">⚗️</span>
+      <span class="stype-label">Anthropic</span>
+      <span class="stype-count">2 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-models-anthropic">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-sonnet')">
+        <div class="si-info"><div class="si-name">Claude Sonnet 4.6</div><div class="si-sub">Modelo principal. 200K ctx. Código, análisis.</div></div>
+        <button class="star-btn" data-id="claude-sonnet" onclick="toggleFav('claude-sonnet',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+      </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-opus')">
+        <div class="si-info"><div class="si-name">Claude Opus 4.6</div><div class="si-sub">Razonamiento profundo, tareas críticas.</div></div>
+        <button class="star-btn" data-id="claude-opus" onclick="toggleFav('claude-opus',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+      </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-models-openai" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('models-openai',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🤖</span>
+      <span class="stype-label">OpenAI</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-models-openai">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('gpt4o')">
+        <div class="si-info"><div class="si-name">GPT-4o</div><div class="si-sub">OpenAI. Base de Copilot y Codex.</div></div>
+        <button class="star-btn" data-id="gpt4o" onclick="toggleFav('gpt4o',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+      </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-models-google" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('models-google',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">✨</span>
+      <span class="stype-label">Google</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-models-google">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('gemini')">
+        <div class="si-info"><div class="si-name">Gemini 2.0 Pro</div><div class="si-sub">Google. 1M tokens ctx. NotebookLM base.</div></div>
+        <button class="star-btn" data-id="gemini" onclick="toggleFav('gemini',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
+      </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-models-local" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('models-local',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🖥️</span>
+      <span class="stype-label">Local</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-models-local">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('ollama')">
+        <div class="si-info"><div class="si-name">llama 3.x (local) (llama3.1:8b)</div><div class="si-sub">Servidor local de LLMs. API en :11434.
+llama3.1:…</div></div>
+        <button class="star-btn" data-id="ollama" onclick="toggleFav('ollama',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+      </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-models-cloudapi" style="--lc:var(--c1);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('models-cloudapi',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">⚡</span>
+      <span class="stype-label">Cloud / API</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-models-cloudapi">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('groq')">
+        <div class="si-info"><div class="si-name">Groq (Llama/Mixtral)</div><div class="si-sub">Inferencia ultrarrápida. Tier gratuito.</div></div>
+        <button class="star-btn" data-id="groq" onclick="toggleFav('groq',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
+      </div></div>
+    </div><div style="height:12px"></div></div></div>
+      <div class="sbody" id="sb-apps"><div style="padding:8px 8px 0"><div class="stype-hdr" id="sbg-hdr-apps-myapp" style="--lc:var(--c6);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('apps-myapp',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">💻</span>
+      <span class="stype-label">App Propia</span>
+      <span class="stype-count">5 herramientas</span>
+    </div>
+    <div class="stype-body" id="sbg-body-apps-myapp">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si app-active" style="cursor:pointer" onclick="openToolModal('app-gastos')">
+          <div class="app-active-dot"></div>
+          <div class="si-info"><div class="si-name">app_gastos_familia</div><div class="si-sub">Gestión gastos domésticos. Python.</div></div>
+          <a href="https://github.com/joseavelsan/app_gastos_familia" target="_blank" style="font-size:.62rem;color:var(--c5);font-weight:700;flex-shrink:0" onclick="event.stopPropagation()">↗</a>
+        </div><div class="si app-active" style="cursor:pointer" onclick="openToolModal('app-jobs')">
+          <div class="app-active-dot"></div>
+          <div class="si-info"><div class="si-name">app_job_tracker</div><div class="si-sub">Seguimiento búsqueda empleo. Python.</div></div>
+          <a href="https://github.com/joseavelsan/app_job_tracker" target="_blank" style="font-size:.62rem;color:var(--c5);font-weight:700;flex-shrink:0" onclick="event.stopPropagation()">↗</a>
+        </div><div class="si app-active" style="cursor:pointer" onclick="openToolModal('app-aparts')">
+          <div class="app-active-dot"></div>
+          <div class="si-info"><div class="si-name">app_apartamentos</div><div class="si-sub">espacioGijón 2 unidades. Python.</div></div>
+          <a href="https://github.com/joseavelsan/app_gestion_apartamentos" target="_blank" style="font-size:.62rem;color:var(--c5);font-weight:700;flex-shrink:0" onclick="event.stopPropagation()">↗</a>
+        </div><div class="si app-active" style="cursor:pointer" onclick="openToolModal('web-espacio')">
+          <div class="app-active-dot"></div>
+          <div class="si-info"><div class="si-name">espacioGijón web</div><div class="si-sub">Web turística. HTML single-file.</div></div>
+          <span style="font-size:.55rem;color:var(--dim)">local</span>
+        </div><div class="si app-active" style="cursor:pointer" onclick="openToolModal('portfolio')">
+          <div class="app-active-dot"></div>
+          <div class="si-info"><div class="si-name">Portfolio profesional</div><div class="si-sub">Portfolio ejecutivo. Timeline industrial.</div></div>
+          <span style="font-size:.55rem;color:var(--dim)">local</span>
+        </div></div>
+    </div><div class="stype-hdr" id="sbg-hdr-apps-saastool" style="--lc:var(--c6);margin-top:10px;margin-bottom:2px" onclick="toggleSbGroup('apps-saastool',event)">
+      <span class="stype-toggle">▼</span>
+      <span class="stype-icon">🛠️</span>
+      <span class="stype-label">SaaS Tool</span>
+      <span class="stype-count">1 herramienta</span>
+    </div>
+    <div class="stype-body" id="sbg-body-apps-saastool">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si app-active" style="cursor:pointer" onclick="openToolModal('gamma')">
+          <div class="app-active-dot"></div>
+          <div class="si-info"><div class="si-name">Gamma</div><div class="si-sub">Generador de presentaciones y docs con IA.</div></div>
+          <a href="https://gamma.app" target="_blank" style="font-size:.62rem;color:var(--c5);font-weight:700;flex-shrink:0" onclick="event.stopPropagation()">↗</a>
+        </div></div>
+    </div><div style="height:12px"></div></div></div>
     </div>
 
   </div>
@@ -504,54 +2090,198 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 ═══════════════════════════════════════════ */
 let TOOLS = [
   // L1 Modelo
-  {id:'claude-sonnet', name:'Claude Sonnet 4.6', layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Modelo principal. 200K ctx. Código, análisis.'},
-  {id:'claude-opus',   name:'Claude Opus 4.6',   layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Razonamiento profundo, tareas críticas.'},
-  {id:'ollama',        name:'Ollama',             layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Servidor local de LLMs. API en :11434.'},
-  {id:'llama3',        name:'Llama 3.x (local)',  layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Modelo local vía Ollama. Privado, sin coste.'},
-  {id:'gpt4o',         name:'GPT-4o',             layer:1, status:'paid',  subtype:'openai',    url:'https://chatgpt.com',          desc:'OpenAI. Base de Copilot y Codex.'},
-  {id:'gemini',        name:'Gemini 2.0 Pro',     layer:1, status:'free',  subtype:'google',    url:'https://gemini.google.com',    desc:'Google. 1M tokens ctx. NotebookLM base.'},
-  {id:'groq',          name:'Groq (Llama/Mixtral)',layer:1,status:'free',  subtype:'cloudapi',  url:'https://console.groq.com',     desc:'Inferencia ultrarrápida. Tier gratuito.'},
+  {id:'claude-sonnet', name:'Claude Sonnet 4.6', layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Modelo principal. 200K ctx. Código, análisis.',              tags:['chat','código','escritura','análisis']},
+  {id:'claude-opus',   name:'Claude Opus 4.6',   layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Razonamiento profundo, tareas críticas.',                    tags:['chat','código','escritura','análisis']},
+  {id:'ollama',        name:'Ollama',             layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Servidor local de LLMs. API en :11434.',                     tags:['local','privacidad','APIs']},
+  {id:'llama3',        name:'Llama 3.x (local)',  layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Modelo local vía Ollama. Privado, sin coste.',               tags:['chat','local','privacidad']},
+  {id:'gpt4o',         name:'GPT-4o',             layer:1, status:'paid',  subtype:'openai',    url:'https://chatgpt.com',          desc:'OpenAI. Base de Copilot y Codex.',                           tags:['chat','imagen','escritura','código']},
+  {id:'gemini',        name:'Gemini 2.0 Pro',     layer:1, status:'free',  subtype:'google',    url:'https://gemini.google.com',    desc:'Google. 1M tokens ctx. NotebookLM base.',                    tags:['chat','imagen','análisis','búsqueda','vídeo']},
+  {id:'groq',          name:'Groq (Llama/Mixtral)',layer:1,status:'free',  subtype:'cloudapi',  url:'https://console.groq.com',     desc:'Inferencia ultrarrápida. Tier gratuito.',                    tags:['chat','APIs']},
   // L2 Interfaz
-  {id:'claudeai',      name:'Claude.ai',          layer:2, status:'paid',  subtype:'webchat',   url:'https://claude.ai',            desc:'Interfaz oficial Anthropic. Projects, artefactos.'},
-  {id:'openwebui',     name:'Open WebUI',         layer:2, status:'free',  subtype:'localui',   url:'http://localhost:3000',        desc:'Visor web de Ollama en Docker. localhost:3000.'},
-  {id:'chatgpt',       name:'ChatGPT (web)',       layer:2, status:'paid',  subtype:'webchat',   url:'https://chatgpt.com',          desc:'Interfaz OpenAI. GPT-4o, DALL-E, voz.'},
-  {id:'console-ant',   name:'Anthropic Console',  layer:2, status:'paid',  subtype:'devcons',   url:'https://console.anthropic.com',desc:'API keys, Workbench, usage. Para tus apps.'},
-  {id:'oai-platform',  name:'OpenAI Platform',    layer:2, status:'api',   subtype:'devcons',   url:'https://platform.openai.com',  desc:'Playground OpenAI. API keys, créditos.'},
-  {id:'gai-studio',    name:'Google AI Studio',   layer:2, status:'free',  subtype:'devcons',   url:'https://aistudio.google.com',  desc:'Gemini API. Tier gratuito generoso.'},
+  {id:'claudeai',      name:'Claude.ai',          layer:2, status:'paid',  subtype:'webchat',   url:'https://claude.ai',            desc:'Interfaz oficial Anthropic. Projects, artefactos.',          tags:['chat','escritura','análisis','presentaciones']},
+  {id:'openwebui',     name:'Open WebUI',         layer:2, status:'free',  subtype:'localui',   url:'http://localhost:3000',        desc:'Visor web de Ollama en Docker. localhost:3000.',             tags:['chat','local','privacidad']},
+  {id:'chatgpt',       name:'ChatGPT (web)',       layer:2, status:'paid',  subtype:'webchat',   url:'https://chatgpt.com',          desc:'Interfaz OpenAI. GPT-4o, DALL-E, voz.',                     tags:['chat','imagen','escritura','presentaciones']},
+  {id:'console-ant',   name:'Anthropic Console',  layer:2, status:'paid',  subtype:'devcons',   url:'https://console.anthropic.com',desc:'API keys, Workbench, usage. Para tus apps.',                 tags:['APIs']},
+  {id:'oai-platform',  name:'OpenAI Platform',    layer:2, status:'api',   subtype:'devcons',   url:'https://platform.openai.com',  desc:'Playground OpenAI. API keys, créditos.',                    tags:['APIs']},
+  {id:'gai-studio',    name:'Google AI Studio',   layer:2, status:'free',  subtype:'devcons',   url:'https://aistudio.google.com',  desc:'Gemini API. Tier gratuito generoso.',                        tags:['APIs']},
   // L3 Memoria/RAG
-  {id:'notebooklm',    name:'NotebookLM',         layer:3, status:'free',  subtype:'cloudrag',  url:'https://notebooklm.google.com',desc:'RAG automático Google. PDFs, docs, vídeos.'},
-  {id:'claude-proj',   name:'Claude Projects',    layer:3, status:'paid',  subtype:'cloudrag',  url:'https://claude.ai',            desc:'Contexto persistente con docs en claude.ai.'},
-  {id:'owui-rag',      name:'Open WebUI RAG',     layer:3, status:'free',  subtype:'localrag',  url:'http://localhost:3000',        desc:'RAG local con modelos Ollama. 100% privado.'},
-  {id:'chromadb',      name:'ChromaDB',           layer:3, status:'inactive',subtype:'vectordb', url:'https://trychroma.com',      desc:'Base vectorial local. pip install chromadb.'},
-  {id:'llamaindex',    name:'LlamaIndex',         layer:3, status:'inactive',subtype:'framework',url:'https://llamaindex.ai',      desc:'Framework Python RAG. Conecta con ChromaDB.'},
+  {id:'notebooklm',    name:'NotebookLM',         layer:3, status:'free',  subtype:'cloudrag',  url:'https://notebooklm.google.com',desc:'RAG automático Google. PDFs, docs, vídeos.',                 tags:['RAG','análisis','presentaciones','vídeo','búsqueda']},
+  {id:'claude-proj',   name:'Claude Projects',    layer:3, status:'paid',  subtype:'cloudrag',  url:'https://claude.ai',            desc:'Contexto persistente con docs en claude.ai.',                tags:['RAG','análisis','escritura']},
+  {id:'owui-rag',      name:'Open WebUI RAG',     layer:3, status:'free',  subtype:'localrag',  url:'http://localhost:3000',        desc:'RAG local con modelos Ollama. 100% privado.',                tags:['RAG','local','privacidad']},
+  {id:'chromadb',      name:'ChromaDB',           layer:3, status:'inactive',subtype:'vectordb', url:'https://trychroma.com',      desc:'Base vectorial local. pip install chromadb.',                tags:['RAG','local','privacidad','APIs']},
+  {id:'llamaindex',    name:'LlamaIndex',         layer:3, status:'inactive',subtype:'framework',url:'https://llamaindex.ai',      desc:'Framework Python RAG. Conecta con ChromaDB.',               tags:['RAG','local','APIs']},
   // L4 Herramientas
-  {id:'mcp',           name:'MCP Protocol',       layer:4, status:'paid',  subtype:'protocol',  url:'https://docs.anthropic.com',   desc:'Gmail, Notion, Calendar, M365 conectados.'},
-  {id:'n8n',           name:'n8n self-hosted',    layer:4, status:'free',  subtype:'automation',url:'http://localhost:5678',        desc:'Automatización flujos IA. localhost:5678.'},
-  {id:'websearch',     name:'Web Search (Claude)',layer:4, status:'paid',  subtype:'search',    url:'https://claude.ai',            desc:'Búsqueda web integrada en claude.ai.'},
-  {id:'codex-api',     name:'Codex API',          layer:4, status:'api',   subtype:'apitools',  url:'https://platform.openai.com',  desc:'API código OpenAI. Acceso vía API key.'},
-  {id:'zapier',        name:'Zapier AI',          layer:4, status:'inactive',subtype:'automation',url:'https://zapier.com',         desc:'Automatización cloud. Alternativa a n8n.'},
+  {id:'mcp',           name:'MCP Protocol',       layer:4, status:'paid',  subtype:'protocol',  url:'https://docs.anthropic.com',   desc:'Gmail, Notion, Calendar, M365 conectados.',                 tags:['automatización','APIs','chat']},
+  {id:'n8n',           name:'n8n self-hosted',    layer:4, status:'free',  subtype:'automation',url:'http://localhost:5678',        desc:'Automatización flujos IA. localhost:5678.',                  tags:['automatización','local']},
+  {id:'websearch',     name:'Web Search (Claude)',layer:4, status:'paid',  subtype:'search',    url:'https://claude.ai',            desc:'Búsqueda web integrada en claude.ai.',                       tags:['búsqueda','chat']},
+  {id:'codex-api',     name:'Codex API',          layer:4, status:'api',   subtype:'apitools',  url:'https://platform.openai.com',  desc:'API código OpenAI. Acceso vía API key.',                    tags:['código','APIs']},
+  {id:'zapier',        name:'Zapier AI',          layer:4, status:'inactive',subtype:'automation',url:'https://zapier.com',         desc:'Automatización cloud. Alternativa a n8n.',                  tags:['automatización']},
   // L5 Agentes — Vibe Coding (IDE/CLI)
-  {id:'copilot',       name:'GitHub Copilot',     layer:5, status:'paid',     subtype:'coding',  url:'https://copilot.github.com',   desc:'Extensión VS Code. Autocomplete + chat inline.'},
-  {id:'antigravity',   name:'Antigravity',        layer:5, status:'paid',     subtype:'coding',  url:'https://antigravity.dev',      desc:'Agente autónomo multi-archivo. Como Cursor.'},
-  {id:'claude-code',   name:'Claude Code',        layer:5, status:'inactive', subtype:'coding',  url:'https://claude.ai/code',       desc:'CLI agente Anthropic. npm install @anthropic-ai/claude-code.'},
-  {id:'cursor',        name:'Cursor IDE',         layer:5, status:'inactive', subtype:'coding',  url:'https://cursor.sh',            desc:'IDE con agente IA integrado. Alternativa a VS Code.'},
-  {id:'continue-dev',  name:'Continue.dev',       layer:5, status:'inactive', subtype:'coding',  url:'https://continue.dev',         desc:'Copilot open-source. Conecta con Ollama local.'},
+  {id:'copilot',       name:'GitHub Copilot',     layer:5, status:'paid',     subtype:'coding',  url:'https://copilot.github.com',   desc:'Extensión VS Code. Autocomplete + chat inline.',            tags:['código','agentes']},
+  {id:'antigravity',   name:'Antigravity',        layer:5, status:'paid',     subtype:'coding',  url:'https://antigravity.dev',      desc:'Agente autónomo multi-archivo. Como Cursor.',               tags:['código','agentes']},
+  {id:'claude-code',   name:'Claude Code',        layer:5, status:'inactive', subtype:'coding',  url:'https://claude.ai/code',       desc:'CLI agente Anthropic. npm install @anthropic-ai/claude-code.',tags:['código','agentes']},
+  {id:'cursor',        name:'Cursor IDE',         layer:5, status:'inactive', subtype:'coding',  url:'https://cursor.sh',            desc:'IDE con agente IA integrado. Alternativa a VS Code.',       tags:['código','agentes']},
+  {id:'continue-dev',  name:'Continue.dev',       layer:5, status:'inactive', subtype:'coding',  url:'https://continue.dev',         desc:'Copilot open-source. Conecta con Ollama local.',            tags:['código','agentes','local']},
   // L5 Agentes — Web Builders
-  {id:'lovable',       name:'Lovable',            layer:5, status:'free',     subtype:'builder', url:'https://lovable.dev',          desc:'Genera apps web completas con React y Supabase desde prompt.'},
-  {id:'base44',        name:'Base44',             layer:5, status:'free',     subtype:'builder', url:'https://base44.com',           desc:'Low-code IA para construir apps internas. Sin código.'},
-  {id:'bolt',          name:'Bolt.new',           layer:5, status:'free',     subtype:'builder', url:'https://bolt.new',             desc:'Genera y ejecuta apps web completas en el navegador. StackBlitz.'},
+  {id:'lovable',       name:'Lovable',            layer:5, status:'free',     subtype:'builder', url:'https://lovable.dev',          desc:'Genera apps web completas con React y Supabase desde prompt.',tags:['web apps','agentes','código']},
+  {id:'base44',        name:'Base44',             layer:5, status:'free',     subtype:'builder', url:'https://base44.com',           desc:'Low-code IA para construir apps internas. Sin código.',     tags:['web apps','agentes']},
+  {id:'bolt',          name:'Bolt.new',           layer:5, status:'free',     subtype:'builder', url:'https://bolt.new',             desc:'Genera y ejecuta apps web completas en el navegador. StackBlitz.',tags:['web apps','agentes','código']},
   // L5 Agentes — Browser Agents
-  {id:'browser-use',   name:'Browser Use',        layer:5, status:'free',     subtype:'browser', url:'https://browser-use.com',      desc:'Python: controla el navegador con IA. pip install browser-use.'},
-  {id:'computer-use',  name:'Computer Use',       layer:5, status:'inactive', subtype:'browser', url:'https://docs.anthropic.com',   desc:'API Anthropic para control de escritorio vía visión por computadora.'},
-  {id:'playwright-mcp',name:'Playwright MCP',     layer:5, status:'inactive', subtype:'browser', url:'https://playwright.dev',       desc:'Automatización de navegador vía MCP. Tests y scraping con Claude.'},
+  {id:'browser-use',   name:'Browser Use',        layer:5, status:'free',     subtype:'browser', url:'https://browser-use.com',      desc:'Python: controla el navegador con IA. pip install browser-use.',tags:['automatización','agentes']},
+  {id:'computer-use',  name:'Computer Use',       layer:5, status:'inactive', subtype:'browser', url:'https://docs.anthropic.com',   desc:'API Anthropic para control de escritorio vía visión por computadora.',tags:['automatización','agentes']},
+  {id:'playwright-mcp',name:'Playwright MCP',     layer:5, status:'inactive', subtype:'browser', url:'https://playwright.dev',       desc:'Automatización de navegador vía MCP. Tests y scraping con Claude.',tags:['automatización','agentes','código']},
   // L6 Aplicaciones
-  {id:'app-gastos',    name:'app_gastos_familia', layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_gastos_familia', desc:'Gestión gastos domésticos. Python.'},
-  {id:'app-jobs',      name:'app_job_tracker',    layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_job_tracker',    desc:'Seguimiento búsqueda empleo. Python.'},
-  {id:'app-aparts',    name:'app_apartamentos',   layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_gestion_apartamentos',desc:'espacioGijón 2 unidades. Python.'},
-  {id:'web-espacio',   name:'espacioGijón web',   layer:6, status:'free',  subtype:'myapp',    url:'#',                            desc:'Web turística. HTML single-file.'},
-  {id:'portfolio',     name:'Portfolio profesional',layer:6,status:'free', subtype:'myapp',    url:'#',                            desc:'Portfolio ejecutivo. Timeline industrial.'},
-  {id:'gamma',         name:'Gamma',              layer:6, status:'free',  subtype:'saastool', url:'https://gamma.app',            desc:'Generador de presentaciones y docs con IA.'},
+  {id:'app-gastos',    name:'app_gastos_familia', layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_gastos_familia', desc:'Gestión gastos domésticos. Python.',           tags:['web apps']},
+  {id:'app-jobs',      name:'app_job_tracker',    layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_job_tracker',    desc:'Seguimiento búsqueda empleo. Python.',         tags:['web apps']},
+  {id:'app-aparts',    name:'app_apartamentos',   layer:6, status:'free',  subtype:'myapp',    url:'https://github.com/joseavelsan/app_gestion_apartamentos',desc:'espacioGijón 2 unidades. Python.',      tags:['web apps']},
+  {id:'web-espacio',   name:'espacioGijón web',   layer:6, status:'free',  subtype:'myapp',    url:'#',                            desc:'Web turística. HTML single-file.',                           tags:['web apps']},
+  {id:'portfolio',     name:'Portfolio profesional',layer:6,status:'free', subtype:'myapp',    url:'#',                            desc:'Portfolio ejecutivo. Timeline industrial.',                   tags:['web apps']},
+  {id:'gamma',         name:'Gamma',              layer:6, status:'free',  subtype:'saastool', url:'https://gamma.app',            desc:'Generador de presentaciones y docs con IA.',                 tags:['presentaciones','escritura','imagen']},
 ];
+
+/* ═══════════════════════════════════════════
+   TOOLS EXTENDED INFO
+═══════════════════════════════════════════ */
+const TOOLS_EXT_DEFAULT = {
+  'claude-sonnet': {
+    whatIs: 'Claude Sonnet 4.6 es el modelo principal de Anthropic. Con 200K tokens de contexto, destaca en razonamiento, código, análisis de documentos largos y redacción. Es la base de claude.ai, Claude Code y tus proyectos vía API.',
+    whyLayer: 'Es el motor generativo central del stack. Sin él, el resto de capas (RAG, MCP, agentes) no tienen cerebro. Sonnet equilibra calidad y coste; Opus se reserva para tareas críticas.',
+    howFits: 'Modelo de uso diario. Alimenta Claude.ai para chat, Claude Projects para RAG, y está disponible vía API para tus apps Python. Los MCPs activos (Gmail, Notion, M365) lo extienden con acceso a datos reales.',
+    integrations: ['Claude.ai','Claude Projects','Anthropic Console','MCP Protocol','Claude Code'],
+    pricing: 'Incluido en Claude Pro ($20/mes). API: $3/M tokens input, $15/M output (Sonnet 4.6).',
+    recommended: '✅ Activo — modelo principal para todo el trabajo diario.'
+  },
+  'claude-opus': {
+    whatIs: 'Claude Opus 4.6 es el modelo más capaz de Anthropic. Razonamiento profundo, análisis complejos, tareas de alta criticidad. Más lento y costoso que Sonnet.',
+    whyLayer: 'LLM de referencia para tareas que requieren máxima calidad: auditorías de código, análisis estratégico, documentos complejos.',
+    howFits: 'Reservarlo para cuando Sonnet no basta. En la misma interfaz Claude.ai, cambiando el modelo.',
+    integrations: ['Claude.ai','Anthropic Console'],
+    pricing: 'Incluido en Claude Pro ($20/mes) con límites. API: $15/M input, $75/M output.',
+    recommended: '✅ Activo — uso selectivo para tareas de alta complejidad.'
+  },
+  'gpt4o': {
+    whatIs: 'GPT-4o es el modelo principal de OpenAI. Multimodal (texto, imagen, voz). Base de ChatGPT, GitHub Copilot y Codex. Muy capaz en código y razonamiento visual.',
+    whyLayer: 'Segunda opción LLM en el stack. Útil cuando Claude no tiene una funcionalidad específica (DALL-E, análisis de imagen, voz).',
+    howFits: 'Complementa a Claude para generación de imágenes (DALL-E), análisis visual y como motor alternativo en prototipos.',
+    integrations: ['ChatGPT','GitHub Copilot','OpenAI Platform','Codex API'],
+    pricing: 'ChatGPT Plus $20/mes. API: $2.50/M input, $10/M output.',
+    recommended: '✅ Activo — segundo modelo del stack, especialmente para imagen y voz.'
+  },
+  'gemini': {
+    whatIs: 'Gemini 2.0 Pro es el modelo de Google DeepMind. Destaca por su contexto de 1 millón de tokens y su integración nativa con el ecosistema Google (Drive, YouTube, Búsqueda).',
+    whyLayer: 'Opción L1 para tareas que requieren contextos enormes o acceso directo a información de Google en tiempo real.',
+    howFits: 'Principalmente a través de NotebookLM (RAG automático) y Google AI Studio para experimentos con la API.',
+    integrations: ['NotebookLM','Google AI Studio'],
+    pricing: 'Gemini Advanced incluido en Google One AI Premium ($19.99/mes). API gratuita con límites generosos en AI Studio.',
+    recommended: '✅ Activo — uso principal vía NotebookLM para RAG con documentos.'
+  },
+  'ollama': {
+    whatIs: 'Ollama es el servidor local que ejecuta LLMs open-source en tu máquina. Expone una API compatible con OpenAI en localhost:11434. Soporta Llama, Mistral, Qwen, Phi y muchos más.',
+    whyLayer: 'Es la infraestructura L1 para todo lo local. Open WebUI, Continue.dev y AnythingLLM se apoyan en él. Sin Ollama no hay modelos locales.',
+    howFits: 'Perfecto para datos sensibles (clientes, proyectos confidenciales), sin coste por token, sin latencia de red. Tus apps Python pueden llamar a su API como si fuera OpenAI.',
+    integrations: ['Open WebUI','Continue.dev','Llama 3.x','n8n'],
+    pricing: 'Totalmente gratuito. Open-source. El coste es el hardware local.',
+    recommended: '✅ Activo — motor de privacidad del stack. Siempre corriendo en local.'
+  },
+  'groq': {
+    whatIs: 'Groq es infraestructura cloud para inferencia ultrarrápida con chips LPU propios. Ejecuta modelos open-source (Llama, Mixtral, Qwen, Kimi K2) a 800+ tokens/segundo. API compatible con OpenAI.',
+    whyLayer: 'Complementa Ollama (local) y Claude API (calidad) con una tercera opción: modelos open-source en cloud con latencia mínima. Clave para agentes y automatizaciones donde la velocidad importa.',
+    howFits: 'Útil como backend de n8n para respuestas rápidas, en Browser Use para agentes en tiempo real, y como alternativa gratuita para prototipos.',
+    integrations: ['n8n','Browser Use','Open WebUI'],
+    pricing: 'Tier gratuito con límite de RPM. API de pago desde $0.06/M tokens (Llama 3.1 8B). Sin coste fijo mensual.',
+    recommended: '✅ Activo — tier gratuito disponible. Activar API key para agentes.'
+  },
+  'claudeai': {
+    whatIs: 'Claude.ai es la interfaz web oficial de Anthropic. Incluye Projects (contexto persistente con docs), artefactos (código/visualizaciones renderizadas), historial, búsqueda web y MCPs activos.',
+    whyLayer: 'Punto de entrada principal al modelo. Aquí vives el día a día: chat, análisis de documentos, generación de artefactos y ejecución de herramientas MCP.',
+    howFits: 'Tu interfaz principal de trabajo. Los Projects guardan contexto por cliente/proyecto. Los MCPs (Gmail, Notion, M365) se activan aquí para dar al modelo acceso a datos reales.',
+    integrations: ['Claude Sonnet 4.6','Claude Projects','MCP Protocol','Web Search'],
+    pricing: 'Claude Pro $20/mes. Incluye Sonnet + Opus, Projects y MCPs.',
+    recommended: '✅ Activo — interfaz principal de uso diario.'
+  },
+  'notebooklm': {
+    whatIs: 'NotebookLM es la herramienta de RAG automático de Google. Subes documentos (PDFs, docs, vídeos de YouTube, URLs) y genera resúmenes, responde preguntas y crea podcasts de audio.',
+    whyLayer: 'RAG sin código. La forma más rápida de hablar con un corpus de documentos sin infraestructura.',
+    howFits: 'Ideal para digerir documentación extensa, informes de clientes o investigaciones. El Audio Overview (podcast automático) es muy útil para ponerse al día en desplazamientos.',
+    integrations: ['Gemini 2.0 Pro','Google Drive'],
+    pricing: 'Gratuito. NotebookLM Plus ($19.99/mes) añade más fuentes y uso compartido.',
+    recommended: '✅ Activo — usar para cualquier corpus de documentos que necesite consultas rápidas.'
+  },
+  'claude-proj': {
+    whatIs: 'Claude Projects es la funcionalidad de Claude.ai para crear contextos persistentes. Subes documentos, defines instrucciones del sistema y todas las conversaciones dentro del proyecto tienen ese contexto disponible.',
+    whyLayer: 'RAG ligero sin código. El contexto de los documentos se mantiene entre sesiones, eliminando la necesidad de re-adjuntar ficheros.',
+    howFits: 'Un Project por cliente o área de trabajo. Documentos base + instrucciones específicas = asistente contextualizado. Este mismo AI Stack puede ser un Project.',
+    integrations: ['Claude.ai','Claude Sonnet 4.6','MCP Protocol'],
+    pricing: 'Incluido en Claude Pro ($20/mes).',
+    recommended: '✅ Activo — crear Projects por cliente y área de trabajo.'
+  },
+  'mcp': {
+    whatIs: 'MCP (Model Context Protocol) es el estándar de Anthropic para conectar Claude con aplicaciones externas. Permite al modelo leer y actuar sobre datos reales: emails, calendarios, documentos, APIs.',
+    whyLayer: 'Es la capa de "herramientas" del stack. Sin MCP, Claude solo conoce el texto de la conversación. Con MCP, puede leer tu email, crear eventos o buscar en SharePoint desde el chat.',
+    howFits: 'Tienes activos: Gmail, Google Calendar, Notion y Microsoft 365. Claude puede hacer búsquedas cross-tool, redactar respuestas con contexto real y actualizar registros.',
+    integrations: ['Gmail','Google Calendar','Notion','Microsoft 365','Claude.ai'],
+    pricing: 'Los servidores MCP son open-source/gratuitos. El coste es el de Claude Pro.',
+    recommended: '✅ Activo — 4 MCPs conectados. Explorar más servidores MCP disponibles.'
+  },
+  'n8n': {
+    whatIs: 'n8n es una plataforma de automatización de flujos open-source que se auto-hostea. Conecta cientos de servicios con nodos visuales. Tiene nodos nativos de IA (OpenAI, Anthropic, Groq).',
+    whyLayer: 'Orquestador del stack. Cuando necesitas un flujo automático (trigger → IA → acción) sin escribir código Python completo, n8n es la respuesta.',
+    howFits: 'Corre en localhost:5678. Ideal para automatizaciones recurrentes: clasificar emails, generar resúmenes automáticos, procesar formularios con IA, notificaciones inteligentes.',
+    integrations: ['Groq','Ollama','Gmail','Notion','Claude API'],
+    pricing: 'Gratuito self-hosted. Cloud desde $20/mes.',
+    recommended: '✅ Activo — explotar más flujos de automatización conectando con los MCPs.'
+  },
+  'copilot': {
+    whatIs: 'GitHub Copilot es el asistente de código de Microsoft/OpenAI integrado en VS Code. Autocompleta líneas y bloques, responde preguntas en chat inline y explica/refactoriza código seleccionado.',
+    whyLayer: 'Agente de código en el IDE. Reduce fricción en tareas de desarrollo: no necesitas salir del editor para consultar sintaxis, patrones o generar boilerplate.',
+    howFits: 'Tu copiloto en VS Code para el trabajo diario. Complementa Antigravity para tareas multi-archivo más complejas.',
+    integrations: ['VS Code','GitHub','GPT-4o'],
+    pricing: '$10/mes individual. Incluido en GitHub Pro/Team.',
+    recommended: '✅ Activo — activar Copilot Chat para refactorizaciones y explicaciones inline.'
+  },
+  'antigravity': {
+    whatIs: 'Antigravity es un agente de código autónomo multi-archivo. Lee el proyecto completo, planifica cambios, ejecuta pasos y hace commits. Similar a Cursor Agent pero como extensión de VS Code.',
+    whyLayer: 'El agente más autónomo del stack para tareas de desarrollo complejas que requieren tocar varios archivos simultáneamente.',
+    howFits: 'Para cuando Copilot no es suficiente: migraciones, refactorizaciones grandes, añadir funcionalidades que cruzan múltiples módulos.',
+    integrations: ['VS Code','GitHub'],
+    pricing: '$20/mes (plan Pro).',
+    recommended: '✅ Activo — usar para tareas que requieren cambios en múltiples ficheros.'
+  },
+  'lovable': {
+    whatIs: 'Lovable genera aplicaciones web completas con React y Supabase desde un prompt en lenguaje natural. Incluye base de datos, autenticación y deploy automático.',
+    whyLayer: 'Web Builder de alto nivel. Genera apps funcionales completas sin escribir código manualmente, ideal para MVPs y prototipos.',
+    howFits: 'Para prototipos rápidos de clientes o nuevas ideas de app. El resultado es código React exportable que puedes continuar en VS Code.',
+    integrations: ['React','Supabase','GitHub'],
+    pricing: 'Tier gratuito (5 proyectos). Pro $20/mes.',
+    recommended: '✅ Activo — usar para MVPs y demos rápidas antes de producción.'
+  },
+  'bolt': {
+    whatIs: 'Bolt.new genera y ejecuta aplicaciones web completas directamente en el navegador usando StackBlitz. Soporta React, Vue, Next.js y backends Node.js sin instalación local.',
+    whyLayer: 'Web Builder que no requiere setup local. Ideal para experimentar con ideas rápidamente.',
+    howFits: 'Alternativa a Lovable para prototipos que no necesitan base de datos. El resultado es código exportable.',
+    integrations: ['StackBlitz','React','Node.js'],
+    pricing: 'Tier gratuito con límites. Pro $20/mes.',
+    recommended: '✅ Activo — usar para prototipos rápidos sin necesidad de Supabase.'
+  },
+};
+
+/* Mutable ext data — merged with defaults, persisted in localStorage */
+const LS_EXT_KEY = 'ai_stack_ext_v1';
+let TOOLS_EXT = {};
+
+function loadExtState() {
+  try {
+    const raw = localStorage.getItem(LS_EXT_KEY);
+    const saved = raw ? JSON.parse(raw) : {};
+    // Merge: saved overrides default; missing ids fall back to default
+    Object.assign(TOOLS_EXT, TOOLS_EXT_DEFAULT, saved);
+  } catch(e) {
+    Object.assign(TOOLS_EXT, TOOLS_EXT_DEFAULT);
+  }
+}
+function saveExtState() {
+  try { localStorage.setItem(LS_EXT_KEY, JSON.stringify(TOOLS_EXT)); } catch(e) {}
+}
 
 /* ═══════════════════════════════════════════
    LAYER META
@@ -1024,6 +2754,7 @@ function buildNav() {
   const items = [
     ...LAYERS.map((L,i)=>({key:'layer-'+i,label:`${String(i+1).padStart(2,'0')} ${L.name.split('·')[0].trim()}`,color:L.color,action:`openLayer(${i})`})),
     {key:'summary',  label:'Resumen',   color:'var(--c6)', action:`showView('summary')`},
+    {key:'uses',     label:'Usos',      color:'var(--c5)', action:`showView('uses')`},
     {key:'learn',    label:'Aprender',  color:'var(--c3)', action:`showView('learn')`},
     {key:'commands', label:'Comandos',  color:'var(--c2)', action:`showView('commands')`},
   ];
@@ -1043,6 +2774,7 @@ function showView(name) {
   document.getElementById('view-'+name).classList.add('active');
   buildNav();
   if (name==='summary') buildSummary();
+  else if (name==='uses') buildUses();
   else if (name==='learn') buildLearn();
   else if (name==='commands') buildCommands();
 }
@@ -1054,6 +2786,7 @@ function goHome() {
 }
 function openLayer(idx) {
   currentLayer = idx;
+  currentLayerIdx = idx;
   currentPage = 'layer';
   renderLayer(idx);
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
@@ -1216,7 +2949,7 @@ function showTab(id, el) {
 ═══════════════════════════════════════════ */
 function renderTcard(t, L) {
   const st = t.status;
-  return `<div class="tcard ${cardClass(st)}" style="--lc:${L.color};cursor:pointer" onclick="openToolModal('${t.id}')">
+  return `<div class="tcard ${cardClass(st)}" style="--lc:${L.color};cursor:pointer" onclick="openToolDetail('${t.id}')">
     <div class="tc-top">
       <span class="tc-name">${t.name}</span>
       ${starBtn(t.id)}
@@ -1228,6 +2961,165 @@ function renderTcard(t, L) {
     <div class="tc-desc">${t.desc}</div>
     ${t.url&&t.url!=='#'?`<a class="tc-link" href="${t.url}" target="_blank" style="color:${L.color}" onclick="event.stopPropagation()">Abrir →</a>`:''}
   </div>`;
+}
+
+let TEV_TAGS = new Set();
+
+function openToolDetail(id) {
+  const t = TOOLS.find(x => x.id === id);
+  if (!t) return;
+  const ext = TOOLS_EXT[id] || {};
+  const L = LAYERS[t.layer - 1];
+
+  TEV_TAGS = new Set(t.tags || []);
+
+  // Reuse existing visual option builders from the modal
+  const layerOpts = LAYERS.map(l =>
+    `<option value="${l.id}" ${t.layer===l.id?'selected':''}>${l.name}</option>`
+  ).join('');
+  const statusOpts  = selectOpts(t.status);
+  const subtypeOpts = subtypeOptions(t.subtype || '');
+
+  const tagPicker = ALL_USE_TAGS.map(tg =>
+    `<button type="button" class="tev-tagchip${TEV_TAGS.has(tg.id)?' act':''}" data-tev-tag="${tg.id}" onclick="tevToggleTag('${tg.id}')">${tg.label}</button>`
+  ).join('');
+
+  document.getElementById('tev-wrap').innerHTML = `
+    <div class="tev-header">
+      <button class="tev-back" onclick="backToLayer()">← Capa</button>
+      <div class="tev-title" style="color:${L.color}">${t.name}</div>
+      <span class="tev-badge" style="color:${L.color};background:color-mix(in srgb,${L.color} 10%,transparent);border-color:color-mix(in srgb,${L.color} 30%,transparent)">L${t.layer} · ${L.tag}</span>
+    </div>
+
+    <div class="tev-grid">
+
+      <!-- LEFT: datos base -->
+      <div class="tev-col">
+        <div class="tev-sec">Datos básicos</div>
+
+        <div class="tev-field">
+          <label class="tev-label">Nombre</label>
+          <input class="tev-input" id="tev-name" value="${t.name.replace(/"/g,'&quot;')}">
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">URL</label>
+          <input class="tev-input" id="tev-url" value="${(t.url||'').replace(/"/g,'&quot;')}">
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Descripción corta</label>
+          <textarea class="tev-input" id="tev-desc" rows="2">${t.desc||''}</textarea>
+        </div>
+        <div class="tev-row2">
+          <div class="tev-field">
+            <label class="tev-label">Estado</label>
+            <select class="tev-select" id="tev-status">${statusOpts}</select>
+          </div>
+          <div class="tev-field">
+            <label class="tev-label">Capa</label>
+            <select class="tev-select" id="tev-layer">${layerOpts}</select>
+          </div>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Subtipo</label>
+          <select class="tev-select" id="tev-subtype">${subtypeOpts}</select>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Casos de uso · tags</label>
+          <div class="tev-tagpicker" id="tev-tagpicker">${tagPicker}</div>
+        </div>
+        ${t.notes!==undefined?`<div class="tev-field">
+          <label class="tev-label">Notas personales</label>
+          <textarea class="tev-input" id="tev-notes" rows="3">${t.notes||''}</textarea>
+        </div>`:''}
+      </div>
+
+      <!-- RIGHT: ficha extendida -->
+      <div class="tev-col">
+        <div class="tev-sec">Ficha de conocimiento</div>
+
+        <div class="tev-field">
+          <label class="tev-label">Qué es</label>
+          <textarea class="tev-input" id="tev-whatIs" rows="4">${ext.whatIs||''}</textarea>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Por qué está en L${t.layer} · ${L.name.split('·')[0].trim()}</label>
+          <textarea class="tev-input" id="tev-whyLayer" rows="3">${ext.whyLayer||''}</textarea>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Cómo encaja en tu stack</label>
+          <textarea class="tev-input" id="tev-howFits" rows="3">${ext.howFits||''}</textarea>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Integraciones relevantes <span style="color:var(--dim)">(separadas por coma)</span></label>
+          <input class="tev-input" id="tev-integrations" value="${(ext.integrations||[]).join(', ')}">
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Precios (2025)</label>
+          <textarea class="tev-input" id="tev-pricing" rows="2">${ext.pricing||''}</textarea>
+        </div>
+        <div class="tev-field">
+          <label class="tev-label">Estado recomendado para tu stack</label>
+          <textarea class="tev-input" id="tev-recommended" rows="2">${ext.recommended||''}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="tev-actions">
+      <button class="tev-save" onclick="saveToolDetail('${id}')">✓ Guardar</button>
+      <button class="tev-cancel" onclick="backToLayer()">Cancelar</button>
+      ${t.url&&t.url!=='#'?`<a class="tev-open" href="${t.url}" target="_blank">↗ Abrir</a>`:''}
+      <button class="tev-del" onclick="deleteToolFromDetail('${id}')">Eliminar</button>
+    </div>`;
+
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-tool').classList.add('active');
+  buildNav();
+}
+
+function tevToggleTag(tag) {
+  if (TEV_TAGS.has(tag)) TEV_TAGS.delete(tag); else TEV_TAGS.add(tag);
+  const btn = document.querySelector(`.tev-tagchip[data-tev-tag="${CSS.escape(tag)}"]`);
+  if (btn) btn.classList.toggle('act', TEV_TAGS.has(tag));
+}
+
+function saveToolDetail(id) {
+  const t = TOOLS.find(x => x.id === id);
+  if (!t) return;
+  t.name     = document.getElementById('tev-name').value.trim() || t.name;
+  t.url      = document.getElementById('tev-url').value.trim();
+  t.desc     = document.getElementById('tev-desc').value.trim();
+  t.status   = document.getElementById('tev-status').value;
+  t.layer    = parseInt(document.getElementById('tev-layer').value, 10);
+  t.subtype  = document.getElementById('tev-subtype').value;
+  t.tags     = [...TEV_TAGS];
+  const notesEl = document.getElementById('tev-notes');
+  if (notesEl) t.notes = notesEl.value.trim();
+
+  const intRaw = document.getElementById('tev-integrations').value;
+  TOOLS_EXT[id] = {
+    whatIs:       document.getElementById('tev-whatIs').value.trim(),
+    whyLayer:     document.getElementById('tev-whyLayer').value.trim(),
+    howFits:      document.getElementById('tev-howFits').value.trim(),
+    integrations: intRaw.split(',').map(s=>s.trim()).filter(Boolean),
+    pricing:      document.getElementById('tev-pricing').value.trim(),
+    recommended:  document.getElementById('tev-recommended').value.trim(),
+  };
+  saveState();
+  saveExtState();
+  backToLayer();
+}
+
+function deleteToolFromDetail(id) {
+  if (!confirm('¿Eliminar esta herramienta?')) return;
+  TOOLS = TOOLS.filter(t => t.id !== id);
+  delete TOOLS_EXT[id];
+  saveState();
+  saveExtState();
+  backToLayer();
+}
+
+function backToLayer() {
+  openLayer(currentLayer ?? 0);
 }
 
 function buildToolsSection(tools, L) {
@@ -1522,6 +3414,22 @@ function addTool() {
    TOOL DETAIL MODAL
 ═══════════════════════════════════════════ */
 let currentModalId = null;
+let MODAL_TAGS = new Set();
+
+function renderModalTagPicker() {
+  const container = document.getElementById('tm-tags-picker');
+  if (!container) return;
+  container.innerHTML = ALL_USE_TAGS.map(t =>
+    `<button type="button" class="tm-tag-chip${MODAL_TAGS.has(t.id)?' act':''}" data-tag="${t.id}" onclick="toggleModalTag('${t.id}')">${t.label}</button>`
+  ).join('');
+}
+
+function toggleModalTag(tag) {
+  if (MODAL_TAGS.has(tag)) MODAL_TAGS.delete(tag);
+  else MODAL_TAGS.add(tag);
+  const btn = document.querySelector(`.tm-tag-chip[data-tag="${CSS.escape(tag)}"]`);
+  if (btn) btn.classList.toggle('act', MODAL_TAGS.has(tag));
+}
 
 function openToolModal(id) {
   const t = TOOLS.find(x=>x.id===id);
@@ -1551,6 +3459,10 @@ function openToolModal(id) {
 
   // Populate subtype select
   document.getElementById('tm-subtype-sel').innerHTML = subtypeOptions(t.subtype);
+
+  // Populate tag picker
+  MODAL_TAGS = new Set(t.tags || []);
+  renderModalTagPicker();
 
   updateModalBadge();
   document.getElementById('tm-overlay').classList.add('open');
@@ -1590,6 +3502,7 @@ function saveToolChanges() {
   t.notes  = document.getElementById('tm-notes').value;
   const sub = document.getElementById('tm-subtype-sel').value;
   t.subtype = sub || undefined;
+  t.tags = [...MODAL_TAGS];
   const rawUrl = document.getElementById('tm-url-input').value.trim();
   t.url = rawUrl || '#';
 
@@ -1624,6 +3537,111 @@ function applyAll() {
   btn.textContent = '✓ Cambios aplicados en todo el dashboard';
   btn.style.background = '#047857';
   setTimeout(()=>{ btn.textContent=orig; btn.style.background=''; }, 2000);
+}
+
+/* ═══════════════════════════════════════════
+   USES PAGE — filter by use case
+═══════════════════════════════════════════ */
+const ALL_USE_TAGS = [
+  {id:'chat',           label:'💬 Chat'},
+  {id:'escritura',      label:'✍️ Escritura'},
+  {id:'análisis',       label:'🔍 Análisis'},
+  {id:'código',         label:'💻 Código'},
+  {id:'imagen',         label:'🖼️ Imagen'},
+  {id:'vídeo',          label:'🎬 Vídeo'},
+  {id:'presentaciones', label:'📊 Presentaciones'},
+  {id:'automatización', label:'⚡ Automatización'},
+  {id:'búsqueda',       label:'🌐 Búsqueda'},
+  {id:'RAG',            label:'📚 RAG / Docs'},
+  {id:'agentes',        label:'🤖 Agentes'},
+  {id:'web apps',       label:'🏗 Web Apps'},
+  {id:'local',          label:'🖥️ Local'},
+  {id:'privacidad',     label:'🔒 Privacidad'},
+  {id:'APIs',           label:'🔑 APIs'},
+];
+const ACTIVE_USE_TAGS = new Set();
+
+function toggleUseTag(tag) {
+  if (ACTIVE_USE_TAGS.has(tag)) ACTIVE_USE_TAGS.delete(tag);
+  else ACTIVE_USE_TAGS.add(tag);
+  refreshUsesView();
+}
+
+function clearUseTags() {
+  ACTIVE_USE_TAGS.clear();
+  refreshUsesView();
+}
+
+function refreshUsesView() {
+  // Update chip active state in tag bar
+  ALL_USE_TAGS.forEach(t => {
+    const btn = document.getElementById('use-tag-' + t.id.replace(/ /g,'_'));
+    if (btn) btn.classList.toggle('act', ACTIVE_USE_TAGS.has(t.id));
+  });
+  // Show/hide cards and highlight chips
+  const cards = document.querySelectorAll('.use-card');
+  const none = ACTIVE_USE_TAGS.size === 0;
+  let visible = 0;
+  cards.forEach(card => {
+    const cardTags = card.dataset.tags ? card.dataset.tags.split('|') : [];
+    const match = none || cardTags.some(t => ACTIVE_USE_TAGS.has(t));
+    card.classList.toggle('hidden', !match);
+    if (match) {
+      visible++;
+      card.querySelectorAll('.uc-chip').forEach(chip => {
+        chip.classList.toggle('match', ACTIVE_USE_TAGS.has(chip.dataset.tag));
+      });
+    }
+  });
+  const countEl = document.getElementById('uses-count-txt');
+  if (countEl) countEl.textContent = none ? `${cards.length} herramientas` : `${visible} de ${cards.length} herramientas`;
+  const clearBtn = document.getElementById('uses-clear-btn');
+  if (clearBtn) clearBtn.style.display = none ? 'none' : 'inline';
+}
+
+function buildUses() {
+  // Count tags
+  const tagCounts = {};
+  TOOLS.forEach(t => (t.tags||[]).forEach(tag => { tagCounts[tag] = (tagCounts[tag]||0)+1; }));
+
+  const tagChips = ALL_USE_TAGS.map(t => {
+    const cnt = tagCounts[t.id]||0;
+    if (!cnt) return '';
+    const safeId = t.id.replace(/ /g,'_');
+    return `<button class="use-tag${ACTIVE_USE_TAGS.has(t.id)?' act':''}" id="use-tag-${safeId}" onclick="toggleUseTag('${t.id}')">${t.label}<span class="use-tag-count">${cnt}</span></button>`;
+  }).filter(Boolean).join('');
+
+  const none = ACTIVE_USE_TAGS.size === 0;
+  const cards = TOOLS.map(t => {
+    const L = LAYERS.find(l=>l.id===t.layer);
+    const lc = L?.color||'var(--c1)';
+    const tagsArr = t.tags||[];
+    const match = none || tagsArr.some(tag => ACTIVE_USE_TAGS.has(tag));
+    const chips = tagsArr.map(tag =>
+      `<span class="uc-chip${ACTIVE_USE_TAGS.has(tag)?' match':''}" data-tag="${tag}" onclick="event.stopPropagation();toggleUseTag('${tag}')">${tag}</span>`
+    ).join('');
+    return `<div class="use-card ${cardClass(t.status)}${match?'':' hidden'}" style="--lc:${lc}" data-tags="${tagsArr.join('|')}" onclick="openToolModal('${t.id}')">
+      <div class="uc-top">
+        <span class="uc-name">${t.name}</span>
+        <span class="uc-layer" style="color:${lc};background:color-mix(in srgb,${lc} 12%,transparent)">L${t.layer}</span>
+        ${badge(t.status)}
+      </div>
+      <div class="uc-desc">${t.desc}</div>
+      <div class="uc-tags">${chips}</div>
+    </div>`;
+  }).join('');
+
+  const visibleCount = none ? TOOLS.length : TOOLS.filter(t=>(t.tags||[]).some(tag=>ACTIVE_USE_TAGS.has(tag))).length;
+
+  document.getElementById('uses-body').innerHTML = `
+    <div class="sect-title" style="margin-bottom:14px">Herramientas por caso de uso · selecciona etiquetas para filtrar</div>
+    <div class="uses-tags-bar">${tagChips}</div>
+    <div class="uses-count">
+      <span id="uses-count-txt">${none?TOOLS.length+' herramientas':visibleCount+' de '+TOOLS.length+' herramientas'}</span>
+      <button class="uses-clear" id="uses-clear-btn" onclick="clearUseTags()" style="display:${none?'none':'inline'}">✕ Limpiar filtros</button>
+    </div>
+    <div class="uses-grid">${cards}</div>
+    <div style="height:24px"></div>`;
 }
 
 /* ═══════════════════════════════════════════
@@ -1670,6 +3688,7 @@ function loadState() {
       TOOLS.forEach(t => { defaults[t.id] = t; });
       TOOLS = data.tools.map(t => {
         if (!t.subtype && defaults[t.id]?.subtype) t.subtype = defaults[t.id].subtype;
+        if (!t.tags && defaults[t.id]?.tags) t.tags = defaults[t.id].tags;
         return t;
       });
     }
@@ -1727,18 +3746,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const td = document.getElementById('td1');
   if (td) td.textContent = ds;
   loadState();
+  loadExtState();
   buildHome();
 });
 </script>
 
 <!-- TOOL DETAIL MODAL -->
 <div id="tm-overlay" class="tm-overlay" onclick="if(event.target===this)closeToolModal()">
-  <div class="tm-panel">
+  <div class="tm-panel" style="--lc: var(--c5);">
     <div class="tm-hdr">
-      <span class="tm-lbadge" id="tm-lbadge"></span>
-      <span id="tm-status-badge" style="margin-left:2px"></span>
+      <span class="tm-lbadge" id="tm-lbadge" style="color: var(--c5); background: color-mix(in srgb,var(--c5) 12%,transparent); border: 1px solid color-mix(in srgb,var(--c5) 25%,transparent);">L5 · Agentes</span>
+      <span id="tm-status-badge" style="margin-left:2px"><span class="si-badge bd-paid">💳 Suscripción</span></span>
       <div style="flex:1"></div>
-      <button class="star-btn" id="tm-star" onclick="toggleFav(this.getAttribute('data-id'),event)">☆</button>
+      <button class="star-btn fav" id="tm-star" onclick="toggleFav(this.getAttribute('data-id'),event)" data-id="copilot" title="Quitar de favoritos">★</button>
       <button class="tm-close" onclick="closeToolModal()">✕</button>
     </div>
     <div class="tm-body">
@@ -1748,17 +3768,22 @@ document.addEventListener('DOMContentLoaded', ()=>{
       <div class="tm-grid2" style="margin-top:8px">
         <div>
           <label class="tm-flabel">Capa</label>
-          <select class="tm-select" id="tm-layer-sel" onchange="updateModalBadge()"></select>
+          <select class="tm-select" id="tm-layer-sel" onchange="updateModalBadge()"><option value="1">Modelo · LLM Core</option><option value="2">Interfaz · Chat &amp; Studios</option><option value="3">Memoria · RAG &amp; Conocimiento</option><option value="4">Herramientas · Tools &amp; Conexiones</option><option value="5" selected="">Agentes · IA Autónoma</option><option value="6">Aplicación · Tus Proyectos</option></select>
         </div>
         <div>
           <label class="tm-flabel">Estado</label>
-          <select class="tm-select" id="tm-status-sel"></select>
+          <select class="tm-select" id="tm-status-sel"><option value="paid" selected="">💳 Suscripción</option><option value="api">🔑 API</option><option value="free">🆓 Gratis</option><option value="trial">🧪 Prueba</option><option value="inactive">⬜ Sin activar</option></select>
         </div>
       </div>
 
       <div style="margin-top:8px">
         <label class="tm-flabel">Tipo / Subgrupo</label>
-        <select class="tm-select" id="tm-subtype-sel"></select>
+        <select class="tm-select" id="tm-subtype-sel"><option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="anthropic">⚗️ Anthropic</option><option value="openai">🤖 OpenAI</option><option value="google">✨ Google</option><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding" selected="">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup></select>
+      </div>
+
+      <div style="margin-top:10px">
+        <label class="tm-flabel">Casos de uso · keywords</label>
+        <div class="tm-tag-picker" id="tm-tags-picker"><button type="button" class="tm-tag-chip" data-tag="chat" onclick="toggleModalTag('chat')">💬 Chat</button><button type="button" class="tm-tag-chip" data-tag="escritura" onclick="toggleModalTag('escritura')">✍️ Escritura</button><button type="button" class="tm-tag-chip" data-tag="análisis" onclick="toggleModalTag('análisis')">🔍 Análisis</button><button type="button" class="tm-tag-chip act" data-tag="código" onclick="toggleModalTag('código')">💻 Código</button><button type="button" class="tm-tag-chip" data-tag="imagen" onclick="toggleModalTag('imagen')">🖼️ Imagen</button><button type="button" class="tm-tag-chip" data-tag="vídeo" onclick="toggleModalTag('vídeo')">🎬 Vídeo</button><button type="button" class="tm-tag-chip" data-tag="presentaciones" onclick="toggleModalTag('presentaciones')">📊 Presentaciones</button><button type="button" class="tm-tag-chip" data-tag="automatización" onclick="toggleModalTag('automatización')">⚡ Automatización</button><button type="button" class="tm-tag-chip" data-tag="búsqueda" onclick="toggleModalTag('búsqueda')">🌐 Búsqueda</button><button type="button" class="tm-tag-chip" data-tag="RAG" onclick="toggleModalTag('RAG')">📚 RAG / Docs</button><button type="button" class="tm-tag-chip act" data-tag="agentes" onclick="toggleModalTag('agentes')">🤖 Agentes</button><button type="button" class="tm-tag-chip" data-tag="web apps" onclick="toggleModalTag('web apps')">🏗 Web Apps</button><button type="button" class="tm-tag-chip" data-tag="local" onclick="toggleModalTag('local')">🖥️ Local</button><button type="button" class="tm-tag-chip" data-tag="privacidad" onclick="toggleModalTag('privacidad')">🔒 Privacidad</button><button type="button" class="tm-tag-chip" data-tag="APIs" onclick="toggleModalTag('APIs')">🔑 APIs</button></div>
       </div>
 
       <label class="tm-flabel" style="margin-top:10px">Descripción corta</label>
@@ -1774,11 +3799,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
       <textarea class="tm-notes" id="tm-notes" placeholder="Casos de uso, configuración, atajos que usas…"></textarea>
     </div>
     <div class="tm-actions">
-      <button class="tm-btn" id="tm-cmd-btn" style="display:none" onclick="openCmdFromModal()">📋 Comandos</button>
+      <button class="tm-btn" id="tm-cmd-btn" style="display: block;" onclick="openCmdFromModal()">📋 Comandos</button>
       <button class="tm-btn primary" onclick="saveToolChanges()">✓ Guardar</button>
       <button class="tm-btn" onclick="closeToolModal()">Cerrar</button>
     </div>
   </div>
 </div>
-</body>
-</html>
+
+
+</body></html>
