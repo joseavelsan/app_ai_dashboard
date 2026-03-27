@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Update · José</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Azeret+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f0f2f5; --surf:#fff; --surf2:#f7f8fa; --surf3:#eceef2;
+  --border:#dde0e8; --border2:#c8ccd8;
+  --text:#111827; --text2:#374151; --muted:#6b7280; --dim:#9ca3af;
+  --c1:#6d4ff0; --c2:#2563eb; --c3:#d97706; --c4:#dc2626; --c5:#059669; --c6:#db2777;
+  --font-h:'Syne',sans-serif; --font-m:'Azeret Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font-m);background:var(--bg);color:var(--text);font-size:15px}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
+
+/* TOPBAR */
+.topbar{
+  display:flex;align-items:center;gap:0;height:48px;min-height:48px;flex-shrink:0;
+  background:var(--surf);border-bottom:2px solid var(--border);padding:0 16px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+.logo{font-family:var(--font-h);font-size:.95rem;font-weight:800;letter-spacing:-.03em;color:var(--text);cursor:pointer;white-space:nowrap;margin-right:12px;flex-shrink:0}
+.logo em{color:var(--c2);font-style:normal}
+.tnav{display:flex;align-items:center;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+.tnav::-webkit-scrollbar{display:none}
+.tnav-btn{
+  font-family:var(--font-m);font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;
+  padding:5px 9px;border-radius:4px;border:1px solid transparent;
+  color:var(--muted);white-space:nowrap;transition:all .15s;flex-shrink:0;
+  display:flex;align-items:center;gap:4px;cursor:pointer;
+}
+.tnav-btn:hover{background:var(--surf3);color:var(--text2);border-color:var(--border)}
+.tnav-btn.act{border-color:currentColor;background:color-mix(in srgb,currentColor 10%,transparent)}
+.tnav-sep{width:1px;height:16px;background:var(--border);flex-shrink:0;margin:0 3px}
+.tnav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.topbar-actions{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0}
+.topbar-search{position:relative;flex-shrink:0}
+.topbar-search input{font-family:var(--font-m);font-size:.6rem;border:1px solid var(--border);border-radius:5px;padding:4px 26px 4px 8px;background:var(--surf2);color:var(--text);width:160px;transition:width .2s,border-color .15s;outline:none}
+.topbar-search input:focus{border-color:var(--c2);width:220px;background:var(--surf)}
+.topbar-search input::placeholder{color:var(--dim)}
+.topbar-search-ico{position:absolute;right:7px;top:50%;transform:translateY(-50%);font-size:.65rem;color:var(--dim);pointer-events:none}
+.topbar-btn{font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;padding:5px 9px;border-radius:4px;border:1px solid var(--border);color:var(--muted);transition:all .15s}
+.topbar-btn:hover{background:var(--surf3);color:var(--text2)}
+
+/* LAYOUT */
+.layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - 48px)}
+.content{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.sidebar{width:260px;min-width:260px;border-left:1px solid var(--border);background:var(--surf);display:flex;flex-direction:column;overflow:hidden}
+
+/* LANG FILTER BAR */
+.filter-bar{
+  display:flex;align-items:center;gap:8px;padding:12px 20px;
+  border-bottom:1px solid var(--border);background:var(--surf);flex-shrink:0;flex-wrap:wrap;
+}
+.filter-chip{
+  font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;
+  border-radius:12px;border:1px solid var(--border);color:var(--muted);
+  background:var(--surf2);cursor:pointer;transition:all .13s;font-family:var(--font-m);
+}
+.filter-chip:hover{border-color:var(--border2);color:var(--text)}
+.filter-chip.act{border-color:var(--c2);color:var(--c2);background:color-mix(in srgb,var(--c2) 10%,transparent);font-weight:600}
+.filter-sep{width:1px;height:16px;background:var(--border);flex-shrink:0}
+.filter-label{font-size:.53rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)}
+
+/* SOURCES GRID */
+.sources-grid{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.source-card{
+  background:var(--surf);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;transition:all .18s;box-shadow:0 1px 3px rgba(0,0,0,.04);
+  display:flex;flex-direction:column;gap:8px;position:relative;cursor:pointer;
+}
+.source-card:hover{border-color:var(--border2);box-shadow:0 3px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+.source-card.is-fav{border-color:#f59e0b;background:#fffdf0;box-shadow:0 1px 4px rgba(245,158,11,.15)}
+.source-card.is-fav:hover{border-color:#d97706;box-shadow:0 3px 14px rgba(245,158,11,.25)}
+.fav-indicator{position:absolute;top:10px;right:10px;font-size:.75rem;color:#f59e0b;line-height:1}
+.source-card.hidden{display:none}
+.sc-header{display:flex;align-items:flex-start;gap:10px}
+.sc-icon{font-size:1.4rem;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0;background:var(--surf2)}
+.sc-meta{flex:1;min-width:0}
+.sc-name{font-family:var(--font-h);font-size:.8rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-type{font-size:.52rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-top:1px}
+.sc-desc{font-size:.62rem;color:var(--text2);line-height:1.55}
+.sc-footer{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sc-lang{font-size:.5rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 6px;border-radius:3px;border:1px solid var(--border);color:var(--muted);background:var(--surf3)}
+.sc-lang.es{border-color:#dc2626;color:#dc2626;background:#fef2f2}
+.sc-lang.en{border-color:#2563eb;color:#2563eb;background:#eff6ff}
+.sc-actions{margin-left:auto;display:flex;gap:4px}
+.sc-btn{font-size:.7rem;padding:3px 6px;border-radius:4px;border:1px solid var(--border);color:var(--muted);transition:all .13s;background:transparent}
+.sc-btn:hover{background:var(--surf3);color:var(--text)}
+.sc-btn.star.act{color:#f59e0b;border-color:#f59e0b}
+.sc-freq{font-size:.5rem;color:var(--dim)}
+
+/* EMPTY STATE */
+.empty-state{padding:60px 20px;text-align:center;color:var(--muted)}
+.empty-state .es-icon{font-size:2.5rem;margin-bottom:12px}
+.empty-state p{font-size:.65rem;line-height:1.6}
+
+/* SIDEBAR */
+.stabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
+.stab{flex:1;text-align:center;font-size:.57rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:9px 2px;border:none;background:transparent;border-bottom:2px solid transparent;transition:all .15s;cursor:pointer}
+.stab.act{color:var(--c2);border-bottom-color:var(--c2);background:color-mix(in srgb,var(--c2) 5%,transparent)}
+.sbody{display:none;flex-direction:column;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;padding:8px}
+.sbody.act{display:flex;gap:5px}
+.si{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:6px;padding:7px 10px;transition:all .15s;background:var(--surf2);cursor:pointer}
+.si:hover{border-color:var(--border2);transform:translateX(2px);background:var(--surf)}
+.si-icon{font-size:.9rem;width:20px;text-align:center;flex-shrink:0}
+.si-info{flex:1;min-width:0}
+.si-name{font-family:var(--font-h);font-size:.68rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.si-sub{font-size:.52rem;color:var(--muted);margin-top:1px}
+.si-star{color:#f59e0b;font-size:.75rem;flex-shrink:0}
+.sb-section{font-size:.52rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);padding:8px 4px 4px;flex-shrink:0}
+
+/* STATS */
+.stat-block{padding:12px;border:1px solid var(--border);border-radius:6px;background:var(--surf2);margin-bottom:6px}
+.stat-num{font-family:var(--font-h);font-size:1.4rem;font-weight:800;color:var(--c2)}
+.stat-label{font-size:.54rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:900;display:none;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--surf);border-radius:12px;border:1px solid var(--border);padding:24px;width:440px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto}
+.modal h3{font-family:var(--font-h);font-size:1rem;font-weight:800;margin-bottom:16px}
+.tm-field{margin-bottom:12px}
+.tm-flabel{font-size:.57rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);display:block;margin-bottom:5px}
+.tm-input{width:100%;font-family:var(--font-m);font-size:.65rem;border:1px solid var(--border);border-radius:5px;padding:7px 10px;background:var(--surf2);color:var(--text);outline:none;transition:border-color .15s}
+.tm-input:focus{border-color:var(--c2);background:var(--surf)}
+.tm-select{width:100%;font-family:var(--font-m);font-size:.65rem;border:1px solid var(--border);border-radius:5px;padding:7px 10px;background:var(--surf2);color:var(--text);outline:none}
+.tm-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;border-top:1px solid var(--border);padding-top:16px}
+.btn-cancel{font-size:.62rem;padding:7px 14px;border-radius:5px;border:1px solid var(--border);color:var(--muted);transition:all .13s}
+.btn-cancel:hover{background:var(--surf3)}
+.btn-save{font-size:.62rem;padding:7px 14px;border-radius:5px;border:none;background:var(--c2);color:#fff;transition:all .13s}
+.btn-save:hover{opacity:.85}
+.btn-del{font-size:.62rem;padding:7px 14px;border-radius:5px;border:1px solid var(--c4);color:var(--c4);margin-right:auto;transition:all .13s}
+.btn-del:hover{background:var(--c4);color:#fff}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo" onclick="window.location='ai-stack.html'">AI <em>Update</em></div>
+  <div class="tnav" id="tnav"></div>
+  <div class="topbar-actions">
+    <div class="topbar-search">
+      <input type="text" id="search-input" placeholder="Buscar fuente..." oninput="filterSources()">
+      <span class="topbar-search-ico">⌕</span>
+    </div>
+    <button class="topbar-btn" onclick="openAddModal()">+ Añadir</button>
+    <button class="topbar-btn" onclick="exportData()">↑ Export</button>
+    <label class="topbar-btn" style="cursor:pointer">↓ Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+  <div class="content">
+    <!-- FILTER BAR -->
+    <div class="filter-bar" id="filter-bar">
+      <span class="filter-label">Idioma:</span>
+      <button class="filter-chip act" data-lang="all" onclick="setLang('all')">Todos</button>
+      <button class="filter-chip" data-lang="es" onclick="setLang('es')">🇪🇸 ES</button>
+      <button class="filter-chip" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
+      <div class="filter-sep"></div>
+      <span class="filter-label">Acceso:</span>
+      <button class="filter-chip act" data-access="all" onclick="setAccess('all')">Todos</button>
+      <button class="filter-chip" data-access="free" onclick="setAccess('free')">Gratis</button>
+      <button class="filter-chip" data-access="paid" onclick="setAccess('paid')">De pago</button>
+    </div>
+
+    <!-- GRID -->
+    <div class="sources-grid" id="sources-grid"></div>
+    <div class="empty-state" id="empty-state" style="display:none">
+      <div class="es-icon">📭</div>
+      <p>No hay fuentes en esta categoría.<br>Pulsa <strong>+ Añadir</strong> para incluir una.</p>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="stabs">
+      <button class="stab act" onclick="showSTab('favs')">⭐ Favs</button>
+      <button class="stab" onclick="showSTab('recents')">🕐 Recent</button>
+      <button class="stab" onclick="showSTab('stats')">📊 Stats</button>
+    </div>
+    <div class="sbody act" id="stab-favs"></div>
+    <div class="sbody" id="stab-recents"></div>
+    <div class="sbody" id="stab-stats"></div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-bg" onclick="closeModal(event)">
+  <div class="modal">
+    <h3 id="modal-title">Nueva fuente</h3>
+    <input type="hidden" id="m-id">
+    <div class="tm-field">
+      <label class="tm-flabel">Nombre</label>
+      <input class="tm-input" id="m-name" placeholder="Ej: MIT Technology Review ES">
+    </div>
+    <div class="tm-field">
+      <label class="tm-flabel">URL</label>
+      <input class="tm-input" id="m-url" placeholder="https://...">
+    </div>
+    <div class="tm-field">
+      <label class="tm-flabel">Descripción corta</label>
+      <input class="tm-input" id="m-desc" placeholder="Una línea descriptiva">
+    </div>
+    <div class="tm-row">
+      <div class="tm-field">
+        <label class="tm-flabel">Categoría</label>
+        <select class="tm-select" id="m-type">
+          <option value="prensa">Prensa</option>
+          <option value="blog">Blog</option>
+          <option value="video">Vídeo</option>
+          <option value="podcast">Podcast</option>
+          <option value="persona">Persona</option>
+        </select>
+      </div>
+      <div class="tm-field">
+        <label class="tm-flabel">Idioma</label>
+        <select class="tm-select" id="m-lang">
+          <option value="es">🇪🇸 Español</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="both">Ambos</option>
+        </select>
+      </div>
+    </div>
+    <div class="tm-row">
+      <div class="tm-field">
+        <label class="tm-flabel">Acceso</label>
+        <select class="tm-select" id="m-access">
+          <option value="free">Gratis</option>
+          <option value="paid">De pago</option>
+          <option value="freemium">Freemium</option>
+        </select>
+      </div>
+      <div class="tm-field">
+        <label class="tm-flabel">Frecuencia</label>
+        <select class="tm-select" id="m-freq">
+          <option value="diario">Diario</option>
+          <option value="semanal">Semanal</option>
+          <option value="variable">Variable</option>
+        </select>
+      </div>
+    </div>
+    <div class="tm-field">
+      <label class="tm-flabel">Icono (emoji)</label>
+      <input class="tm-input" id="m-icon" placeholder="📰" maxlength="4" style="width:80px">
+    </div>
+    <div class="tm-field">
+      <label class="tm-flabel">Notas personales</label>
+      <textarea class="tm-input" id="m-notes" rows="2" placeholder="Apuntes, por qué lo sigues..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-del" id="modal-del-btn" onclick="deleteSource()" style="display:none">Eliminar</button>
+      <button class="btn-cancel" onclick="closeModalDirect()">Cancelar</button>
+      <button class="btn-save" onclick="saveSource()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── TABS CONFIG ─────────────────────────────────────────── */
+const TABS = [
+  {key:'all',      label:'Todos',    color:'var(--c2)'},
+  {key:'prensa',   label:'Prensa',   color:'var(--c4)'},
+  {key:'blog',     label:'Blog',     color:'var(--c3)'},
+  {key:'video',    label:'Vídeo',    color:'var(--c6)'},
+  {key:'podcast',  label:'Podcast',  color:'var(--c5)'},
+  {key:'persona',  label:'Personas', color:'var(--c1)'},
+];
+let ACTIVE_TAB = 'all';
+let ACTIVE_LANG = 'all';
+let ACTIVE_ACCESS = 'all';
+
+/* ── DEFAULT SOURCES ─────────────────────────────────────── */
+const DEFAULT_SOURCES = [
+  // PRENSA
+  {id:'mit-es',      name:'MIT Technology Review ES', type:'prensa',  lang:'es', access:'free',     freq:'diario',   icon:'📰', url:'https://www.technologyreview.es',                             desc:'Periodismo tecnológico de referencia en español.',         fav:false, notes:''},
+  {id:'xataka-ai',   name:'Xataka IA',                type:'prensa',  lang:'es', access:'free',     freq:'diario',   icon:'🤖', url:'https://www.xataka.com/tag/inteligencia-artificial',          desc:'Cobertura diaria de IA en español, noticias y análisis.',  fav:false, notes:''},
+  {id:'elpais-tec',  name:'El País Tecnología',        type:'prensa',  lang:'es', access:'freemium', freq:'diario',   icon:'📰', url:'https://elpais.com/tecnologia/',                              desc:'Sección tech del diario El País.',                         fav:false, notes:''},
+  {id:'hipertextual',name:'Hipertextual',              type:'prensa',  lang:'es', access:'free',     freq:'diario',   icon:'📡', url:'https://hipertextual.com/tag/inteligencia-artificial',        desc:'Tech en español con buena cobertura de IA.',               fav:false, notes:''},
+  {id:'rundown',     name:'The Rundown AI',            type:'prensa',  lang:'en', access:'free',     freq:'diario',   icon:'📬', url:'https://www.therundown.ai',                                   desc:'Newsletter diaria con lo más relevante de IA.',            fav:true,  notes:''},
+  // BLOG
+  {id:'enrique-dans',name:'Enrique Dans',              type:'blog',    lang:'es', access:'free',     freq:'diario',   icon:'✍️', url:'https://www.enriquedans.com',                                 desc:'Análisis reflexivo de tecnología e IA en español.',        fav:true,  notes:''},
+  {id:'bonilista',   name:'Bonilista',                 type:'blog',    lang:'es', access:'free',     freq:'semanal',  icon:'📩', url:'https://www.bonilista.com',                                   desc:'Newsletter semanal de David Bonilla, referente dev ES.',   fav:false, notes:''},
+  {id:'tldr-ai',     name:'TLDR AI',                   type:'blog',    lang:'en', access:'free',     freq:'diario',   icon:'⚡', url:'https://tldr.tech/ai',                                        desc:'Resumen diario de noticias de IA en 5 minutos.',           fav:true,  notes:''},
+  {id:'simonw',      name:'Simon Willison',            type:'blog',    lang:'en', access:'free',     freq:'variable', icon:'🔬', url:'https://simonwillison.net',                                   desc:'Exploración práctica de LLMs y herramientas de IA.',      fav:true,  notes:''},
+  {id:'ben-evans',   name:'Benedict Evans',            type:'blog',    lang:'en', access:'free',     freq:'semanal',  icon:'📊', url:'https://www.ben-evans.com',                                   desc:'Análisis estratégico de tech y tendencias.',               fav:false, notes:''},
+  // VÍDEO
+  {id:'dotcsv',      name:'Dot CSV',                   type:'video',   lang:'es', access:'free',     freq:'semanal',  icon:'🎬', url:'https://www.youtube.com/@dotcsv',                             desc:'Divulgación de IA en español, referente en YouTube.',      fav:true,  notes:''},
+  {id:'mouredev',    name:'MoureDev',                  type:'video',   lang:'es', access:'free',     freq:'semanal',  icon:'🐍', url:'https://www.youtube.com/@mouredev',                           desc:'Programación y herramientas de IA para desarrolladores.',  fav:false, notes:''},
+  {id:'midulive',    name:'Midulive',                  type:'video',   lang:'es', access:'free',     freq:'variable', icon:'💻', url:'https://www.youtube.com/@midulive',                           desc:'Live coding y tutoriales de IA en español.',               fav:false, notes:''},
+  {id:'two-minute',  name:'Two Minute Papers',         type:'video',   lang:'en', access:'free',     freq:'semanal',  icon:'📄', url:'https://www.youtube.com/@TwoMinutePapers',                    desc:'Resúmenes accesibles de papers de investigación IA.',      fav:true,  notes:''},
+  {id:'karpathy-yt', name:'Andrej Karpathy',           type:'video',   lang:'en', access:'free',     freq:'variable', icon:'🧠', url:'https://www.youtube.com/@AndrejKarpathy',                     desc:'Tutoriales profundos sobre LLMs y deep learning.',         fav:true,  notes:''},
+  // PODCAST
+  {id:'catapulta',   name:'Catapulta · Itnig',         type:'podcast', lang:'es', access:'free',     freq:'semanal',  icon:'🚀', url:'https://itnig.net/es/podcast',                                desc:'Emprendimiento y tecnología desde Barcelona.',             fav:false, notes:''},
+  {id:'lex',         name:'Lex Fridman Podcast',        type:'podcast', lang:'en', access:'free',     freq:'variable', icon:'🎙️', url:'https://lexfridman.com/podcast',                              desc:'Conversaciones largas con referentes de IA y ciencia.',   fav:true,  notes:''},
+  {id:'twiml',       name:'TWIML AI Podcast',           type:'podcast', lang:'en', access:'free',     freq:'semanal',  icon:'🤖', url:'https://twimlai.com/podcast',                                 desc:'ML técnico en profundidad para profesionales.',            fav:false, notes:''},
+  {id:'hard-fork',   name:'Hard Fork · NYT',            type:'podcast', lang:'en', access:'freemium', freq:'semanal',  icon:'📻', url:'https://www.nytimes.com/column/hard-fork',                    desc:'Tech journalism del NYT, tono accesible y crítico.',      fav:false, notes:''},
+  // PERSONAS
+  {id:'p-dotcsv',    name:'Carlos Santana · DotCSV',   type:'persona', lang:'es', access:'free',     freq:'variable', icon:'👨‍💻', url:'https://twitter.com/dotcsv',                                  desc:'Divulgador de IA líder en español. YouTube + X.',          fav:true,  notes:''},
+  {id:'p-edans',     name:'Enrique Dans',              type:'persona', lang:'es', access:'free',     freq:'diario',   icon:'👨‍🏫', url:'https://twitter.com/edans',                                   desc:'Profesor IE, ensayista tech. Activo en X y su blog.',     fav:true,  notes:''},
+  {id:'p-nuria',     name:'Nuria Oliver',              type:'persona', lang:'es', access:'free',     freq:'variable', icon:'👩‍🔬', url:'https://twitter.com/nuriaoliver',                             desc:'Investigadora IA, Chief Data Scientist en ELLIS Alicante.',fav:false, notes:''},
+  {id:'p-karpathy',  name:'Andrej Karpathy',           type:'persona', lang:'en', access:'free',     freq:'variable', icon:'🧠', url:'https://twitter.com/karpathy',                                desc:'Ex OpenAI/Tesla, referente mundial en LLMs.',             fav:true,  notes:''},
+  {id:'p-sama',      name:'Sam Altman',                type:'persona', lang:'en', access:'free',     freq:'variable', icon:'🏢', url:'https://twitter.com/sama',                                    desc:'CEO de OpenAI. Voz central en el debate sobre AGI.',      fav:false, notes:''},
+  {id:'p-ylecun',    name:'Yann LeCun',                type:'persona', lang:'en', access:'free',     freq:'variable', icon:'🔬', url:'https://twitter.com/ylecun',                                  desc:'Chief AI Scientist en Meta, fundador del deep learning.',  fav:false, notes:''},
+];
+
+/* ── STATE ───────────────────────────────────────────────── */
+let SOURCES = [];
+let RECENTS = [];
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('ai_update_sources');
+    if (s) {
+      SOURCES = JSON.parse(s);
+      // merge new defaults not yet saved
+      DEFAULT_SOURCES.forEach(d => {
+        if (!SOURCES.find(x => x.id === d.id)) SOURCES.push({...d});
+      });
+    } else {
+      SOURCES = DEFAULT_SOURCES.map(d => ({...d}));
+    }
+  } catch(e) { SOURCES = DEFAULT_SOURCES.map(d => ({...d})); }
+  try {
+    const r = localStorage.getItem('ai_update_recents');
+    if (r) RECENTS = JSON.parse(r);
+  } catch(e) {}
+}
+
+function saveState() {
+  localStorage.setItem('ai_update_sources', JSON.stringify(SOURCES));
+  localStorage.setItem('ai_update_recents', JSON.stringify(RECENTS));
+}
+
+/* ── TYPE META ───────────────────────────────────────────── */
+const TYPE_META = {
+  prensa:  {label:'Prensa',   color:'var(--c4)'},
+  blog:    {label:'Blog',     color:'var(--c3)'},
+  video:   {label:'Vídeo',    color:'var(--c6)'},
+  podcast: {label:'Podcast',  color:'var(--c5)'},
+  persona: {label:'Persona',  color:'var(--c1)'},
+};
+
+/* ── NAV ─────────────────────────────────────────────────── */
+function buildNav() {
+  const nav = document.getElementById('tnav');
+  nav.innerHTML = TABS.map((t,i) => `
+    <button class="tnav-btn${ACTIVE_TAB===t.key?' act':''}" style="color:${ACTIVE_TAB===t.key?t.color:''};"
+      onclick="setTab('${t.key}')">
+      <span class="tnav-dot" style="background:${t.color}"></span>
+      ${t.label}
+    </button>
+    ${i<TABS.length-1?'<div class="tnav-sep"></div>':''}
+  `).join('');
+  // Back link
+  nav.innerHTML += `<div class="tnav-sep"></div>
+    <a href="ai-stack.html" class="tnav-btn" style="margin-left:4px">← AI Stack</a>`;
+}
+
+function setTab(key) {
+  ACTIVE_TAB = key;
+  buildNav();
+  renderGrid();
+}
+
+/* ── FILTERS ─────────────────────────────────────────────── */
+function setLang(lang) {
+  ACTIVE_LANG = lang;
+  document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('act', el.dataset.lang === lang));
+  filterSources();
+}
+function setAccess(acc) {
+  ACTIVE_ACCESS = acc;
+  document.querySelectorAll('[data-access]').forEach(el => el.classList.toggle('act', el.dataset.access === acc));
+  filterSources();
+}
+
+function filterSources() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const cards = document.querySelectorAll('.source-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const type   = card.dataset.type;
+    const lang   = card.dataset.lang;
+    const access = card.dataset.access;
+    const text   = card.dataset.search;
+    const tabOk    = ACTIVE_TAB === 'all' || type === ACTIVE_TAB;
+    const langOk   = ACTIVE_LANG === 'all' || lang === ACTIVE_LANG;
+    const accessOk = ACTIVE_ACCESS === 'all' || access === ACTIVE_ACCESS;
+    const searchOk = !q || text.includes(q);
+    const show = tabOk && langOk && accessOk && searchOk;
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('empty-state').style.display = visible ? 'none' : 'block';
+}
+
+/* ── GRID ────────────────────────────────────────────────── */
+function renderGrid() {
+  const grid = document.getElementById('sources-grid');
+  grid.innerHTML = SOURCES.map(s => {
+    const tm = TYPE_META[s.type] || {label:s.type, color:'var(--c2)'};
+    const langLabel = s.lang === 'es' ? '🇪🇸 ES' : s.lang === 'en' ? '🇬🇧 EN' : '🌐';
+    return `
+    <div class="source-card${s.fav?' is-fav':''}" data-id="${s.id}" data-type="${s.type}" data-lang="${s.lang}" data-access="${s.access}"
+         data-search="${(s.name+' '+s.desc+' '+s.type).toLowerCase()}"
+         onclick="openSource('${s.id}','${s.url}')">
+      ${s.fav ? '<div class="fav-indicator">★</div>' : ''}
+      <div class="sc-header">
+        <div class="sc-icon" style="background:color-mix(in srgb,${tm.color} 10%,transparent)">${s.icon}</div>
+        <div class="sc-meta">
+          <div class="sc-name">${s.name}</div>
+          <div class="sc-type" style="color:${tm.color}">${tm.label} · ${s.freq}</div>
+        </div>
+      </div>
+      <div class="sc-desc">${s.desc}${s.notes ? `<br><span style="color:var(--dim);font-style:italic">${s.notes}</span>` : ''}</div>
+      <div class="sc-footer">
+        <span class="sc-lang ${s.lang}">${langLabel}</span>
+        <span class="sc-lang">${s.access}</span>
+        <div class="sc-actions">
+          <button class="sc-btn star${s.fav?' act':''}" title="Favorito" onclick="toggleFav('${s.id}',event)">★</button>
+          <a href="${s.url}" target="_blank" class="sc-btn" title="Abrir" onclick="addRecent('${s.id}');event.stopPropagation()">↗</a>
+          <button class="sc-btn" title="Editar" onclick="openEditModal('${s.id}');event.stopPropagation()">✎</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  filterSources();
+  renderSidebar();
+}
+
+/* ── OPEN SOURCE ─────────────────────────────────────────── */
+function openSource(id, url) {
+  addRecent(id);
+  window.open(url, '_blank');
+}
+
+/* ── FAVORITES ───────────────────────────────────────────── */
+function toggleFav(id, e) {
+  e.stopPropagation();
+  const s = SOURCES.find(x => x.id === id);
+  if (!s) return;
+  s.fav = !s.fav;
+  saveState();
+  renderGrid();
+}
+
+/* ── RECENTS ─────────────────────────────────────────────── */
+function addRecent(id) {
+  RECENTS = [id, ...RECENTS.filter(r => r !== id)].slice(0, 10);
+  saveState();
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+function showSTab(key) {
+  document.querySelectorAll('.stab').forEach((b,i) => b.classList.toggle('act', ['favs','recents','stats'][i]===key));
+  document.querySelectorAll('.sbody').forEach(b => b.classList.remove('act'));
+  document.getElementById('stab-'+key).classList.add('act');
+}
+
+function renderSidebar() {
+  // Favs
+  const favs = SOURCES.filter(s => s.fav);
+  const favsEl = document.getElementById('stab-favs');
+  favsEl.innerHTML = favs.length ? favs.map(s => sidebarItem(s)).join('') :
+    '<div style="padding:16px;font-size:.6rem;color:var(--dim);text-align:center">Sin favoritos aún</div>';
+
+  // Recents
+  const recEl = document.getElementById('stab-recents');
+  const recSources = RECENTS.map(id => SOURCES.find(s => s.id === id)).filter(Boolean);
+  recEl.innerHTML = recSources.length ? recSources.map(s => sidebarItem(s)).join('') :
+    '<div style="padding:16px;font-size:.6rem;color:var(--dim);text-align:center">Sin actividad reciente</div>';
+
+  // Stats
+  const statsEl = document.getElementById('stab-stats');
+  const total = SOURCES.length;
+  const byType = {};
+  SOURCES.forEach(s => { byType[s.type] = (byType[s.type]||0)+1; });
+  statsEl.innerHTML = `
+    <div style="padding:8px">
+      <div class="stat-block"><div class="stat-num">${total}</div><div class="stat-label">Fuentes totales</div></div>
+      <div class="stat-block"><div class="stat-num">${favs.length}</div><div class="stat-label">Favoritas</div></div>
+      ${Object.entries(byType).map(([type,count]) => {
+        const tm = TYPE_META[type] || {label:type, color:'var(--c2)'};
+        return `<div class="stat-block" style="border-color:${tm.color};background:color-mix(in srgb,${tm.color} 5%,transparent)">
+          <div class="stat-num" style="color:${tm.color}">${count}</div>
+          <div class="stat-label">${tm.label}</div></div>`;
+      }).join('')}
+    </div>`;
+}
+
+function sidebarItem(s) {
+  const tm = TYPE_META[s.type] || {label:s.type, color:'var(--c2)'};
+  return `<div class="si" onclick="addRecent('${s.id}');window.open('${s.url}','_blank')">
+    <div class="si-icon">${s.icon}</div>
+    <div class="si-info">
+      <div class="si-name">${s.name}</div>
+      <div class="si-sub" style="color:${tm.color}">${tm.label}</div>
+    </div>
+    ${s.fav ? '<span class="si-star">★</span>' : ''}
+  </div>`;
+}
+
+/* ── MODAL ───────────────────────────────────────────────── */
+let EDITING_ID = null;
+
+function openAddModal() {
+  EDITING_ID = null;
+  document.getElementById('modal-title').textContent = 'Nueva fuente';
+  document.getElementById('modal-del-btn').style.display = 'none';
+  ['m-id','m-name','m-url','m-desc','m-notes','m-icon'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('m-type').value = 'prensa';
+  document.getElementById('m-lang').value = 'es';
+  document.getElementById('m-access').value = 'free';
+  document.getElementById('m-freq').value = 'semanal';
+  document.getElementById('m-icon').value = '📰';
+  document.getElementById('modal-bg').classList.add('open');
+}
+
+function openEditModal(id) {
+  const s = SOURCES.find(x => x.id === id);
+  if (!s) return;
+  EDITING_ID = id;
+  document.getElementById('modal-title').textContent = 'Editar fuente';
+  document.getElementById('modal-del-btn').style.display = '';
+  document.getElementById('m-id').value = s.id;
+  document.getElementById('m-name').value = s.name;
+  document.getElementById('m-url').value = s.url;
+  document.getElementById('m-desc').value = s.desc;
+  document.getElementById('m-notes').value = s.notes || '';
+  document.getElementById('m-type').value = s.type;
+  document.getElementById('m-lang').value = s.lang;
+  document.getElementById('m-access').value = s.access;
+  document.getElementById('m-freq').value = s.freq;
+  document.getElementById('m-icon').value = s.icon;
+  document.getElementById('modal-bg').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-bg')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-bg').classList.remove('open');
+}
+
+function saveSource() {
+  const name = document.getElementById('m-name').value.trim();
+  if (!name) return;
+  if (EDITING_ID) {
+    const s = SOURCES.find(x => x.id === EDITING_ID);
+    if (s) {
+      s.name   = name;
+      s.url    = document.getElementById('m-url').value.trim();
+      s.desc   = document.getElementById('m-desc').value.trim();
+      s.notes  = document.getElementById('m-notes').value.trim();
+      s.type   = document.getElementById('m-type').value;
+      s.lang   = document.getElementById('m-lang').value;
+      s.access = document.getElementById('m-access').value;
+      s.freq   = document.getElementById('m-freq').value;
+      s.icon   = document.getElementById('m-icon').value || '📎';
+    }
+  } else {
+    const newId = 'src-' + Date.now();
+    SOURCES.push({
+      id:     newId,
+      name,
+      url:    document.getElementById('m-url').value.trim(),
+      desc:   document.getElementById('m-desc').value.trim(),
+      notes:  document.getElementById('m-notes').value.trim(),
+      type:   document.getElementById('m-type').value,
+      lang:   document.getElementById('m-lang').value,
+      access: document.getElementById('m-access').value,
+      freq:   document.getElementById('m-freq').value,
+      icon:   document.getElementById('m-icon').value || '📎',
+      fav:    false,
+    });
+  }
+  saveState();
+  closeModalDirect();
+  renderGrid();
+}
+
+function deleteSource() {
+  if (!EDITING_ID) return;
+  if (!confirm('¿Eliminar esta fuente?')) return;
+  SOURCES = SOURCES.filter(s => s.id !== EDITING_ID);
+  saveState();
+  closeModalDirect();
+  renderGrid();
+}
+
+/* ── EXPORT / IMPORT ─────────────────────────────────────── */
+function exportData() {
+  const blob = new Blob([JSON.stringify({sources:SOURCES, recents:RECENTS}, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ai-update-backup.json';
+  a.click();
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (data.sources) { SOURCES = data.sources; if (data.recents) RECENTS = data.recents; }
+      saveState(); renderGrid();
+    } catch(err) { alert('Error al importar el archivo.'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+/* ── INIT ────────────────────────────────────────────────── */
+loadState();
+buildNav();
+renderGrid();
+</script>
+</body>
+</html>
