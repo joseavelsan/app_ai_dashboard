@@ -2707,7 +2707,7 @@ function buildSbGroups(groups) {
 
 function renderSiTool(t) {
   const isFav = FAVORITES.has(t.id);
-  const favStyle = isFav ? 'border-color:#f59e0b!important;background:#fffdf0!important;' : '';
+  const favStyle = isFav ? 'border-color:#f59e0b!important;background:#fffdf0!important;box-shadow:0 0 0 1px rgba(245,158,11,.4)!important;' : '';
   return `<div class="si ${cardClass(t.status)}" style="cursor:pointer;${favStyle}" onclick="openToolDetailFrom('${t.id}')">
     <div class="si-info">
       <div class="si-name">${t.name}${isFav?' ★':''}</div>
@@ -2944,7 +2944,7 @@ function buildSidebar() {
       const items = appsBySubtype[k].map(t => {
         const isActive = t.status !== 'inactive';
         const isFavApp = FAVORITES.has(t.id);
-        const favStyle = isFavApp ? 'border-color:#f59e0b!important;background:#fffdf0!important;' : '';
+        const favStyle = isFavApp ? 'border-color:#f59e0b!important;background:#fffdf0!important;box-shadow:0 0 0 1px rgba(245,158,11,.4)!important;' : '';
         return `<div class="si ${isActive?'app-active':'inactive'}" style="cursor:pointer;${favStyle}" onclick="openToolDetailFrom('${t.id}')">
           ${isActive?'<div class="app-active-dot"></div>':'<div style="width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0"></div>'}
           <div class="si-info"><div class="si-name">${t.name}${isFavApp?' ★':''}</div><div class="si-sub">${t.desc.length>48?t.desc.substring(0,48)+'…':t.desc}</div></div>

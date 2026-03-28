@@ -27,6 +27,8 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .logo{font-family:var(--font-h);font-size:.95rem;font-weight:800;letter-spacing:-.03em;color:var(--text);white-space:nowrap;margin-right:auto}
 .logo em{color:var(--c1);font-style:normal}
 .topbar-date{font-size:.57rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.topbar-btn{font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;padding:5px 9px;border-radius:4px;border:1px solid var(--border);color:var(--muted);transition:all .15s;margin-left:6px;flex-shrink:0}
+.topbar-btn:hover{background:var(--surf3);color:var(--text2)}
 
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;gap:32px}
 
@@ -46,7 +48,6 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .nav-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s;border-radius:12px}
 .nav-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.12);border-color:var(--card-color)}
 .nav-card:hover::before{opacity:1;background:color-mix(in srgb,var(--card-color) 4%,transparent)}
-.nav-card-num{font-family:var(--font-h);font-size:2.4rem;font-weight:800;line-height:1;color:color-mix(in srgb,var(--card-color) 15%,transparent);margin-bottom:2px}
 .nav-card-icon{font-size:1.6rem;line-height:1;margin-bottom:4px}
 .nav-card-title{font-family:var(--font-h);font-size:1.1rem;font-weight:800;letter-spacing:-.03em;color:var(--card-color);margin-bottom:2px}
 .nav-card-sub{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px}
@@ -58,6 +59,10 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 
 .footer{font-size:.56rem;color:var(--dim);text-align:center;padding-bottom:16px}
 
+/* BACKUP TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:.62rem;padding:8px 16px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:99}
+.toast.show{opacity:1}
+
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
@@ -68,6 +73,8 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 <div class="topbar">
   <div class="logo">AI<em>·</em>Dashboard <span style="font-size:.62rem;font-weight:400;color:var(--muted);margin-left:6px">José A. Velázquez</span></div>
   <div class="topbar-date" id="td-date"></div>
+  <button class="topbar-btn" onclick="exportAll()" title="Exportar datos de las 3 páginas a un único fichero JSON">↑ Backup</button>
+  <label class="topbar-btn" style="cursor:pointer" title="Restaurar datos desde backup JSON">↓ Restaurar<input type="file" accept=".json" style="display:none" onchange="importAll(event)"></label>
 </div>
 
 <div class="main">
@@ -126,10 +133,83 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
 const d = new Date();
 document.getElementById('td-date').textContent = d.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 document.getElementById('footer-year').textContent = d.getFullYear();
+
+// Claves de localStorage de cada página
+const BACKUP_KEYS = [
+  'ai-stack-v1',       // AI Stack: herramientas
+  'ai_stack_ext_v1',   // AI Stack: fichas extendidas
+  'ai_update_sources', // AI Update: fuentes
+  'ai_update_recents', // AI Update: recientes
+  'ia-webs-v1',        // IA Webs: enlaces
+];
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+async function exportAll() {
+  const backup = { _version: 1, _date: new Date().toISOString(), data: {} };
+  let hasData = false;
+  BACKUP_KEYS.forEach(k => {
+    const v = localStorage.getItem(k);
+    if (v) { backup.data[k] = v; hasData = true; }
+  });
+  if (!hasData) { showToast('No hay datos guardados para exportar.'); return; }
+
+  const date = new Date().toISOString().slice(0,10);
+  const filename = `ai-dashboard-backup-${date}.json`;
+  const content = JSON.stringify(backup, null, 2);
+
+  if (window.showSaveFilePicker) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: filename,
+        types: [{ description: 'JSON backup', accept: {'application/json': ['.json']} }]
+      });
+      const writable = await handle.createWritable();
+      await writable.write(content);
+      await writable.close();
+      showToast('✓ Backup guardado correctamente.');
+      return;
+    } catch(e) { if (e.name === 'AbortError') return; }
+  }
+  const blob = new Blob([content], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  showToast('✓ Backup descargado.');
+}
+
+function importAll(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const backup = JSON.parse(e.target.result);
+      if (!backup.data) throw new Error('Formato de backup no válido.');
+      let count = 0;
+      Object.entries(backup.data).forEach(([k, v]) => {
+        if (BACKUP_KEYS.includes(k)) { localStorage.setItem(k, v); count++; }
+      });
+      showToast(`✓ Restaurados ${count} conjuntos de datos. Abre cada página para verlos.`);
+    } catch(err) {
+      showToast('Error al importar: ' + err.message);
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
 </script>
 
 </body>
