@@ -145,7 +145,8 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="logo" onclick="window.location='ai-stack.html'">AI <em>Update</em></div>
+  <a href="index.html" style="font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;padding:5px 9px;border-radius:4px;border:1px solid var(--border);color:var(--muted);transition:all .15s;white-space:nowrap;margin-right:8px;flex-shrink:0" onmouseover="this.style.background='var(--surf3)';this.style.color='var(--text2)'" onmouseout="this.style.background='';this.style.color='var(--muted)'">🏠 Home</a>
+  <div class="logo">AI <em>Update</em></div>
   <div class="tnav" id="tnav"></div>
   <div class="topbar-actions">
     <div class="topbar-search">
@@ -429,7 +430,7 @@ function renderGrid() {
         <span class="sc-lang">${s.access}</span>
         <div class="sc-actions">
           <button class="sc-btn star${s.fav?' act':''}" title="Favorito" onclick="toggleFav('${s.id}',event)">★</button>
-          <a href="${s.url}" target="_blank" class="sc-btn" title="Abrir" onclick="addRecent('${s.id}');event.stopPropagation()">↗</a>
+          <a href="${s.url}" target="_blank" class="sc-btn" title="Abrir" onclick="addRecent('${s.id}');event.stopPropagation()" style="background:#F77C65;color:#fff;border-color:#F77C65;font-weight:700">↗</a>
           <button class="sc-btn" title="Editar" onclick="openEditModal('${s.id}');event.stopPropagation()">✎</button>
         </div>
       </div>
@@ -600,11 +601,25 @@ function deleteSource() {
 }
 
 /* ── EXPORT / IMPORT ─────────────────────────────────────── */
-function exportData() {
-  const blob = new Blob([JSON.stringify({sources:SOURCES, recents:RECENTS}, null, 2)], {type:'application/json'});
+async function exportData() {
+  const data = JSON.stringify({sources:SOURCES, recents:RECENTS}, null, 2);
+  const filename = `ai-update-backup-${new Date().toISOString().slice(0,10)}.json`;
+  if (window.showSaveFilePicker) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: filename,
+        types: [{ description: 'JSON backup', accept: {'application/json': ['.json']} }]
+      });
+      const writable = await handle.createWritable();
+      await writable.write(data);
+      await writable.close();
+      return;
+    } catch(e) { if (e.name === 'AbortError') return; }
+  }
+  const blob = new Blob([data], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'ai-update-backup.json';
+  a.download = filename;
   a.click();
 }
 
