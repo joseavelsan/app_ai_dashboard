@@ -3675,7 +3675,7 @@ function buildUses() {
 /* ═══════════════════════════════════════════
    CLAUDE API INTEGRATION
 ═══════════════════════════════════════════ */
-const LS_API_KEY   = 'ai-stack-claude-key';
+const LS_PROXY_URL = 'ai-stack-proxy-url';
 const LS_API_MODEL = 'ai-stack-claude-model';
 const CLAUDE_MODELS = [
   {id:'claude-haiku-4-5-20251001', label:'Haiku 4.5  — rápido y económico (~$0.004/búsqueda)', recommended:true},
@@ -3686,28 +3686,26 @@ const CLAUDE_MODELS = [
 function updateApiStatusBtn() {
   const btn = document.getElementById('api-status-btn');
   if (!btn) return;
-  const key = localStorage.getItem(LS_API_KEY);
-  if (key) {
+  const url = localStorage.getItem(LS_PROXY_URL);
+  if (url) {
     btn.style.color = 'var(--c5)';
     btn.style.borderColor = 'color-mix(in srgb,var(--c5) 40%,transparent)';
-    btn.title = 'API Claude configurada · clic para cambiar';
+    btn.title = 'Proxy Claude configurado · clic para cambiar';
   } else {
     btn.style.color = 'var(--dim)';
     btn.style.borderColor = 'var(--border)';
-    btn.title = 'API Claude no configurada · clic para añadir key';
+    btn.title = 'Proxy Claude no configurado · clic para configurar';
   }
 }
 
 function openApiSettings() {
-  const key   = localStorage.getItem(LS_API_KEY) || '';
+  const url   = localStorage.getItem(LS_PROXY_URL) || '';
   const model = localStorage.getItem(LS_API_MODEL) || CLAUDE_MODELS[0].id;
   const modelOpts = CLAUDE_MODELS.map(m=>
     `<option value="${m.id}"${m.id===model?' selected':''}>${m.label}${m.recommended?' ✓':''}</option>`
   ).join('');
   document.getElementById('api-settings-overlay').style.display = 'flex';
-  const inp = document.getElementById('api-key-input');
-  inp.value = key ? key.substring(0,12)+'…'+key.slice(-4) : '';
-  inp.dataset.real = key;
+  document.getElementById('proxy-url-input').value = url;
   document.getElementById('api-model-sel').innerHTML = modelOpts;
 }
 
@@ -3716,31 +3714,25 @@ function closeApiSettings() {
 }
 
 function saveApiSettings() {
-  const inp = document.getElementById('api-key-input');
-  const raw = inp.value.trim();
-  if (raw && !raw.includes('…')) {
-    localStorage.setItem(LS_API_KEY, raw);
-  } else if (!raw) {
-    localStorage.removeItem(LS_API_KEY);
+  const url = document.getElementById('proxy-url-input').value.trim();
+  if (url) {
+    localStorage.setItem(LS_PROXY_URL, url);
+  } else {
+    localStorage.removeItem(LS_PROXY_URL);
   }
   localStorage.setItem(LS_API_MODEL, document.getElementById('api-model-sel').value);
   closeApiSettings();
   updateApiStatusBtn();
 }
 
-function clearApiKey() {
-  if (!confirm('¿Eliminar la API key guardada?')) return;
-  localStorage.removeItem(LS_API_KEY);
-  const inp = document.getElementById('api-key-input');
-  inp.value = ''; inp.dataset.real = '';
+function clearProxyUrl() {
+  if (!confirm('¿Eliminar la URL del proxy guardada?')) return;
+  localStorage.removeItem(LS_PROXY_URL);
+  document.getElementById('proxy-url-input').value = '';
   updateApiStatusBtn();
 }
 
 async function searchWithClaude() {
-  if (location.protocol === 'file:') {
-    showClaudeMsg('La API de Claude no funciona cuando el archivo se abre desde el disco (file://). Usa GitHub Pages o un servidor local: abre Terminal → cd a la carpeta → python -m http.server 8080 → abre http://localhost:8080', 'error');
-    return;
-  }
   const nameEl = document.getElementById('tev-name');
   const name = nameEl?.value.trim();
   if (!name) {
@@ -3748,9 +3740,9 @@ async function searchWithClaude() {
     nameEl?.focus();
     return;
   }
-  const apiKey = localStorage.getItem(LS_API_KEY);
-  if (!apiKey) {
-    showClaudeMsg('API key no configurada. Pulsa ⚙ API en la barra superior para añadirla.', 'warn');
+  const proxyUrl = localStorage.getItem(LS_PROXY_URL);
+  if (!proxyUrl) {
+    showClaudeMsg('Proxy no configurado. Pulsa ⚙ API en la barra superior para añadir la URL del Cloudflare Worker.', 'warn');
     return;
   }
   const model = localStorage.getItem(LS_API_MODEL) || CLAUDE_MODELS[0].id;
@@ -3774,16 +3766,11 @@ Devuelve ÚNICAMENTE un objeto JSON válido (sin markdown, sin bloques de códig
 {"desc":"descripción corta máx 80 caracteres","url":"URL oficial con https://","layer":número 1-6,"status":"paid|api|free|trial|inactive","subtype":"subtype según la capa","whatIs":"qué es, 2-3 frases","whyLayer":"por qué en esta capa del stack, 1-2 frases","howFits":"cómo encaja en flujo personal de IA, 1-2 frases","integrations":"integraciones separadas por coma","pricing":"información de precios","recommended":"cuándo usarla y por qué","tags":["array","de","tags","válidos"]}`;
 
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch(proxyUrl, {
       method: 'POST',
       mode: 'cors',
       credentials: 'omit',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-allow-browser': 'true',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model, max_tokens: 1200, messages: [{role:'user', content: prompt}] }),
     });
     if (!resp.ok) {
@@ -4235,15 +4222,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     </div>
     <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px">
       <div class="api-notice">
-        Necesitas una <strong>API key de Anthropic</strong> para usar esta función. Consíguela en
-        <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--c1);text-decoration:underline">console.anthropic.com → API Keys</a>.
-        La key se guarda localmente en tu navegador (localStorage) y nunca sale de tu equipo excepto para llamar a la API de Anthropic.
+        Introduce la URL de tu <strong>Cloudflare Worker</strong> (proxy). El Worker contiene la API key como secreto — nunca se expone en el navegador. Ver instrucciones en <code style="font-size:.6rem;background:var(--surf3);padding:1px 5px;border-radius:3px">cloudflare-worker.js</code> del repositorio.
       </div>
       <div>
-        <label style="font-size:.54rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px">API Key</label>
+        <label style="font-size:.54rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px">URL del Worker (proxy)</label>
         <div style="display:flex;gap:6px">
-          <input id="api-key-input" type="password" placeholder="sk-ant-api03-…" style="flex:1;font-family:var(--font-m);font-size:.64rem;border:1px solid var(--border);border-radius:5px;padding:7px 10px;background:var(--surf2);color:var(--text);outline:none;transition:border-color .15s" onfocus="if(this.dataset.real){this.value=this.dataset.real;this.type='text'}" onblur="this.type='password'">
-          <button onclick="clearApiKey()" style="font-size:.6rem;padding:6px 10px;border:1px solid var(--c4);color:var(--c4);border-radius:5px;background:none;cursor:pointer;transition:all .13s;white-space:nowrap" onmouseover="this.style.background='var(--c4)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='var(--c4)'">Eliminar</button>
+          <input id="proxy-url-input" type="url" placeholder="https://claude-proxy.tu-usuario.workers.dev" style="flex:1;font-family:var(--font-m);font-size:.64rem;border:1px solid var(--border);border-radius:5px;padding:7px 10px;background:var(--surf2);color:var(--text);outline:none;transition:border-color .15s">
+          <button onclick="clearProxyUrl()" style="font-size:.6rem;padding:6px 10px;border:1px solid var(--c4);color:var(--c4);border-radius:5px;background:none;cursor:pointer;transition:all .13s;white-space:nowrap" onmouseover="this.style.background='var(--c4)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='var(--c4)'">Eliminar</button>
         </div>
       </div>
       <div>
