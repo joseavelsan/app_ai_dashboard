@@ -121,10 +121,13 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .stat-num{font-family:var(--font-h);font-size:1.4rem;font-weight:800;color:var(--c2)}
 .stat-label{font-size:.54rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
 
-/* MODAL */
+/* MODAL (edit) */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:900;display:none;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
-.modal{background:var(--surf);border-radius:12px;border:1px solid var(--border);padding:24px;width:440px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto}
+.modal{background:var(--surf);border-radius:12px;border:1px solid var(--border);padding:24px;width:700px;max-width:96vw;box-shadow:0 20px 60px rgba(0,0,0,.2);max-height:92vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.modal-section-sep{height:1px;background:var(--border);margin:16px 0}
+.modal-section-title{font-size:.52rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:10px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+
 .modal h3{font-family:var(--font-h);font-size:1rem;font-weight:800;margin-bottom:16px}
 .tm-field{margin-bottom:12px}
 .tm-flabel{font-size:.57rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);display:block;margin-bottom:5px}
@@ -156,6 +159,7 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
     <button class="topbar-btn" onclick="openAddModal()">+ Añadir</button>
     <button class="topbar-btn" onclick="exportData()">↑ Export</button>
     <label class="topbar-btn" style="cursor:pointer">↓ Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+    <a href="ai-notas.html" target="_blank" class="topbar-btn" style="text-decoration:none" title="Abrir cuaderno de notas en nueva ventana">📒 Notas</a>
   </div>
 </div>
 
@@ -213,6 +217,10 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
       <label class="tm-flabel">Descripción corta</label>
       <input class="tm-input" id="m-desc" placeholder="Una línea descriptiva">
     </div>
+    <div class="tm-field">
+      <label class="tm-flabel">Notas personales</label>
+      <textarea class="tm-input" id="m-notes" rows="2" placeholder="Apuntes, por qué la sigues, artículos destacados…" style="resize:vertical"></textarea>
+    </div>
     <div class="tm-row">
       <div class="tm-field">
         <label class="tm-flabel">Categoría</label>
@@ -254,10 +262,6 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
     <div class="tm-field">
       <label class="tm-flabel">Icono (emoji)</label>
       <input class="tm-input" id="m-icon" placeholder="📰" maxlength="4" style="width:80px">
-    </div>
-    <div class="tm-field">
-      <label class="tm-flabel">Notas personales</label>
-      <textarea class="tm-input" id="m-notes" rows="2" placeholder="Apuntes, por qué lo sigues..."></textarea>
     </div>
     <div class="modal-actions">
       <button class="btn-del" id="modal-del-btn" onclick="deleteSource()" style="display:none">Eliminar</button>
@@ -324,7 +328,6 @@ function loadState() {
     const s = localStorage.getItem('ai_update_sources');
     if (s) {
       SOURCES = JSON.parse(s);
-      // merge new defaults not yet saved
       DEFAULT_SOURCES.forEach(d => {
         if (!SOURCES.find(x => x.id === d.id)) SOURCES.push({...d});
       });
@@ -336,11 +339,18 @@ function loadState() {
     const r = localStorage.getItem('ai_update_recents');
     if (r) RECENTS = JSON.parse(r);
   } catch(e) {}
+  try {
+    const ex = localStorage.getItem(EXT_KEY);
+    if (ex) EXT = JSON.parse(ex);
+  } catch(e) {}
 }
 
 function saveState() {
   localStorage.setItem('ai_update_sources', JSON.stringify(SOURCES));
   localStorage.setItem('ai_update_recents', JSON.stringify(RECENTS));
+}
+
+function saveExt() {
 }
 
 /* ── TYPE META ───────────────────────────────────────────── */
@@ -415,7 +425,7 @@ function renderGrid() {
     return `
     <div class="source-card${s.fav?' is-fav':''}" data-id="${s.id}" data-type="${s.type}" data-lang="${s.lang}" data-access="${s.access}"
          data-search="${(s.name+' '+s.desc+' '+s.type).toLowerCase()}"
-         onclick="openSource('${s.id}','${s.url}')">
+         onclick="openEditModal('${s.id}')">
       ${s.fav ? '<div class="fav-indicator">★</div>' : ''}
       <div class="sc-header">
         <div class="sc-icon" style="background:color-mix(in srgb,${tm.color} 10%,transparent)">${s.icon}</div>
@@ -430,7 +440,7 @@ function renderGrid() {
         <span class="sc-lang">${s.access}</span>
         <div class="sc-actions">
           <button class="sc-btn star${s.fav?' act':''}" title="Favorito" onclick="toggleFav('${s.id}',event)">★</button>
-          <a href="${s.url}" target="_blank" class="sc-btn" title="Abrir" onclick="addRecent('${s.id}');event.stopPropagation()" style="background:#F77C65;color:#fff;border-color:#F77C65;font-weight:700">↗</a>
+          <a href="${s.url}" target="_blank" class="sc-btn" title="Abrir en nueva pestaña" onclick="addRecent('${s.id}');event.stopPropagation()" style="background:#F77C65;color:#fff;border-color:#F77C65;font-weight:700">↗</a>
           <button class="sc-btn" title="Editar" onclick="openEditModal('${s.id}');event.stopPropagation()">✎</button>
         </div>
       </div>
@@ -502,7 +512,7 @@ function renderSidebar() {
 
 function sidebarItem(s) {
   const tm = TYPE_META[s.type] || {label:s.type, color:'var(--c2)'};
-  return `<div class="si" onclick="addRecent('${s.id}');window.open('${s.url}','_blank')">
+  return `<div class="si" onclick="openEditModal('${s.id}')">
     <div class="si-icon">${s.icon}</div>
     <div class="si-info">
       <div class="si-name">${s.name}</div>
@@ -514,6 +524,7 @@ function sidebarItem(s) {
 
 /* ── MODAL ───────────────────────────────────────────────── */
 let EDITING_ID = null;
+
 
 function openAddModal() {
   EDITING_ID = null;
@@ -557,6 +568,7 @@ function closeModalDirect() {
 function saveSource() {
   const name = document.getElementById('m-name').value.trim();
   if (!name) return;
+  let savedId;
   if (EDITING_ID) {
     const s = SOURCES.find(x => x.id === EDITING_ID);
     if (s) {
@@ -570,10 +582,11 @@ function saveSource() {
       s.freq   = document.getElementById('m-freq').value;
       s.icon   = document.getElementById('m-icon').value || '📎';
     }
+    savedId = EDITING_ID;
   } else {
-    const newId = 'src-' + Date.now();
+    savedId = 'src-' + Date.now();
     SOURCES.push({
-      id:     newId,
+      id:     savedId,
       name,
       url:    document.getElementById('m-url').value.trim(),
       desc:   document.getElementById('m-desc').value.trim(),
@@ -586,7 +599,9 @@ function saveSource() {
       fav:    false,
     });
   }
+  // Save extended fields
   saveState();
+  saveExt();
   closeModalDirect();
   renderGrid();
 }
@@ -638,10 +653,17 @@ function importData(e) {
   e.target.value = '';
 }
 
+/* ── OPEN ITEM FROM URL ──────────────────────────────────── */
+function checkOpenFromUrl() {
+  const id = new URLSearchParams(location.search).get('open');
+  if (id) setTimeout(() => openEditModal(id), 80);
+}
+
 /* ── INIT ────────────────────────────────────────────────── */
 loadState();
 buildNav();
 renderGrid();
+checkOpenFromUrl();
 </script>
 </body>
 </html>

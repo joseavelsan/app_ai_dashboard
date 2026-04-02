@@ -1,7 +1,7 @@
 <html lang="es"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Stack · José</title>
+<title>AI Tools · José</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=Azeret+Mono:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <style>
 :root {
@@ -33,7 +33,7 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
   font-family:var(--font-h);font-size:.95rem;font-weight:800;letter-spacing:-.03em;
   color:var(--text);cursor:pointer;white-space:nowrap;margin-right:12px;flex-shrink:0;
 }
-.logo em{color:var(--c1);font-style:normal}
+.logo em{color:var(--c6);font-style:normal}
 .tnav{display:flex;align-items:center;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
 .tnav::-webkit-scrollbar{display:none}
 .tnav-btn{
@@ -445,7 +445,6 @@ textarea.tev-input{resize:vertical;line-height:1.6}
 .api-notice{font-size:.61rem;color:var(--text2);line-height:1.7;padding:10px 12px;background:color-mix(in srgb,var(--c1) 6%,var(--surf2));border-radius:6px;border-left:3px solid var(--c1);margin-bottom:14px}
 
 /* ─── NEW PAGES ──────────────────────────────── */
-#view-learn{flex:1;overflow:hidden}
 #view-commands{flex:1;overflow:hidden}
 
 /* STAR / FAVORITO */
@@ -540,8 +539,8 @@ textarea.tev-input{resize:vertical;line-height:1.6}
   <!-- TOPBAR — always visible -->
   <div class="topbar">
     <a href="index.html" style="font-family:var(--font-h);font-size:.82rem;font-weight:700;letter-spacing:-.02em;color:var(--muted);text-decoration:none;margin-right:10px;padding-right:10px;border-right:1px solid var(--border);flex-shrink:0;transition:color .15s" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">🏠 Home</a>
-    <div class="logo" onclick="goHome()">AI<em>·</em>Stack</div>
-    <div class="tnav" id="tnav"><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(0)">01 Modelo</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(1)">02 Interfaz</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(2)">03 Memoria</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(3)">04 Herramientas</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(4)">05 Agentes</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(5)">06 Aplicación</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('summary')">Resumen</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('uses')">Usos</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('learn')">Aprender</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('commands')">Comandos</button></div>
+    <div class="logo" onclick="goHome()">AI<em>·</em>Tools</div>
+    <div class="tnav" id="tnav"><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(0)">01 Modelo</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(1)">02 Interfaz</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(2)">03 Memoria</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(3)">04 Herramientas</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(4)">05 Agentes</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="openLayer(5)">06 Aplicación</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('summary')">Resumen</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('uses')">Usos</button><span class="tnav-sep"></span><button class="tnav-btn" style="color:var(--muted)" onclick="showView('commands')">Comandos</button></div>
     <div class="topbar-search">
       <input type="text" id="topbar-search-input" placeholder="Buscar herramienta…" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Escape')closeSearch()">
       <span class="topbar-search-ico">🔍</span>
@@ -1317,85 +1316,6 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       </div>
 
       <!-- VIEW: APRENDER (Formativa) -->
-      <div class="view" id="view-learn">
-        <div class="learn-body" id="learn-body"><div class="learn-inner">
-    <div class="sect-title" style="margin-bottom:18px">Guía formativa · El stack de abajo a arriba</div>
-    <div class="learn-intro">El diagrama va <strong>de abajo a arriba</strong> — como los pisos de un edificio: los cimientos sostienen todo lo demás. Cada capa depende de las que tiene debajo, pero no necesita las de arriba. <strong>L1 funciona sola. L6 necesita a todas.</strong></div>
-    
-      <div class="learn-layer" style="--lc:var(--c1)">
-        <div class="learn-lhdr">
-          <div class="learn-lnum">L1</div>
-          <div>
-            <div class="learn-lname">Modelo · LLM Core</div>
-            <div class="learn-lsub">Núcleo generativo</div>
-          </div>
-          <span class="learn-ltag">Los cimientos</span>
-        </div>
-        <div class="learn-text">Es el único nivel que genera inteligencia. Todo lo demás es fontanería alrededor. Sin él, nada funciona. Aquí viven <strong>Claude, GPT-4o</strong>, y tu <strong>Llama local en Ollama</strong>. Son "cerebros" sin manos: saben razonar pero no pueden hacer nada por sí solos.</div>
-      </div>
-      <div class="learn-layer" style="--lc:var(--c2)">
-        <div class="learn-lhdr">
-          <div class="learn-lnum">L2</div>
-          <div>
-            <div class="learn-lname">Interfaz · Chat &amp; Studios</div>
-            <div class="learn-lsub">Punto de acceso</div>
-          </div>
-          <span class="learn-ltag">La ventana</span>
-        </div>
-        <div class="learn-text">Es simplemente cómo llegas al modelo. <strong>Claude.ai, Open WebUI, el Playground de OpenAI</strong>... son interfaces que envuelven al LLM y lo hacen usable. Sin L1 debajo, no existe. Es la capa más "visible" pero la menos inteligente.</div>
-      </div>
-      <div class="learn-layer" style="--lc:var(--c3)">
-        <div class="learn-lhdr">
-          <div class="learn-lnum">L3</div>
-          <div>
-            <div class="learn-lname">Memoria · RAG &amp; Conocimiento</div>
-            <div class="learn-lsub">Contexto externo</div>
-          </div>
-          <span class="learn-ltag">La biblioteca</span>
-        </div>
-        <div class="learn-text">El LLM no recuerda nada entre conversaciones y solo conoce lo que aprendió en su entrenamiento. Esta capa le da acceso a tus documentos en tiempo real. <strong>NotebookLM</strong> es L3: subes un PDF, lo trocea, lo vectoriza, y cuando preguntas recupera los fragmentos relevantes antes de responder. Sin L1, no puede responder. Sin L2, no puedes preguntar.</div>
-      </div>
-      <div class="learn-layer" style="--lc:var(--c4)">
-        <div class="learn-lhdr">
-          <div class="learn-lnum">L4</div>
-          <div>
-            <div class="learn-lname">Herramientas · Tools &amp; Conexiones</div>
-            <div class="learn-lsub">Extensión del modelo</div>
-          </div>
-          <span class="learn-ltag">Las manos</span>
-        </div>
-        <div class="learn-text">Aquí el modelo deja de solo hablar y empieza a <strong>actuar</strong>: buscar en internet, leer un email, crear un evento, llamar a una API. <strong>MCP</strong> es el protocolo que lo hace posible. <strong>n8n</strong> orquesta esos flujos. Esta capa requiere L1 (para decidir qué herramienta usar) y L2 (para recibir la instrucción).</div>
-      </div>
-      <div class="learn-layer" style="--lc:var(--c5)">
-        <div class="learn-lhdr">
-          <div class="learn-lnum">L5</div>
-          <div>
-            <div class="learn-lname">Agentes · IA Autónoma</div>
-            <div class="learn-lsub">Coding · Builders · Browser</div>
-          </div>
-          <span class="learn-ltag">El autónomo</span>
-        </div>
-        <div class="learn-text">Combina todo lo anterior en bucles: el modelo planifica → usa herramientas (L4) → observa el resultado → ajusta → repite. No espera instrucción por instrucción. <strong>Antigravity</strong> hace esto con tu código: recibe un objetivo, lee el repo entero, ejecuta cambios en múltiples archivos. <strong>Copilot</strong> es más simple: sugiere mientras escribes, tú decides.</div>
-      </div>
-      <div class="learn-layer" style="--lc:var(--c6)">
-        <div class="learn-lhdr">
-          <div class="learn-lnum">L6</div>
-          <div>
-            <div class="learn-lname">Aplicación · Tus Proyectos</div>
-            <div class="learn-lsub">Capa de salida</div>
-          </div>
-          <span class="learn-ltag">Tu negocio</span>
-        </div>
-        <div class="learn-text">Donde todo el stack se convierte en valor concreto para ti. Tus tres apps Python, la web de <strong>espacioGijón</strong>, el portfolio. Esta capa consume las inferiores según necesite: llama a la API de Claude (L1 vía L4), puede usar RAG (L3), puede lanzar agentes (L5).</div>
-      </div>
-    <div class="learn-gold">
-      <h3>⚡ La regla de oro</h3>
-      <p>Cada capa depende de las que tiene debajo, pero <strong>no necesita las de arriba</strong>. <strong>L1</strong> funciona sola — es el único nivel que genera inteligencia. <strong>L6</strong> necesita a todas — es donde el stack se convierte en valor real. Puedes usar solo L1+L2 para el 80% de los casos de uso diarios.</p>
-    </div>
-    <div style="height:28px"></div>
-  </div></div>
-      </div>
-
       <!-- VIEW: COMANDOS (Referencia de uso) -->
       <div class="view" id="view-commands">
         <div class="cmd-body" id="cmd-body">
@@ -2118,6 +2038,12 @@ llama3.1:…</div></div>
 ═══════════════════════════════════════════ */
 let TOOLS = [
   // L1 Modelo
+  // ── HERRAMIENTAS INVESTIGADAS (NO ACTIVAS) ──
+  {id:'deepseek',      name:'DeepSeek',           layer:1, status:'free',  subtype:'cloudapi',  url:'https://platform.deepseek.com',desc:'Modelo chino competitivo. Muy barato. Investigado pero no integrado.', tags:['chat'], notes:'Costo 90% menos pero latencia variable.'},
+  {id:'perplexity-api',name:'Perplexity API',     layer:1, status:'free',  subtype:'cloudapi',  url:'https://perplexity.ai',        desc:'Búsqueda + RAG. Investigado pero ChatGPT suficiente.',        tags:['búsqueda','chat'], notes:'Investigado: funcionalidad duplicada.'},
+  {id:'langchain',     name:'LangChain Framework', layer:3, status:'free',  subtype:'framework', url:'https://langchain.com',         desc:'Framework RAG/LLM. Evaluado pero demasiado complejo.',        tags:['RAG','APIs'], notes:'Overkill para casos de uso personales.'},
+  {id:'make-io',       name:'Make.io',            layer:4, status:'free',  subtype:'automation',url:'https://make.com',             desc:'Automatización visual. Alternativa Zapier/n8n.',              tags:['automatización'], notes:'UI mejor pero menos AI-native que n8n.'},
+  {id:'cline-vscode',  name:'Cline (VS Code)',    layer:5, status:'free',  subtype:'coding',    url:'https://github.com/clinebot',   desc:'Extensión agente IA open-source. Alternativa Copilot.',      tags:['código','agentes'], notes:'Funcionó bien, pero Cursor es más pulido.'},
   {id:'claude-sonnet', name:'Claude Sonnet 4.6', layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Modelo principal. 200K ctx. Código, análisis.',              tags:['chat','código','escritura','análisis']},
   {id:'claude-opus',   name:'Claude Opus 4.6',   layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Razonamiento profundo, tareas críticas.',                    tags:['chat','código','escritura','análisis']},
   {id:'ollama',        name:'Ollama',             layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Servidor local de LLMs. API en :11434.',                     tags:['local','privacidad','APIs']},
@@ -2294,7 +2220,7 @@ const TOOLS_EXT_DEFAULT = {
 };
 
 /* Mutable ext data — merged with defaults, persisted in localStorage */
-const LS_EXT_KEY = 'ai_stack_ext_v1';
+const LS_EXT_KEY = 'ai_tools_ext_v1';
 let TOOLS_EXT = {};
 
 function loadExtState() {
@@ -2785,7 +2711,6 @@ function buildNav() {
     ...LAYERS.map((L,i)=>({key:'layer-'+i,label:`${String(i+1).padStart(2,'0')} ${L.name.split('·')[0].trim()}`,color:L.color,action:`openLayer(${i})`})),
     {key:'summary',  label:'Resumen',   color:'var(--c6)', action:`showView('summary')`},
     {key:'uses',     label:'Usos',      color:'var(--c5)', action:`showView('uses')`},
-    {key:'learn',    label:'Aprender',  color:'var(--c3)', action:`showView('learn')`},
     {key:'commands', label:'Comandos',  color:'var(--c2)', action:`showView('commands')`},
   ];
   el.innerHTML = items.map((it,i)=>{
@@ -3092,7 +3017,7 @@ function openToolDetail(id) {
       <button class="tev-cancel" onclick="backToLayer()">Cancelar</button>
       ${t.url&&t.url!=='#'?`<a class="tev-open" href="${t.url}" target="_blank">↗ Abrir</a>`:''}
       <button class="tev-del" onclick="deleteToolFromDetail('${id}')">Eliminar</button>
-      <button style="background:#db2777;color:#fff;padding:7px 12px;border-radius:5px;font-size:.62rem;margin-left:auto" onclick="moveToAITools(this.closest('.tev-wrap').querySelector('input[value=]')?.value || '')" title="Mover a AI-Tools">📦 Mover a Tools</button>
+      <button style="background:#059669;color:#fff;padding:7px 12px;border-radius:5px;font-size:.62rem;margin-left:auto" onclick="moveToAIStack('${id}')" title="Mover a AI-Stack">🚀 Mover a Stack</button>
     </div>`;
 
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -3153,50 +3078,50 @@ function deleteToolFromDetail(id) {
   backToLayer();
 }
 
-function moveToAITools(id) {
+
+function moveToAIStack(id) {
   const tool = TOOLS.find(t => t.id === id);
   if (!tool) return;
   
-  if (!confirm(`¿Mover "${tool.name}" a AI-Tools? Se mantendrá en la Capa L${tool.layer}.`)) return;
+  if (!confirm(`¿Mover "${tool.name}" a AI-Stack? Se añadirá a la capa L${tool.layer}.`)) return;
 
-  // Obtener datos de AI-Tools desde su localStorage
-  let toolsRepoTools = [];
+  // Obtener datos de AI-Stack desde su localStorage
+  let stackTools = [];
   try {
-    const stored = localStorage.getItem('ai-tools-v1');
-    if (stored) toolsRepoTools = JSON.parse(stored);
+    const stored = localStorage.getItem('ai-stack-v1');
+    if (stored) stackTools = JSON.parse(stored);
   } catch(e) {}
   
   // Evitar duplicados
-  if (toolsRepoTools.find(t => t.id === id)) {
-    alert('Esta herramienta ya existe en AI-Tools.');
+  if (stackTools.find(t => t.id === id)) {
+    alert('Esta herramienta ya existe en AI-Stack.');
     return;
   }
   
-  // Añadir a AI-Tools
-  toolsRepoTools.push(tool);
-  localStorage.setItem('ai-tools-v1', JSON.stringify(toolsRepoTools));
+  // Añadir a AI-Stack
+  stackTools.push(tool);
+  localStorage.setItem('ai-stack-v1', JSON.stringify(stackTools));
   
-  // Eliminar de AI-Stack
+  // Eliminar de AI-Tools
   TOOLS = TOOLS.filter(t => t.id !== id);
   const ext = TOOLS_EXT[id];
   if (ext) {
-    let toolsExt = {};
+    let stackExt = {};
     try {
-      const stored = localStorage.getItem('ai_tools_ext_v1');
-      if (stored) toolsExt = JSON.parse(stored);
+      const stored = localStorage.getItem('ai_stack_ext_v1');
+      if (stored) stackExt = JSON.parse(stored);
     } catch(e) {}
-    toolsExt[id] = ext;
-    localStorage.setItem('ai_tools_ext_v1', JSON.stringify(toolsExt));
+    stackExt[id] = ext;
+    localStorage.setItem('ai_stack_ext_v1', JSON.stringify(stackExt));
     delete TOOLS_EXT[id];
   }
   
   saveState();
   saveExtState();
   
-  alert(`✓ "${tool.name}" archivada en AI-Tools.\n\nAbre ai-tools.html para verla en el repositorio.`);
+  alert(`✓ "${tool.name}" movida a AI-Stack.\n\nAbre ai-stack.html para verla en la Capa ${tool.layer}.`);
   backToLayer();
 }
-
 function backToLayer() {
   if (prevViewName === 'summary') {
     showView('summary');
@@ -3267,8 +3192,7 @@ function renderLayer(idx) {
     </div>`).join('');
 
   document.getElementById('det-r').innerHTML=`
-    <div class="dsec">Conceptos clave</div>${cboxes}
-    <div class="dsec" style="margin-top:18px">Navegar por el stack</div>
+    <div class="dsec">Navegar por el stack</div>
     <div class="smini">${minimap}</div>`;
 
   // Bottom nav
@@ -3721,8 +3645,8 @@ function buildUses() {
 /* ═══════════════════════════════════════════
    CLAUDE API INTEGRATION
 ═══════════════════════════════════════════ */
-const LS_PROXY_URL = 'ai-stack-proxy-url';
-const LS_API_MODEL = 'ai-stack-claude-model';
+const LS_PROXY_URL = 'ai-tools-proxy-url';
+const LS_API_MODEL = 'ai-tools-claude-model';
 const CLAUDE_MODELS = [
   {id:'claude-haiku-4-5-20251001', label:'Haiku 4.5  — rápido y económico (~$0.004/búsqueda)', recommended:true},
   {id:'claude-sonnet-4-6',         label:'Sonnet 4.6 — mayor calidad (~$0.015/búsqueda)'},
@@ -3889,7 +3813,7 @@ function openToolDetailFrom(id) {
   setTimeout(() => {
     const backBtn = document.querySelector('.tev-back');
     if (backBtn) {
-      const labels = {summary:'← Resumen', home:'← Inicio', uses:'← Usos', learn:'← Aprender', commands:'← Comandos'};
+      const labels = {summary:'← Resumen', home:'← Inicio', uses:'← Usos', commands:'← Comandos'};
       backBtn.textContent = labels[prevViewName] || '← Capa';
     }
   }, 0);
@@ -4064,7 +3988,7 @@ function togglePanel() {
 /* ═══════════════════════════════════════════
    LOCALSTORAGE PERSISTENCE
 ═══════════════════════════════════════════ */
-const LS_KEY = 'ai-stack-v1';
+const LS_KEY = 'ai-tools-v1';
 
 function saveState() {
   try {
@@ -4104,7 +4028,7 @@ async function exportData() {
   const raw = localStorage.getItem(LS_KEY);
   if (!raw) { alert('No hay datos guardados para exportar.'); return; }
   const date = new Date().toISOString().slice(0,10);
-  const filename = `ai-stack-backup-${date}.json`;
+  const filename = `ai-tools-backup-${date}.json`;
   if (window.showSaveFilePicker) {
     try {
       const handle = await window.showSaveFilePicker({

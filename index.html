@@ -19,6 +19,40 @@ body{font-family:var(--font-m);background:var(--bg);color:var(--text);font-size:
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 
+/* GLOBAL SEARCH */
+.gsearch-wrap{width:100%;max-width:640px;position:relative}
+.gsearch-input{
+  width:100%;font-family:var(--font-m);font-size:.72rem;
+  border:2px solid var(--border);border-radius:10px;
+  padding:11px 44px 11px 16px;background:var(--surf);color:var(--text);
+  outline:none;transition:border-color .18s,box-shadow .18s;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.gsearch-input:focus{border-color:var(--c1);box-shadow:0 0 0 3px color-mix(in srgb,var(--c1) 15%,transparent)}
+.gsearch-input::placeholder{color:var(--dim)}
+.gsearch-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:.85rem;color:var(--dim);pointer-events:none}
+.gsearch-results{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--surf);border:1px solid var(--border);border-radius:10px;
+  box-shadow:0 12px 40px rgba(0,0,0,.14);z-index:100;
+  max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;
+  display:none;
+}
+.gsearch-results.open{display:block}
+.gsearch-section{padding:8px 12px 4px;font-size:.5rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)}
+.gsearch-item{
+  display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;
+  transition:background .12s;border-left:3px solid transparent;
+}
+.gsearch-item:hover{background:var(--surf2);border-left-color:var(--item-color)}
+.gsearch-item-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;background:color-mix(in srgb,var(--item-color) 12%,transparent)}
+.gsearch-item-body{flex:1;min-width:0}
+.gsearch-item-name{font-family:var(--font-h);font-size:.72rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gsearch-item-desc{font-size:.56rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.gsearch-badge{font-size:.48rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 6px;border-radius:3px;border:1px solid var(--item-color);color:var(--item-color);background:color-mix(in srgb,var(--item-color) 8%,transparent);flex-shrink:0;white-space:nowrap}
+.gsearch-empty{padding:20px;text-align:center;font-size:.62rem;color:var(--dim)}
+.gsearch-shortcut{font-size:.5rem;color:var(--dim);padding:6px 14px;border-top:1px solid var(--border);text-align:center}
+
 .topbar{
   display:flex;align-items:center;gap:0;height:48px;min-height:48px;flex-shrink:0;
   background:var(--surf);border-bottom:2px solid var(--border);padding:0 16px;
@@ -73,7 +107,8 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 <div class="topbar">
   <div class="logo">AI<em>·</em>Dashboard <span style="font-size:.62rem;font-weight:400;color:var(--muted);margin-left:6px">José A. Velázquez</span></div>
   <div class="topbar-date" id="td-date"></div>
-  <button class="topbar-btn" onclick="exportAll()" title="Exportar datos de las 3 páginas a un único fichero JSON">↑ Backup</button>
+  <button class="topbar-btn" onclick="exportExcel()" title="Exportar todo a Excel (.xlsx)">📊 Excel</button>
+  <button class="topbar-btn" onclick="exportAll()" title="Exportar datos de las 4 páginas a un único fichero JSON">↑ Backup</button>
   <label class="topbar-btn" style="cursor:pointer" title="Restaurar datos desde backup JSON">↓ Restaurar<input type="file" accept=".json" style="display:none" onchange="importAll(event)"></label>
 </div>
 
@@ -84,7 +119,19 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
     <p>Panel central de navegación hacia las distintas herramientas del stack de inteligencia artificial personal.</p>
   </div>
 
-  <div class="nav-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));max-width:1000px">
+  <!-- GLOBAL SEARCH -->
+  <div class="gsearch-wrap" id="gsearch-wrap">
+    <input class="gsearch-input" id="gsearch-input" type="text"
+      placeholder="Buscar herramienta, fuente, web, nota..."
+      oninput="onGSearch(this.value)"
+      onkeydown="onGSearchKey(event)"
+      onfocus="if(this.value.trim()) showResults()"
+      autocomplete="off">
+    <span class="gsearch-ico">⌕</span>
+    <div class="gsearch-results" id="gsearch-results"></div>
+  </div>
+
+  <div class="nav-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));max-width:1280px;width:100%">
 
     <a href="ai-stack.html" class="nav-card" style="--card-color: var(--c1); border-left: 4px solid var(--c1)">
       <div class="nav-card-icon">🗂️</div>
@@ -100,6 +147,19 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
       <div class="nav-card-arrow">Abrir dashboard <span>→</span></div>
     </a>
 
+    <a href="ai-tools.html" class="nav-card" style="--card-color: var(--c6); border-left: 4px solid var(--c6)">
+      <div class="nav-card-icon">🧰</div>
+      <div class="nav-card-title">AI Tools</div>
+      <div class="nav-card-sub">Repositorio de herramientas</div>
+      <div class="nav-card-desc">Catálogo de herramientas de IA investigadas pero no activas en el stack. Almacén de descubrimientos para futuras integraciones y referencias.</div>
+      <div class="nav-card-pills">
+        <span class="nav-card-pill">Repositorio</span>
+        <span class="nav-card-pill">Investigación</span>
+        <span class="nav-card-pill">Almacén</span>
+      </div>
+      <div class="nav-card-arrow">Abrir repositorio <span>→</span></div>
+    </a>
+
     <a href="ai-update.html" class="nav-card" style="--card-color: var(--c2); border-left: 4px solid var(--c2)">
       <div class="nav-card-icon">📡</div>
       <div class="nav-card-title">AI Update</div>
@@ -113,9 +173,9 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
       <div class="nav-card-arrow">Abrir updates <span>→</span></div>
     </a>
 
-    <a href="ia-webs.html" class="nav-card" style="--card-color: var(--c5); border-left: 4px solid var(--c5)">
+    <a href="ai-webs.html" class="nav-card" style="--card-color: var(--c5); border-left: 4px solid var(--c5)">
       <div class="nav-card-icon">🌐</div>
-      <div class="nav-card-title">IA Webs</div>
+      <div class="nav-card-title">AI Webs</div>
       <div class="nav-card-sub">Registro de enlaces</div>
       <div class="nav-card-desc">Directorio personal de webs, empresas y organismos de IA de interés. Añade anotaciones y notas a cada enlace para mantener un registro de navegación organizado.</div>
       <div class="nav-card-pills">
@@ -125,6 +185,19 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
         <span class="nav-card-pill">Noticias</span>
       </div>
       <div class="nav-card-arrow">Abrir directorio <span>→</span></div>
+    </a>
+
+    <a href="ai-notas.html" target="_blank" class="nav-card" style="--card-color: var(--c3); border-left: 4px solid var(--c3)">
+      <div class="nav-card-icon">📒</div>
+      <div class="nav-card-title">AI Notas</div>
+      <div class="nav-card-sub">Cuaderno de investigación</div>
+      <div class="nav-card-desc">Captura rápida de ideas y anotaciones mientras navegas. Organiza tus notas por etiquetas y colores. Se abre en nueva ventana para usar mientras navegas el ecosistema.</div>
+      <div class="nav-card-pills">
+        <span class="nav-card-pill">Captura rápida</span>
+        <span class="nav-card-pill">Etiquetas</span>
+        <span class="nav-card-pill">Investigar</span>
+      </div>
+      <div class="nav-card-arrow">Abrir cuaderno <span>↗</span></div>
     </a>
 
   </div>
@@ -142,11 +215,16 @@ document.getElementById('footer-year').textContent = d.getFullYear();
 
 // Claves de localStorage de cada página
 const BACKUP_KEYS = [
-  'ai-stack-v1',       // AI Stack: herramientas
-  'ai_stack_ext_v1',   // AI Stack: fichas extendidas
-  'ai_update_sources', // AI Update: fuentes
-  'ai_update_recents', // AI Update: recientes
-  'ia-webs-v1',        // IA Webs: enlaces
+  'ai-stack-v1',        // AI Stack: herramientas
+  'ai_stack_ext_v1',    // AI Stack: fichas extendidas
+  'ai-tools-v1',        // AI Tools: herramientas
+  'ai_tools_ext_v1',    // AI Tools: fichas extendidas
+  'ai_update_sources',  // AI Update: fuentes
+  'ai_update_recents',  // AI Update: recientes
+  'ai_update_ext_v1',   // AI Update: fichas extendidas
+  'ia-webs-v1',         // AI Webs: enlaces
+  'ia_webs_ext_v1',     // AI Webs: fichas extendidas
+  'ai_notas_v1',        // AI Notas: cuaderno
 ];
 
 function showToast(msg) {
@@ -210,6 +288,281 @@ function importAll(event) {
   };
   reader.readAsText(file);
 }
+
+/* ── EXCEL EXPORT ──────────────────────────────────────────── */
+function exportExcel() {
+  if (typeof XLSX === 'undefined') {
+    showToast('Cargando librería Excel…');
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    script.onload = () => doExportExcel();
+    script.onerror = () => showToast('Error al cargar la librería Excel. Comprueba la conexión.');
+    document.head.appendChild(script);
+  } else {
+    doExportExcel();
+  }
+}
+
+function doExportExcel() {
+  const wb = XLSX.utils.book_new();
+  let hasSheets = false;
+
+  // ── AI Stack ──────────────────────────────────────────────
+  try {
+    const tools = JSON.parse(localStorage.getItem('ai-stack-v1') || '[]');
+    if (tools.length) {
+      const layerNames = {1:'Modelo',2:'Interfaz',3:'Memoria',4:'Herramientas',5:'Agentes',6:'Aplicación'};
+      const rows = tools.map(t => ({
+        'ID':          t.id || '',
+        'Nombre':      t.name || '',
+        'Capa':        `L${t.layer} · ${layerNames[t.layer]||''}`,
+        'Estado':      t.status || '',
+        'Subtipo':     t.subtype || '',
+        'Tags':        (t.tags||[]).join(', '),
+        'URL':         t.url || '',
+        'Descripción': t.desc || '',
+        'Notas':       t.notes || '',
+        'Favorito':    t.fav ? 'Sí' : 'No',
+      }));
+      const ws = XLSX.utils.json_to_sheet(rows);
+      ws['!cols'] = [{wch:20},{wch:28},{wch:20},{wch:10},{wch:15},{wch:30},{wch:35},{wch:50},{wch:40},{wch:8}];
+      XLSX.utils.book_append_sheet(wb, ws, 'AI Stack');
+      hasSheets = true;
+    }
+  } catch(e) {}
+
+  // ── AI Tools ──────────────────────────────────────────────
+  try {
+    const tools = JSON.parse(localStorage.getItem('ai-tools-v1') || '[]');
+    if (tools.length) {
+      const layerNames = {1:'Modelo',2:'Interfaz',3:'Memoria',4:'Herramientas',5:'Agentes',6:'Aplicación'};
+      const rows = tools.map(t => ({
+        'ID':          t.id || '',
+        'Nombre':      t.name || '',
+        'Capa':        `L${t.layer} · ${layerNames[t.layer]||''}`,
+        'Estado':      t.status || '',
+        'Subtipo':     t.subtype || '',
+        'Tags':        (t.tags||[]).join(', '),
+        'URL':         t.url || '',
+        'Descripción': t.desc || '',
+        'Notas':       t.notes || '',
+        'Favorito':    t.fav ? 'Sí' : 'No',
+      }));
+      const ws = XLSX.utils.json_to_sheet(rows);
+      ws['!cols'] = [{wch:20},{wch:28},{wch:20},{wch:10},{wch:15},{wch:30},{wch:35},{wch:50},{wch:40},{wch:8}];
+      XLSX.utils.book_append_sheet(wb, ws, 'AI Tools');
+      hasSheets = true;
+    }
+  } catch(e) {}
+
+  // ── AI Update ─────────────────────────────────────────────
+  try {
+    const sources = JSON.parse(localStorage.getItem('ai_update_sources') || '[]');
+    if (sources.length) {
+      const rows = sources.map(s => ({
+        'ID':          s.id || '',
+        'Nombre':      s.name || '',
+        'Tipo':        s.type || '',
+        'Idioma':      s.lang || '',
+        'Acceso':      s.access || '',
+        'Frecuencia':  s.freq || '',
+        'URL':         s.url || '',
+        'Descripción': s.desc || '',
+        'Notas':       s.notes || '',
+        'Favorito':    s.fav ? 'Sí' : 'No',
+      }));
+      const ws = XLSX.utils.json_to_sheet(rows);
+      ws['!cols'] = [{wch:20},{wch:30},{wch:10},{wch:8},{wch:10},{wch:12},{wch:40},{wch:55},{wch:40},{wch:8}];
+      XLSX.utils.book_append_sheet(wb, ws, 'AI Update');
+      hasSheets = true;
+    }
+  } catch(e) {}
+
+  // ── IA Webs ───────────────────────────────────────────────
+  try {
+    const webData = JSON.parse(localStorage.getItem('ia-webs-v1') || '{}');
+    const links = webData.links || [];
+    if (links.length) {
+      const rows = links.map(l => ({
+        'ID':          l.id || '',
+        'Nombre':      l.name || '',
+        'URL':         l.url || '',
+        'Categoría':   l.cat || '',
+        'Icono':       l.icon || '',
+        'Descripción': l.desc || '',
+        'Notas':       l.notes || '',
+        'Tags':        (l.tags||[]).join(', '),
+        'Favorito':    l.fav ? 'Sí' : 'No',
+        'Añadido':     l.added || '',
+      }));
+      const ws = XLSX.utils.json_to_sheet(rows);
+      ws['!cols'] = [{wch:20},{wch:28},{wch:40},{wch:18},{wch:6},{wch:50},{wch:40},{wch:30},{wch:8},{wch:12}];
+      XLSX.utils.book_append_sheet(wb, ws, 'AI Webs');
+      hasSheets = true;
+    }
+  } catch(e) {}
+
+  // ── AI Notas ──────────────────────────────────────────────
+  try {
+    const notes = JSON.parse(localStorage.getItem('ai_notas_v1') || '[]');
+    if (notes.length) {
+      const rows = notes.map(n => ({
+        'ID':         n.id || '',
+        'Título':     n.title || '',
+        'Contenido':  n.content || '',
+        'Tags':       (n.tags||[]).join(', '),
+        'Color':      n.color || '',
+        'Fijada':     n.pinned ? 'Sí' : 'No',
+        'Creado':     n.created ? n.created.slice(0,16).replace('T',' ') : '',
+        'Actualizado':n.updated ? n.updated.slice(0,16).replace('T',' ') : '',
+      }));
+      const ws = XLSX.utils.json_to_sheet(rows);
+      ws['!cols'] = [{wch:20},{wch:30},{wch:80},{wch:30},{wch:10},{wch:7},{wch:18},{wch:18}];
+      XLSX.utils.book_append_sheet(wb, ws, 'AI Notas');
+      hasSheets = true;
+    }
+  } catch(e) {}
+
+  if (!hasSheets) { showToast('No hay datos para exportar a Excel.'); return; }
+
+  const date = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, `ai-dashboard-${date}.xlsx`);
+  showToast('✓ Excel exportado correctamente');
+}
+
+/* ── GLOBAL SEARCH ─────────────────────────────────────────── */
+let gSearchTimeout = null;
+
+function onGSearch(val) {
+  clearTimeout(gSearchTimeout);
+  if (!val.trim()) { hideResults(); return; }
+  gSearchTimeout = setTimeout(() => runGSearch(val.trim()), 120);
+}
+
+function onGSearchKey(e) {
+  if (e.key === 'Escape') { hideResults(); e.target.blur(); }
+}
+
+function showResults() {
+  document.getElementById('gsearch-results').classList.add('open');
+}
+
+function hideResults() {
+  document.getElementById('gsearch-results').classList.remove('open');
+}
+
+function runGSearch(q) {
+  const ql = q.toLowerCase();
+  const results = [];
+
+  // ── AI Stack tools ────────────────────────────────────────
+  try {
+    const tools = JSON.parse(localStorage.getItem('ai-stack-v1') || '[]');
+    const layerNames = {1:'L1 Modelo',2:'L2 Interfaz',3:'L3 Memoria',4:'L4 Herramientas',5:'L5 Agentes',6:'L6 Aplicación'};
+    tools.forEach(t => {
+      const hay = ((t.name||'')+(t.desc||'')+(t.notes||'')+(t.tags||[]).join(' ')).toLowerCase();
+      if (hay.includes(ql)) results.push({
+        page:'ai-stack', id:t.id, icon:t.icon||'🤖', name:t.name,
+        desc:t.desc||'', badge:layerNames[t.layer]||'AI Stack',
+        color:'var(--c1)', url:`ai-stack.html?open=${t.id}`
+      });
+    });
+  } catch(e) {}
+
+  // ── AI Tools ──────────────────────────────────────────────
+  try {
+    const tools = JSON.parse(localStorage.getItem('ai-tools-v1') || '[]');
+    const layerNames = {1:'L1 Modelo',2:'L2 Interfaz',3:'L3 Memoria',4:'L4 Herramientas',5:'L5 Agentes',6:'L6 Aplicación'};
+    tools.forEach(t => {
+      const hay = ((t.name||'')+(t.desc||'')+(t.notes||'')+(t.tags||[]).join(' ')).toLowerCase();
+      if (hay.includes(ql)) results.push({
+        page:'ai-tools', id:t.id, icon:t.icon||'🧰', name:t.name,
+        desc:t.desc||'', badge:layerNames[t.layer]||'AI Tools',
+        color:'var(--c6)', url:`ai-tools.html?open=${t.id}`
+      });
+    });
+  } catch(e) {}
+
+  // ── AI Update sources ─────────────────────────────────────
+  try {
+    const sources = JSON.parse(localStorage.getItem('ai_update_sources') || '[]');
+    const typeLabels = {prensa:'Prensa',blog:'Blog',video:'Vídeo',podcast:'Podcast',persona:'Persona'};
+    sources.forEach(s => {
+      const hay = ((s.name||'')+(s.desc||'')+(s.notes||'')+(s.type||'')).toLowerCase();
+      if (hay.includes(ql)) results.push({
+        page:'ai-update', id:s.id, icon:s.icon||'📡', name:s.name,
+        desc:s.desc||'', badge:'AI Update · '+(typeLabels[s.type]||s.type),
+        color:'var(--c2)', url:`ai-update.html?open=${s.id}`
+      });
+    });
+  } catch(e) {}
+
+  // ── IA Webs links ─────────────────────────────────────────
+  try {
+    const webData = JSON.parse(localStorage.getItem('ia-webs-v1') || '{}');
+    const links = webData.links || [];
+    links.forEach(l => {
+      const hay = ((l.name||'')+(l.url||'')+(l.desc||'')+(l.notes||'')+(l.tags||[]).join(' ')).toLowerCase();
+      if (hay.includes(ql)) results.push({
+        page:'ai-webs', id:l.id, icon:l.icon||'🔗', name:l.name,
+        desc:l.desc||l.url||'', badge:'AI Webs · '+(l.cat||''),
+        color:'var(--c5)', url:`ai-webs.html?open=${l.id}`
+      });
+    });
+  } catch(e) {}
+
+  // ── AI Notas ──────────────────────────────────────────────
+  try {
+    const notes = JSON.parse(localStorage.getItem('ai_notas_v1') || '[]');
+    notes.forEach(n => {
+      const hay = ((n.title||'')+(n.content||'')+(n.tags||[]).join(' ')).toLowerCase();
+      if (hay.includes(ql)) results.push({
+        page:'ai-notas', id:n.id, icon:'📒',
+        name: n.title || (n.content||'').substring(0,50)+'…',
+        desc: (n.tags||[]).join(', ') || '',
+        badge:'AI Notas', color:'var(--c3)',
+        url:`ai-notas.html`
+      });
+    });
+  } catch(e) {}
+
+  renderGResults(results.slice(0,20));
+}
+
+function renderGResults(results) {
+  const box = document.getElementById('gsearch-results');
+  if (!results.length) {
+    box.innerHTML = '<div class="gsearch-empty">Sin resultados. Prueba con otro término.</div>';
+    box.classList.add('open');
+    return;
+  }
+  const html = results.map(r => `
+    <div class="gsearch-item" style="--item-color:${r.color}" onclick="goTo('${r.url}','${r.page}')">
+      <div class="gsearch-item-icon" style="--item-color:${r.color}">${r.icon}</div>
+      <div class="gsearch-item-body">
+        <div class="gsearch-item-name">${escHtml(r.name)}</div>
+        ${r.desc ? `<div class="gsearch-item-desc">${escHtml(r.desc.substring(0,80))}</div>` : ''}
+      </div>
+      <span class="gsearch-badge" style="--item-color:${r.color}">${r.badge}</span>
+    </div>`).join('');
+  box.innerHTML = html + '<div class="gsearch-shortcut">↵ para abrir · Esc para cerrar</div>';
+  box.classList.add('open');
+}
+
+function goTo(url, page) {
+  hideResults();
+  if (page === 'ai-notas') window.open(url, '_blank');
+  else window.location.href = url;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Close search results when clicking outside
+document.addEventListener('click', e => {
+  if (!document.getElementById('gsearch-wrap').contains(e.target)) hideResults();
+});
 </script>
 
 </body>

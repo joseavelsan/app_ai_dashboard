@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IA Webs · José</title>
+<title>AI Webs · José</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Azeret+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -228,6 +228,10 @@ textarea.tm-input{resize:vertical;line-height:1.6}
       <input class="tm-input" id="m-desc" placeholder="Qué es este sitio…">
     </div>
     <div class="tm-field">
+      <label class="tm-flabel">Notas personales</label>
+      <textarea class="tm-input" id="m-notes" rows="2" placeholder="Por qué es interesante, secciones relevantes…" style="resize:vertical"></textarea>
+    </div>
+    <div class="tm-field">
       <label class="tm-flabel">Tags (separados por coma)</label>
       <input class="tm-input" id="m-tags" placeholder="ej: papers, modelos, open-source">
     </div>
@@ -239,10 +243,6 @@ textarea.tm-input{resize:vertical;line-height:1.6}
     <div class="modal-section-sep"></div>
     <div class="modal-section-title">Ficha extendida</div>
 
-    <div class="tm-field">
-      <label class="tm-flabel">Notas personales</label>
-      <textarea class="tm-input" id="m-notes" rows="3" placeholder="Por qué es interesante, qué encontré aquí, secciones relevantes…" style="resize:vertical"></textarea>
-    </div>
     <div class="tm-field">
       <label class="tm-flabel">Descripción extendida</label>
       <textarea class="tm-input" id="m-longdesc" rows="3" placeholder="Amplía la descripción de este sitio web…" style="resize:vertical"></textarea>
@@ -318,7 +318,6 @@ function saveState() {
 }
 
 function saveExt() {
-  try { localStorage.setItem(EXT_KEY, JSON.stringify(EXT)); } catch(e){}
 }
 
 /* ── RENDER ─────────────────────────────────────────────── */
@@ -353,7 +352,6 @@ function renderGrid() {
     const c = catColor(l.cat);
     const catLabel = CAT_MAP[l.cat]?.label || l.cat || '';
     const tagsHtml = (l.tags||[]).slice(0,3).map(t=>`<span class="lc-tag">${t}</span>`).join('');
-    const notesHtml = l.notes ? `<div class="lc-notes" style="--cat-color:${c}">${l.notes.substring(0,120)}${l.notes.length>120?'…':''}</div>` : '';
     return `<div class="link-card fade-in ${l.fav?'is-fav':''}" style="--cat-color:${c}" onclick="openEditModal('${l.id}')">
       <div class="lc-top">
         <div class="lc-favicon">${l.icon||'🔗'}</div>
@@ -364,7 +362,6 @@ function renderGrid() {
         <a href="${l.url}" target="_blank" class="lc-open" onclick="event.stopPropagation()" title="Abrir">↗</a>
       </div>
       ${l.desc ? `<div class="lc-desc">${l.desc}</div>` : ''}
-      ${notesHtml}
       <div class="lc-footer">
         <span class="lc-cat" style="--cat-color:${c}">${catLabel}</span>
         ${tagsHtml}
@@ -460,11 +457,6 @@ function buildCatOptions(selected) {
     CATS.map(c=>`<option value="${c.id}"${c.id===selected?' selected':''}>${c.icon} ${c.label}</option>`).join('');
 }
 
-function clearExtFields() {
-  document.getElementById('m-longdesc').value = '';
-  document.getElementById('m-why').value = '';
-  document.getElementById('m-fit').value = '';
-}
 
 function openAddModal() {
   editingId = null;
@@ -473,11 +465,9 @@ function openAddModal() {
   document.getElementById('m-url').value = '';
   document.getElementById('m-cat').innerHTML = buildCatOptions('');
   document.getElementById('m-icon').value = '';
-  document.getElementById('m-desc').value = '';
   document.getElementById('m-notes').value = '';
   document.getElementById('m-tags').value = '';
   document.getElementById('m-fav').checked = false;
-  clearExtFields();
   document.getElementById('btn-del').style.display = 'none';
   document.getElementById('modal-bg').classList.add('open');
   setTimeout(()=>document.getElementById('m-name').focus(), 80);
@@ -487,7 +477,6 @@ function openEditModal(id) {
   const l = LINKS.find(x=>x.id===id);
   if (!l) return;
   editingId = id;
-  const ex = EXT[id] || {};
   document.getElementById('modal-title').textContent = '✏️ Editar web';
   document.getElementById('m-name').value = l.name;
   document.getElementById('m-url').value = l.url;
@@ -497,9 +486,6 @@ function openEditModal(id) {
   document.getElementById('m-notes').value = l.notes||'';
   document.getElementById('m-tags').value = (l.tags||[]).join(', ');
   document.getElementById('m-fav').checked = !!l.fav;
-  document.getElementById('m-longdesc').value = ex.longDesc || '';
-  document.getElementById('m-why').value = ex.whyInteresting || '';
-  document.getElementById('m-fit').value = ex.ecosystemFit || '';
   document.getElementById('btn-del').style.display = '';
   document.getElementById('modal-bg').classList.add('open');
 }
@@ -546,10 +532,6 @@ function saveLink() {
     savedId = id;
   }
   // Save extended fields
-  if (!EXT[savedId]) EXT[savedId] = {};
-  EXT[savedId].longDesc       = document.getElementById('m-longdesc').value.trim();
-  EXT[savedId].whyInteresting = document.getElementById('m-why').value.trim();
-  EXT[savedId].ecosystemFit   = document.getElementById('m-fit').value.trim();
   saveState();
   saveExt();
   closeModal();
