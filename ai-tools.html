@@ -97,9 +97,9 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .lc-pills{display:flex;flex-wrap:wrap;gap:3px}
 .pill{font-size:.55rem;padding:2px 6px;border-radius:3px;border:1px solid color-mix(in srgb,var(--lc) 22%,transparent);color:var(--lc);background:color-mix(in srgb,var(--lc) 7%,transparent);text-transform:uppercase;letter-spacing:.03em}
 .pill.mine{border-color:color-mix(in srgb,var(--lc) 45%,transparent);background:color-mix(in srgb,var(--lc) 13%,transparent);font-weight:600}
-.pill.st-paid{background:#fffbeb;border-color:#f59e0b;color:#92400e}
+.pill.st-evaluado{background:#fffbeb;border-color:#f59e0b;color:#92400e}
 .pill.st-plus{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
-.pill.st-inactive{opacity:.4;filter:grayscale(.4)}
+.pill.st-pendiente{opacity:.4;filter:grayscale(.4)}
 .lc-cta{font-size:.57rem;color:var(--lc);text-transform:uppercase;letter-spacing:.07em;margin-top:6px;opacity:0;transition:opacity .15s}
 .open-url-btn{display:inline-flex;align-items:center;gap:3px;font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;padding:3px 9px;border-radius:4px;background:#F77C65;color:#fff!important;border:none;text-decoration:none;cursor:pointer;transition:background .13s;font-family:var(--font-m);font-weight:600}
 .open-url-btn:hover{background:#e06550}
@@ -168,12 +168,12 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 .si-name{font-family:var(--font-h);font-size:.7rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .si-sub{font-size:.55rem;color:var(--muted);margin-top:1px}
 .si-badge{font-size:.5rem;padding:1px 5px;border-radius:2px;flex-shrink:0;white-space:nowrap}
-.bd-paid{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
-.bd-api{background:#ede9fe;color:#5b21b6;border:1px solid #a78bfa}
+.bd-evaluado{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
+.bd-testeado{background:#ede9fe;color:#5b21b6;border:1px solid #a78bfa}
 .bd-plus{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
-.bd-free{background:var(--surf3);color:var(--muted);border:1px solid var(--border)}
-.bd-inactive{background:#f9fafb;color:#9ca3af;border:1px solid #e5e7eb}
-.bd-trial{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
+.bd-testeado{background:var(--surf3);color:var(--muted);border:1px solid var(--border)}
+.bd-pendiente{background:#f9fafb;color:#9ca3af;border:1px solid #e5e7eb}
+.bd-pendiente{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
 
 /* LAYER DETAIL */
 .det-body{display:grid;grid-template-columns:3fr 2fr;flex:1;overflow:hidden}
@@ -626,7 +626,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="stype-body-cloudrag">
-      <div class="tcard free" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('notebooklm')">
+      <div class="tcard testeado" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('notebooklm')">
     <div class="tc-top">
       <span class="tc-name">NotebookLM</span>
       <button class="star-btn fav" data-id="notebooklm" onclick="toggleFav('notebooklm',event)" title="Quitar de favoritos">★</button>
@@ -637,7 +637,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
     </div>
     <div class="tc-desc">RAG automático Google. PDFs, docs, vídeos.</div>
     <a class="tc-link" href="https://notebooklm.google.com" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
-  </div><div class="tcard paid" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('claude-proj')">
+  </div><div class="tcard evaluado" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('claude-proj')">
     <div class="tc-top">
       <span class="tc-name">Claude Projects</span>
       <button class="star-btn fav" data-id="claude-proj" onclick="toggleFav('claude-proj',event)" title="Quitar de favoritos">★</button>
@@ -657,7 +657,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="stype-body-localrag">
-      <div class="tcard free" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('owui-rag')">
+      <div class="tcard testeado" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('owui-rag')">
     <div class="tc-top">
       <span class="tc-name">Open WebUI RAG</span>
       <button class="star-btn" data-id="owui-rag" onclick="toggleFav('owui-rag',event)" title="Marcar como favorito">☆</button>
@@ -668,7 +668,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
     </div>
     <div class="tc-desc">RAG local con modelos Ollama. 100% privado.</div>
     <a class="tc-link" href="http://localhost:3000" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
-  </div><div class="tcard free" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('anythingllm')">
+  </div><div class="tcard testeado" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('anythingllm')">
     <div class="tc-top">
       <span class="tc-name">AnythingLLM</span>
       <button class="star-btn" data-id="anythingllm" onclick="toggleFav('anythingllm',event)" title="Marcar como favorito">☆</button>
@@ -688,7 +688,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="stype-body-vectordb">
-      <div class="tcard inactive" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('chromadb')">
+      <div class="tcard pendiente" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('chromadb')">
     <div class="tc-top">
       <span class="tc-name">ChromaDB</span>
       <button class="star-btn" data-id="chromadb" onclick="toggleFav('chromadb',event)" title="Marcar como favorito">☆</button>
@@ -708,7 +708,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="stype-body-framework">
-      <div class="tcard inactive" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('llamaindex')">
+      <div class="tcard pendiente" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('llamaindex')">
     <div class="tc-top">
       <span class="tc-name">LlamaIndex</span>
       <button class="star-btn" data-id="llamaindex" onclick="toggleFav('llamaindex',event)" title="Marcar como favorito">☆</button>
@@ -720,7 +720,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
     <div class="tc-desc">Framework Python RAG. Conecta con ChromaDB.</div>
     <a class="tc-link" href="https://llamaindex.ai" target="_blank" style="color:var(--c3)" onclick="event.stopPropagation()">Abrir →</a>
   </div>
-    </div><div class="tcard free" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('kaggle')">
+    </div><div class="tcard testeado" style="--lc:var(--c3);cursor:pointer" onclick="openToolDetail('kaggle')">
     <div class="tc-top">
       <span class="tc-name">Kaggle</span>
       <button class="star-btn" data-id="kaggle" onclick="toggleFav('kaggle',event)" title="Marcar como favorito">☆</button>
@@ -1205,7 +1205,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
         </select>
         <select class="form-select" id="new-status"><option value="evaluado">✅ Evaluado</option><option value="testeado">🧪 Testeado</option><option value="testeado">🧪 Testeado</option><option value="pendiente">📋 Pendiente</option><option value="pendiente">📋 Pendiente</option></select>
         <select class="form-select" id="new-subtype">
-          <option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="anthropic">⚗️ Anthropic</option><option value="openai">🤖 OpenAI</option><option value="google">✨ Google</option><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup>
+          <option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup>
         </select>
         <div></div>
         <button class="add-btn" onclick="addTool()">Añadir herramienta</button>
@@ -1264,7 +1264,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
         </div>
         <div class="tev-field">
           <label class="tev-label">Subtipo</label>
-          <select class="tev-select" id="tev-subtype"><option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="anthropic">⚗️ Anthropic</option><option value="openai">🤖 OpenAI</option><option value="google">✨ Google</option><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag" selected="">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup></select>
+          <select class="tev-select" id="tev-subtype"><option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag" selected="">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup></select>
         </div>
         <div class="tev-field">
           <label class="tev-label">Casos de uso · tags</label>
@@ -1465,7 +1465,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-links-L0">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si free" href="https://github.com/joseavelsan" target="_blank">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si testeado" href="https://github.com/joseavelsan" target="_blank">
       <div class="si-icon">🐙</div>
       <div class="si-info"><div class="si-name">GitHub joseavelsan</div><div class="si-sub">github.com/joseavelsan</div></div>
       <span class="si-badge bd-free">🆓 Gratis</span>
@@ -1477,7 +1477,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-links-L1">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si free" href="http://localhost:11434" target="_blank">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si testeado" href="http://localhost:11434" target="_blank">
       <div class="si-icon">🦙</div>
       <div class="si-info"><div class="si-name">Ollama API</div><div class="si-sub">localhost:11434</div></div>
       <span class="si-badge bd-free">🆓 Gratis</span>
@@ -1489,27 +1489,27 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">6 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-links-L2">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si paid" href="https://claude.ai" target="_blank">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si evaluado" href="https://claude.ai" target="_blank">
       <div class="si-icon">⚗️</div>
       <div class="si-info"><div class="si-name">Claude.ai</div><div class="si-sub">claude.ai</div></div>
       <span class="si-badge bd-paid">💳 Suscripción</span>
-    </a><a class="si paid" href="https://chatgpt.com" target="_blank">
+    </a><a class="si evaluado" href="https://chatgpt.com" target="_blank">
       <div class="si-icon">💬</div>
       <div class="si-info"><div class="si-name">ChatGPT</div><div class="si-sub">chatgpt.com</div></div>
       <span class="si-badge bd-paid">💳 Suscripción</span>
-    </a><a class="si free" href="http://localhost:3000" target="_blank">
+    </a><a class="si testeado" href="http://localhost:3000" target="_blank">
       <div class="si-icon">🖥️</div>
       <div class="si-info"><div class="si-name">Open WebUI</div><div class="si-sub">localhost:3000</div></div>
       <span class="si-badge bd-free">🆓 Gratis</span>
-    </a><a class="si paid" href="https://console.anthropic.com" target="_blank">
+    </a><a class="si evaluado" href="https://console.anthropic.com" target="_blank">
       <div class="si-icon">🔬</div>
       <div class="si-info"><div class="si-name">Anthropic Console</div><div class="si-sub">console.anthropic.com</div></div>
       <span class="si-badge bd-paid">💳 Suscripción</span>
-    </a><a class="si paid" href="https://platform.openai.com" target="_blank">
+    </a><a class="si evaluado" href="https://platform.openai.com" target="_blank">
       <div class="si-icon">🧪</div>
       <div class="si-info"><div class="si-name">OpenAI Platform</div><div class="si-sub">platform.openai.com</div></div>
       <span class="si-badge bd-paid">💳 Suscripción</span>
-    </a><a class="si paid" href="https://aistudio.google.com" target="_blank">
+    </a><a class="si evaluado" href="https://aistudio.google.com" target="_blank">
       <div class="si-icon">✨</div>
       <div class="si-info"><div class="si-name">Google AI Studio</div><div class="si-sub">aistudio.google.com</div></div>
       <span class="si-badge bd-paid">💳 Suscripción</span>
@@ -1521,7 +1521,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-links-L3">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si free" href="https://notebooklm.google.com" target="_blank">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si testeado" href="https://notebooklm.google.com" target="_blank">
       <div class="si-icon">📓</div>
       <div class="si-info"><div class="si-name">NotebookLM</div><div class="si-sub">notebooklm.google.com</div></div>
       <span class="si-badge bd-free">🆓 Gratis</span>
@@ -1533,7 +1533,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-links-L4">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si inactive" href="http://localhost:5678" target="_blank">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si pendiente" href="http://localhost:5678" target="_blank">
       <div class="si-icon">🔁</div>
       <div class="si-info"><div class="si-name">n8n local</div><div class="si-sub">localhost:5678</div></div>
       <span class="si-badge bd-inactive">⬜ Sin activar</span>
@@ -1545,7 +1545,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-links-L6">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si free" href="https://gamma.app" target="_blank">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><a class="si testeado" href="https://gamma.app" target="_blank">
       <div class="si-icon">🎯</div>
       <div class="si-info"><div class="si-name">Gamma</div><div class="si-sub">gamma.app</div></div>
       <span class="si-badge bd-free">🆓 Gratis</span>
@@ -1558,13 +1558,13 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-anthropic">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-sonnet')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('claude-sonnet')">
     <div class="si-info">
       <div class="si-name">Claude Sonnet 4.6</div>
       <div class="si-sub">Modelo principal. 200K ctx. Código, análisis.</div>
     </div>
     <button class="star-btn" data-id="claude-sonnet" onclick="toggleFav('claude-sonnet',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
-  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-opus')">
+  </div><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('claude-opus')">
     <div class="si-info">
       <div class="si-name">Claude Opus 4.6</div>
       <div class="si-sub">Razonamiento profundo, tareas críticas.</div>
@@ -1578,7 +1578,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-openai">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('gpt4o')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('gpt4o')">
     <div class="si-info">
       <div class="si-name">GPT-4o</div>
       <div class="si-sub">OpenAI. Base de Copilot y Codex.</div>
@@ -1592,7 +1592,7 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-google">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('gemini')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('gemini')">
     <div class="si-info">
       <div class="si-name">Gemini 2.0 Pro</div>
       <div class="si-sub">Google. 1M tokens ctx. NotebookLM base.</div>
@@ -1606,14 +1606,14 @@ textarea.tev-input{resize:vertical;line-height:1.6}
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-local">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('ollama')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('ollama')">
     <div class="si-info">
       <div class="si-name">llama 3.x (local) (llama3.1:8b)</div>
       <div class="si-sub">Servidor local de LLMs. API en :11434.
 llama3.1:…</div>
     </div>
     <button class="star-btn" data-id="ollama" onclick="toggleFav('ollama',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
-  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('llama3')">
+  </div><div class="si testeado" style="cursor:pointer" onclick="openToolModal('llama3')">
     <div class="si-info">
       <div class="si-name">Ollama</div>
       <div class="si-sub">Interface oficinal Ollama. Modelos local y cloud</div>
@@ -1627,7 +1627,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-cloudapi">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('groq')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('groq')">
     <div class="si-info">
       <div class="si-name">Groq (Llama/Mixtral)</div>
       <div class="si-sub">Inferencia ultrarrápida. Tier gratuito.</div>
@@ -1641,13 +1641,13 @@ llama3.1:…</div>
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-webchat">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('claudeai')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('claudeai')">
     <div class="si-info">
       <div class="si-name">Claude.ai</div>
       <div class="si-sub">Interfaz oficial Anthropic. Projects, artefactos…</div>
     </div>
     <button class="star-btn fav" data-id="claudeai" onclick="toggleFav('claudeai',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-paid">💳 Suscripción</span>
-  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('chatgpt')">
+  </div><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('chatgpt')">
     <div class="si-info">
       <div class="si-name">ChatGPT (web)</div>
       <div class="si-sub">Interfaz OpenAI. GPT-4o, DALL-E, voz.</div>
@@ -1661,7 +1661,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-localui">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('openwebui')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('openwebui')">
     <div class="si-info">
       <div class="si-name">Open WebUI</div>
       <div class="si-sub">Visor web de Ollama en Docker. localhost:3000.</div>
@@ -1675,25 +1675,25 @@ llama3.1:…</div>
       <span class="stype-count">5 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-devcons">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('console-ant')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('console-ant')">
     <div class="si-info">
       <div class="si-name">Anthropic Console</div>
       <div class="si-sub">API keys, Workbench, usage. Para tus apps.</div>
     </div>
     <button class="star-btn" data-id="console-ant" onclick="toggleFav('console-ant',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
-  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('oai-platform')">
+  </div><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('oai-platform')">
     <div class="si-info">
       <div class="si-name">OpenAI Platform</div>
       <div class="si-sub">Playground OpenAI. API keys, créditos.</div>
     </div>
     <button class="star-btn" data-id="oai-platform" onclick="toggleFav('oai-platform',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
-  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('gai-studio')">
+  </div><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('gai-studio')">
     <div class="si-info">
       <div class="si-name">Google AI Studio</div>
       <div class="si-sub">Gemini API. Tier gratuito generoso.</div>
     </div>
     <button class="star-btn" data-id="gai-studio" onclick="toggleFav('gai-studio',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
-  </div><div class="si inactive" style="cursor:pointer" onclick="openToolModal('lm-studio')">
+  </div><div class="si pendiente" style="cursor:pointer" onclick="openToolModal('lm-studio')">
     <div class="si-info">
       <div class="si-name">LM Studio</div>
       <div class="si-sub">App de escritorio para ejecutar LLMs locales. Al…</div>
@@ -1713,13 +1713,13 @@ llama3.1:…</div>
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-cloudrag">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('notebooklm')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('notebooklm')">
     <div class="si-info">
       <div class="si-name">NotebookLM</div>
       <div class="si-sub">RAG automático Google. PDFs, docs, vídeos.</div>
     </div>
     <button class="star-btn fav" data-id="notebooklm" onclick="toggleFav('notebooklm',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-free">🆓 Gratis</span>
-  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-proj')">
+  </div><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('claude-proj')">
     <div class="si-info">
       <div class="si-name">Claude Projects</div>
       <div class="si-sub">Contexto persistente con docs en claude.ai.</div>
@@ -1733,13 +1733,13 @@ llama3.1:…</div>
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-localrag">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('owui-rag')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('owui-rag')">
     <div class="si-info">
       <div class="si-name">Open WebUI RAG</div>
       <div class="si-sub">RAG local con modelos Ollama. 100% privado.</div>
     </div>
     <button class="star-btn" data-id="owui-rag" onclick="toggleFav('owui-rag',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
-  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('anythingllm')">
+  </div><div class="si testeado" style="cursor:pointer" onclick="openToolModal('anythingllm')">
     <div class="si-info">
       <div class="si-name">AnythingLLM</div>
       <div class="si-sub">Aplicación de escritorio todo-en-uno para RAG, a…</div>
@@ -1753,7 +1753,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-vectordb">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si inactive" style="cursor:pointer" onclick="openToolModal('chromadb')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si pendiente" style="cursor:pointer" onclick="openToolModal('chromadb')">
     <div class="si-info">
       <div class="si-name">ChromaDB</div>
       <div class="si-sub">Base vectorial local. pip install chromadb.</div>
@@ -1767,7 +1767,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-framework">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si inactive" style="cursor:pointer" onclick="openToolModal('llamaindex')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si pendiente" style="cursor:pointer" onclick="openToolModal('llamaindex')">
     <div class="si-info">
       <div class="si-name">LlamaIndex</div>
       <div class="si-sub">Framework Python RAG. Conecta con ChromaDB.</div>
@@ -1781,7 +1781,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-protocol">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('mcp')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('mcp')">
     <div class="si-info">
       <div class="si-name">MCP Protocol</div>
       <div class="si-sub">Gmail, Notion, Calendar, M365 conectados.</div>
@@ -1795,25 +1795,25 @@ llama3.1:…</div>
       <span class="stype-count">4 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-automation">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si inactive" style="cursor:pointer" onclick="openToolModal('n8n')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si pendiente" style="cursor:pointer" onclick="openToolModal('n8n')">
     <div class="si-info">
       <div class="si-name">n8n self-hosted</div>
       <div class="si-sub">Automatización flujos IA. localhost:5678.</div>
     </div>
     <button class="star-btn" data-id="n8n" onclick="toggleFav('n8n',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
-  </div><div class="si inactive" style="cursor:pointer" onclick="openToolModal('zapier')">
+  </div><div class="si pendiente" style="cursor:pointer" onclick="openToolModal('zapier')">
     <div class="si-info">
       <div class="si-name">Zapier AI</div>
       <div class="si-sub">Automatización cloud. Alternativa a n8n.</div>
     </div>
     <button class="star-btn" data-id="zapier" onclick="toggleFav('zapier',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
-  </div><div class="si inactive" style="cursor:pointer" onclick="openToolModal('make')">
+  </div><div class="si pendiente" style="cursor:pointer" onclick="openToolModal('make')">
     <div class="si-info">
       <div class="si-name">Make</div>
       <div class="si-sub">Automatización cloud. Alternativa a n8n y Zapier…</div>
     </div>
     <button class="star-btn" data-id="make" onclick="toggleFav('make',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
-  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('playwright')">
+  </div><div class="si testeado" style="cursor:pointer" onclick="openToolModal('playwright')">
     <div class="si-info">
       <div class="si-name">Playwright</div>
       <div class="si-sub">Librería de automatización de navegador. Base té…</div>
@@ -1827,7 +1827,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-search">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('websearch')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('websearch')">
     <div class="si-info">
       <div class="si-name">Web Search (Claude)</div>
       <div class="si-sub">Búsqueda web integrada en claude.ai.</div>
@@ -1841,37 +1841,37 @@ llama3.1:…</div>
       <span class="stype-count">6 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-coding">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('codex-api')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('codex-api')">
     <div class="si-info">
       <div class="si-name">Codex</div>
       <div class="si-sub">API código OpenAI. Plus web, sin API key.</div>
     </div>
     <button class="star-btn" data-id="codex-api" onclick="toggleFav('codex-api',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
-  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('copilot')">
+  </div><div class="si testeado" style="cursor:pointer" onclick="openToolModal('copilot')">
     <div class="si-info">
       <div class="si-name">GitHub Copilot</div>
       <div class="si-sub">Extensión VS Code. Autocomplete + chat inline.</div>
     </div>
     <button class="star-btn fav" data-id="copilot" onclick="toggleFav('copilot',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-free">🆓 Gratis</span>
-  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('antigravity')">
+  </div><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('antigravity')">
     <div class="si-info">
       <div class="si-name">Antigravity</div>
       <div class="si-sub">Agente autónomo multi-archivo. Como Cursor.</div>
     </div>
     <button class="star-btn fav" data-id="antigravity" onclick="toggleFav('antigravity',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-paid">💳 Suscripción</span>
-  </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-code')">
+  </div><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('claude-code')">
     <div class="si-info">
       <div class="si-name">Claude Code</div>
       <div class="si-sub">CLI agente Anthropic. npm install @anthropic-ai/…</div>
     </div>
     <button class="star-btn fav" data-id="claude-code" onclick="toggleFav('claude-code',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-paid">💳 Suscripción</span>
-  </div><div class="si inactive" style="cursor:pointer" onclick="openToolModal('cursor')">
+  </div><div class="si pendiente" style="cursor:pointer" onclick="openToolModal('cursor')">
     <div class="si-info">
       <div class="si-name">Cursor IDE</div>
       <div class="si-sub">IDE con agente IA integrado. Alternativa a VS Co…</div>
     </div>
     <button class="star-btn" data-id="cursor" onclick="toggleFav('cursor',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-inactive">⬜ Sin activar</span>
-  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('continue-dev')">
+  </div><div class="si testeado" style="cursor:pointer" onclick="openToolModal('continue-dev')">
     <div class="si-info">
       <div class="si-name">Continue.dev</div>
       <div class="si-sub">Copilot open-source. Conecta con Ollama local.</div>
@@ -1885,13 +1885,13 @@ llama3.1:…</div>
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-tools-builder">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('lovable')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('lovable')">
     <div class="si-info">
       <div class="si-name">Lovable</div>
       <div class="si-sub">Genera apps web completas desde prompt.</div>
     </div>
     <button class="star-btn" data-id="lovable" onclick="toggleFav('lovable',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
-  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('base44')">
+  </div><div class="si testeado" style="cursor:pointer" onclick="openToolModal('base44')">
     <div class="si-info">
       <div class="si-name">Base44</div>
       <div class="si-sub">Low-code IA para construir apps. Sin código.</div>
@@ -1912,13 +1912,13 @@ llama3.1:…</div>
     </div>
     <button class="star-btn fav" data-id="genspark" onclick="toggleFav('genspark',event)" title="Quitar de favoritos">★</button><span class="si-badge bd-trial">🧪 Prueba</span>
   </div></div>
-    </div><div class="slist"><div class="si free" style="cursor:pointer" onclick="openToolModal('kaggle')">
+    </div><div class="slist"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('kaggle')">
     <div class="si-info">
       <div class="si-name">Kaggle</div>
       <div class="si-sub">Plataforma de datasets, notebooks y competicione…</div>
     </div>
     <button class="star-btn" data-id="kaggle" onclick="toggleFav('kaggle',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
-  </div><div class="si free" style="cursor:pointer" onclick="openToolModal('arena')">
+  </div><div class="si testeado" style="cursor:pointer" onclick="openToolModal('arena')">
     <div class="si-info">
       <div class="si-name">Arena</div>
       <div class="si-sub">Plataforma donde comparas respuestas de múltiple…</div>
@@ -1932,10 +1932,10 @@ llama3.1:…</div>
       <span class="stype-count">2 herramientas</span>
     </div>
     <div class="stype-body" id="sbg-body-models-anthropic">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-sonnet')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('claude-sonnet')">
         <div class="si-info"><div class="si-name">Claude Sonnet 4.6</div><div class="si-sub">Modelo principal. 200K ctx. Código, análisis.</div></div>
         <button class="star-btn" data-id="claude-sonnet" onclick="toggleFav('claude-sonnet',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
-      </div><div class="si paid" style="cursor:pointer" onclick="openToolModal('claude-opus')">
+      </div><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('claude-opus')">
         <div class="si-info"><div class="si-name">Claude Opus 4.6</div><div class="si-sub">Razonamiento profundo, tareas críticas.</div></div>
         <button class="star-btn" data-id="claude-opus" onclick="toggleFav('claude-opus',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
       </div></div>
@@ -1946,7 +1946,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-models-openai">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('gpt4o')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('gpt4o')">
         <div class="si-info"><div class="si-name">GPT-4o</div><div class="si-sub">OpenAI. Base de Copilot y Codex.</div></div>
         <button class="star-btn" data-id="gpt4o" onclick="toggleFav('gpt4o',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
       </div></div>
@@ -1957,7 +1957,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-models-google">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si paid" style="cursor:pointer" onclick="openToolModal('gemini')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si evaluado" style="cursor:pointer" onclick="openToolModal('gemini')">
         <div class="si-info"><div class="si-name">Gemini 2.0 Pro</div><div class="si-sub">Google. 1M tokens ctx. NotebookLM base.</div></div>
         <button class="star-btn" data-id="gemini" onclick="toggleFav('gemini',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-paid">💳 Suscripción</span>
       </div></div>
@@ -1968,7 +1968,7 @@ llama3.1:…</div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-models-local">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('ollama')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('ollama')">
         <div class="si-info"><div class="si-name">llama 3.x (local) (llama3.1:8b)</div><div class="si-sub">Servidor local de LLMs. API en :11434.
 llama3.1:…</div></div>
         <button class="star-btn" data-id="ollama" onclick="toggleFav('ollama',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
@@ -1980,7 +1980,7 @@ llama3.1:…</div></div>
       <span class="stype-count">1 herramienta</span>
     </div>
     <div class="stype-body" id="sbg-body-models-cloudapi">
-      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si free" style="cursor:pointer" onclick="openToolModal('groq')">
+      <div class="slist" style="padding-top:3px;padding-bottom:3px"><div class="si testeado" style="cursor:pointer" onclick="openToolModal('groq')">
         <div class="si-info"><div class="si-name">Groq (Llama/Mixtral)</div><div class="si-sub">Inferencia ultrarrápida. Tier gratuito.</div></div>
         <button class="star-btn" data-id="groq" onclick="toggleFav('groq',event)" title="Marcar como favorito">☆</button><span class="si-badge bd-free">🆓 Gratis</span>
       </div></div>
@@ -4112,7 +4112,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
       <div style="margin-top:8px">
         <label class="tm-flabel">Tipo / Subgrupo</label>
-        <select class="tm-select" id="tm-subtype-sel"><option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="anthropic">⚗️ Anthropic</option><option value="openai">🤖 OpenAI</option><option value="google">✨ Google</option><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding" selected="">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup></select>
+        <select class="tm-select" id="tm-subtype-sel"><option value="">— Sin tipo</option><optgroup label="L1 · Modelo"><option value="local">🖥️ Local</option><option value="cloudapi">⚡ Cloud / API</option></optgroup><optgroup label="L2 · Interfaz"><option value="webchat">💬 Chat Web</option><option value="localui">🖥️ UI Local</option><option value="devcons">🔬 Consola Dev</option></optgroup><optgroup label="L3 · Memoria"><option value="cloudrag">☁️ RAG Cloud</option><option value="localrag">🗄️ RAG Local</option><option value="vectordb">📊 Base Vectorial</option><option value="framework">🔧 Framework</option></optgroup><optgroup label="L4 · Herramientas"><option value="protocol">🔌 Protocolo</option><option value="automation">⚡ Automatización</option><option value="search">🔍 Búsqueda Web</option><option value="apitools">🔑 API Tools</option></optgroup><optgroup label="L5 · Agentes"><option value="coding" selected="">⌨ Vibe Coding</option><option value="builder">🏗 Web Builders</option><option value="browser">🌐 Browser Agents</option></optgroup><optgroup label="L6 · Aplicación"><option value="myapp">💻 App Propia</option><option value="saastool">🛠️ SaaS Tool</option></optgroup></select>
       </div>
 
       <div style="margin-top:10px">
