@@ -2565,9 +2565,9 @@ const COMMANDS = {
 /* ═══════════════════════════════════════════
    HELPERS
 ═══════════════════════════════════════════ */
-const STATUS_LABELS = {evaluado:'✅ Evaluado',testeado:'🧪 Testeado',pendiente:'📋 Pendiente'};
-const STATUS_BD = {evaluado:'bd-evaluado',testeado:'bd-testeado',pendiente:'bd-pendiente'};
-const STATUS_CARD = {evaluado:'evaluado',testeado:'testeado',pendiente:'pendiente'};
+const STATUS_LABELS = {paid:'💳 Suscripción',api:'🔑 API',free:'🆓 Gratis',trial:'🧪 Prueba',inactive:'⬜ Sin activar',evaluado:'✅ Evaluado',testeado:'🧪 Testeado',pendiente:'📋 Pendiente'};
+const STATUS_BD = {paid:'bd-paid',api:'bd-api',free:'bd-free',trial:'bd-trial',inactive:'bd-inactive',evaluado:'bd-evaluado',testeado:'bd-testeado',pendiente:'bd-pendiente'};
+const STATUS_CARD = {paid:'paid',api:'api',free:'free',trial:'trial',inactive:'inactive',evaluado:'evaluado',testeado:'testeado',pendiente:'pendiente'};
 
 function badge(status) {
   return `<span class="si-badge ${STATUS_BD[status]||'bd-free'}">${STATUS_LABELS[status]||'🆓'}</span>`;
