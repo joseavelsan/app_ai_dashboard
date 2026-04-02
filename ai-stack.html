@@ -2370,9 +2370,6 @@ const LAYERS = [
 ═══════════════════════════════════════════ */
 const SUBTYPES = {
   // L1 — Modelos
-  anthropic:{layer:1, icon:'⚗️', label:'Anthropic',      desc:'Modelos de la familia Claude'},
-  openai:   {layer:1, icon:'🤖', label:'OpenAI',         desc:'Modelos GPT y Codex de OpenAI'},
-  google:   {layer:1, icon:'✨', label:'Google',         desc:'Modelos Gemini de Google DeepMind'},
   local:    {layer:1, icon:'🖥️', label:'Local',          desc:'Ejecuta en tu máquina, sin internet'},
   cloudapi: {layer:1, icon:'⚡', label:'Cloud / API',    desc:'Inferencia cloud con API gratuita'},
   // L2 — Interfaces
@@ -2642,9 +2639,9 @@ const COMMANDS = {
 /* ═══════════════════════════════════════════
    HELPERS
 ═══════════════════════════════════════════ */
-const STATUS_LABELS = {paid:'💳 Suscripción',api:'🔑 API',free:'🆓 Gratis',trial:'🧪 Prueba',inactive:'⬜ Sin activar'};
-const STATUS_BD = {paid:'bd-paid',api:'bd-api',free:'bd-free',trial:'bd-trial',inactive:'bd-inactive'};
-const STATUS_CARD = {paid:'paid',api:'api',free:'free',trial:'trial',inactive:'inactive'};
+const STATUS_LABELS = {evaluado:'✅ Evaluado',testeado:'🧪 Testeado',pendiente:'📋 Pendiente'};
+const STATUS_BD = {evaluado:'bd-evaluado',testeado:'bd-testeado',pendiente:'bd-pendiente'};
+const STATUS_CARD = {evaluado:'evaluado',testeado:'testeado',pendiente:'pendiente'};
 
 function badge(status) {
   return `<span class="si-badge ${STATUS_BD[status]||'bd-free'}">${STATUS_LABELS[status]||'🆓'}</span>`;
