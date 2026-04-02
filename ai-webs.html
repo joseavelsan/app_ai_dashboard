@@ -466,6 +466,10 @@ function openAddModal() {
   document.getElementById('m-cat').innerHTML = buildCatOptions('');
   document.getElementById('m-icon').value = '';
   document.getElementById('m-notes').value = '';
+  document.getElementById('m-desc').value = '';
+  document.getElementById('m-longdesc').value = '';
+  document.getElementById('m-why').value = '';
+  document.getElementById('m-fit').value = '';
   document.getElementById('m-tags').value = '';
   document.getElementById('m-fav').checked = false;
   document.getElementById('btn-del').style.display = 'none';
@@ -486,6 +490,10 @@ function openEditModal(id) {
   document.getElementById('m-notes').value = l.notes||'';
   document.getElementById('m-tags').value = (l.tags||[]).join(', ');
   document.getElementById('m-fav').checked = !!l.fav;
+  const ex = EXT[id] || {};
+  document.getElementById('m-longdesc').value = ex.longDesc || '';
+  document.getElementById('m-why').value = ex.whyInteresting || '';
+  document.getElementById('m-fit').value = ex.ecosystemFit || '';
   document.getElementById('btn-del').style.display = '';
   document.getElementById('modal-bg').classList.add('open');
 }
@@ -532,6 +540,10 @@ function saveLink() {
     savedId = id;
   }
   // Save extended fields
+  if (!EXT[savedId]) EXT[savedId] = {};
+  EXT[savedId].longDesc = document.getElementById('m-longdesc').value.trim();
+  EXT[savedId].whyInteresting = document.getElementById('m-why').value.trim();
+  EXT[savedId].ecosystemFit = document.getElementById('m-fit').value.trim();
   saveState();
   saveExt();
   closeModal();
