@@ -2118,12 +2118,12 @@ llama3.1:…</div></div>
 ═══════════════════════════════════════════ */
 let TOOLS = [
   // L1 Modelo
-  {id:'claude-sonnet', name:'Claude Sonnet 4.6', layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Modelo principal. 200K ctx. Código, análisis.',              tags:['chat','código','escritura','análisis']},
-  {id:'claude-opus',   name:'Claude Opus 4.6',   layer:1, status:'paid',  subtype:'anthropic', url:'https://claude.ai',            desc:'Razonamiento profundo, tareas críticas.',                    tags:['chat','código','escritura','análisis']},
+  {id:'claude-sonnet', name:'Claude Sonnet 4.6', layer:1, status:'paid',  subtype:'cloudapi', url:'https://claude.ai',            desc:'Modelo principal. 200K ctx. Código, análisis.',              tags:['chat','código','escritura','análisis']},
+  {id:'claude-opus',   name:'Claude Opus 4.6',   layer:1, status:'paid',  subtype:'cloudapi', url:'https://claude.ai',            desc:'Razonamiento profundo, tareas críticas.',                    tags:['chat','código','escritura','análisis']},
   {id:'ollama',        name:'Ollama',             layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Servidor local de LLMs. API en :11434.',                     tags:['local','privacidad','APIs']},
   {id:'llama3',        name:'Llama 3.x (local)',  layer:1, status:'free',  subtype:'local',     url:'http://localhost:11434',       desc:'Modelo local vía Ollama. Privado, sin coste.',               tags:['chat','local','privacidad']},
-  {id:'gpt4o',         name:'GPT-4o',             layer:1, status:'paid',  subtype:'openai',    url:'https://chatgpt.com',          desc:'OpenAI. Base de Copilot y Codex.',                           tags:['chat','imagen','escritura','código']},
-  {id:'gemini',        name:'Gemini 2.0 Pro',     layer:1, status:'free',  subtype:'google',    url:'https://gemini.google.com',    desc:'Google. 1M tokens ctx. NotebookLM base.',                    tags:['chat','imagen','análisis','búsqueda','vídeo']},
+  {id:'gpt4o',         name:'GPT-4o',             layer:1, status:'paid',  subtype:'cloudapi',    url:'https://chatgpt.com',          desc:'OpenAI. Base de Copilot y Codex.',                           tags:['chat','imagen','escritura','código']},
+  {id:'gemini',        name:'Gemini 2.0 Pro',     layer:1, status:'free',  subtype:'cloudapi',    url:'https://gemini.google.com',    desc:'Google. 1M tokens ctx. NotebookLM base.',                    tags:['chat','imagen','análisis','búsqueda','vídeo']},
   {id:'groq',          name:'Groq (Llama/Mixtral)',layer:1,status:'free',  subtype:'cloudapi',  url:'https://console.groq.com',     desc:'Inferencia ultrarrápida. Tier gratuito.',                    tags:['chat','APIs']},
   // L2 Interfaz
   {id:'claudeai',      name:'Claude.ai',          layer:2, status:'paid',  subtype:'webchat',   url:'https://claude.ai',            desc:'Interfaz oficial Anthropic. Projects, artefactos.',          tags:['chat','escritura','análisis','presentaciones']},
