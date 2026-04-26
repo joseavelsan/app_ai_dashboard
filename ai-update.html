@@ -271,6 +271,7 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
   </div>
 </div>
 
+<script src="remote-storage.js"></script>
 <script>
 /* ── TABS CONFIG ─────────────────────────────────────────── */
 const TABS = [
@@ -322,6 +323,8 @@ const DEFAULT_SOURCES = [
 /* ── STATE ───────────────────────────────────────────────── */
 let SOURCES = [];
 let RECENTS = [];
+const EXT_KEY = 'ai_update_ext_v1';
+let EXT = {};
 
 function loadState() {
   try {
@@ -351,6 +354,7 @@ function saveState() {
 }
 
 function saveExt() {
+  localStorage.setItem(EXT_KEY, JSON.stringify(EXT));
 }
 
 /* ── TYPE META ───────────────────────────────────────────── */

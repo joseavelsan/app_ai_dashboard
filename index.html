@@ -93,6 +93,39 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 
 .footer{font-size:.56rem;color:var(--dim);text-align:center;padding-bottom:16px}
 
+/* USERS MODAL */
+.users-modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(2px);
+  display:none;align-items:center;justify-content:center;z-index:120;
+}
+.users-modal-bg.open{display:flex}
+.users-modal{
+  width:min(820px,96vw);max-height:90vh;overflow:auto;
+  background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  box-shadow:0 18px 60px rgba(0,0,0,.25);padding:20px 22px;
+}
+.users-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.users-title{font-family:var(--font-h);font-size:1rem;font-weight:800;letter-spacing:-.02em}
+.users-close{margin-left:auto;font-size:.8rem;padding:4px 8px;border:1px solid var(--border);border-radius:4px;color:var(--muted)}
+.users-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.users-block{border:1px solid var(--border);border-radius:8px;background:var(--surf2);padding:12px}
+.users-sub{font-size:.55rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.users-list{display:flex;flex-direction:column;gap:6px;max-height:240px;overflow:auto;padding-right:2px}
+.user-row{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:6px;background:var(--surf);padding:7px 9px}
+.user-name{font-size:.62rem;font-weight:700}
+.user-role{font-size:.48rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 6px;border-radius:3px;border:1px solid var(--border)}
+.user-role.admin{color:var(--c5);border-color:color-mix(in srgb,var(--c5) 30%,transparent);background:color-mix(in srgb,var(--c5) 9%,transparent)}
+.users-form{display:flex;flex-direction:column;gap:8px}
+.users-input,.users-select{
+  width:100%;font-family:var(--font-m);font-size:.62rem;border:1px solid var(--border);
+  border-radius:6px;padding:7px 10px;background:var(--surf);color:var(--text);outline:none;
+}
+.users-input:focus,.users-select:focus{border-color:var(--c1)}
+.users-check{display:flex;align-items:center;gap:7px;font-size:.58rem;color:var(--text2)}
+.users-btn{font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;padding:7px 10px;border-radius:6px;border:1px solid var(--border);color:var(--muted)}
+.users-btn.primary{color:#fff;border-color:var(--c1);background:var(--c1)}
+.users-btn.primary:hover{opacity:.88}
+
 /* BACKUP TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:.62rem;padding:8px 16px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:99}
 .toast.show{opacity:1}
@@ -110,6 +143,7 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
   <button class="topbar-btn" onclick="exportExcel()" title="Exportar todo a Excel (.xlsx)">📊 Excel</button>
   <button class="topbar-btn" onclick="exportAll()" title="Exportar datos de las 4 páginas a un único fichero JSON">↑ Backup</button>
   <label class="topbar-btn" style="cursor:pointer" title="Restaurar datos desde backup JSON">↓ Restaurar<input type="file" accept=".json" style="display:none" onchange="importAll(event)"></label>
+  <button class="topbar-btn" onclick="openUsersModal()" title="Gestionar usuarios y contraseñas">👥 Usuarios</button>
 </div>
 
 <div class="main">
@@ -206,8 +240,43 @@ button{cursor:pointer;font-family:var(--font-m);border:none;background:none}
 
 </div>
 
+<div class="users-modal-bg" id="users-modal-bg" onclick="if(event.target===this) closeUsersModal()">
+  <div class="users-modal">
+    <div class="users-header">
+      <div class="users-title">Gestión de usuarios</div>
+      <button class="users-close" onclick="closeUsersModal()">✕</button>
+    </div>
+    <div class="users-grid">
+      <div class="users-block">
+        <div class="users-sub">Usuarios actuales</div>
+        <div class="users-list" id="users-list"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="users-block">
+          <div class="users-sub">Añadir usuario</div>
+          <div class="users-form">
+            <input id="new-user-name" class="users-input" placeholder="Usuario (ej: maria)">
+            <input id="new-user-pass" class="users-input" type="password" placeholder="Contraseña (mín. 8)">
+            <label class="users-check"><input id="new-user-admin" type="checkbox"> Admin</label>
+            <button class="users-btn primary" onclick="createUser()">Crear usuario</button>
+          </div>
+        </div>
+        <div class="users-block">
+          <div class="users-sub">Cambiar contraseña</div>
+          <div class="users-form">
+            <select id="password-user-select" class="users-select"></select>
+            <input id="password-new-pass" class="users-input" type="password" placeholder="Nueva contraseña (mín. 8)">
+            <button class="users-btn" onclick="changePassword()">Actualizar contraseña</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
+<script src="remote-storage.js"></script>
 <script>
 const d = new Date();
 document.getElementById('td-date').textContent = d.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
@@ -227,11 +296,131 @@ const BACKUP_KEYS = [
   'ai_notas_v1',        // AI Notas: cuaderno
 ];
 
+function readToolsList(key) {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(key) || 'null');
+    if (Array.isArray(parsed)) return parsed;
+    if (parsed && Array.isArray(parsed.tools)) return parsed.tools;
+  } catch(e) {}
+  return [];
+}
+
+function readArray(key) {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(key) || 'null');
+    if (Array.isArray(parsed)) return parsed;
+  } catch(e) {}
+  return [];
+}
+
+function readWebLinks() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem('ia-webs-v1') || '{}');
+    if (parsed && Array.isArray(parsed.links)) return parsed.links;
+  } catch(e) {}
+  return [];
+}
+
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+let usersCache = [];
+
+async function apiRequest(url, options = {}) {
+  const headers = options.headers ? { ...options.headers } : {};
+  if (options.body && !headers['Content-Type']) headers['Content-Type'] = 'application/json';
+  const resp = await fetch(url, { ...options, headers });
+  const contentType = resp.headers.get('content-type') || '';
+  const payload = contentType.includes('application/json') ? await resp.json() : null;
+  if (!resp.ok) {
+    throw new Error(payload?.error || `Error ${resp.status}`);
+  }
+  return payload;
+}
+
+function openUsersModal() {
+  document.getElementById('users-modal-bg').classList.add('open');
+  loadUsers().catch(err => showToast('Error cargando usuarios: ' + err.message));
+}
+
+function closeUsersModal() {
+  document.getElementById('users-modal-bg').classList.remove('open');
+}
+
+function renderUsers() {
+  const list = document.getElementById('users-list');
+  const select = document.getElementById('password-user-select');
+
+  if (!usersCache.length) {
+    list.innerHTML = '<div style="font-size:.6rem;color:var(--muted)">No hay usuarios</div>';
+    select.innerHTML = '';
+    return;
+  }
+
+  list.innerHTML = usersCache.map(u => `
+    <div class="user-row">
+      <div class="user-name">${escHtml(u.username)}</div>
+      <span class="user-role ${u.isAdmin ? 'admin' : ''}">${u.isAdmin ? 'Admin' : 'Usuario'}</span>
+    </div>
+  `).join('');
+
+  select.innerHTML = usersCache
+    .map(u => `<option value="${escHtml(u.username)}">${escHtml(u.username)}</option>`)
+    .join('');
+}
+
+async function loadUsers() {
+  const data = await apiRequest('/api/auth/users');
+  usersCache = Array.isArray(data?.users) ? data.users : [];
+  renderUsers();
+}
+
+async function createUser() {
+  const username = document.getElementById('new-user-name').value.trim();
+  const password = document.getElementById('new-user-pass').value;
+  const isAdmin = document.getElementById('new-user-admin').checked;
+
+  if (!username) { showToast('Indica un nombre de usuario'); return; }
+  if (password.length < 8) { showToast('La contraseña debe tener al menos 8 caracteres'); return; }
+
+  try {
+    await apiRequest('/api/auth/users', {
+      method: 'POST',
+      body: JSON.stringify({ username, password, isAdmin })
+    });
+
+    document.getElementById('new-user-name').value = '';
+    document.getElementById('new-user-pass').value = '';
+    document.getElementById('new-user-admin').checked = false;
+    showToast(`✓ Usuario "${username}" creado`);
+    await loadUsers();
+  } catch (err) {
+    showToast('Error creando usuario: ' + err.message);
+  }
+}
+
+async function changePassword() {
+  const user = document.getElementById('password-user-select').value;
+  const password = document.getElementById('password-new-pass').value;
+
+  if (!user) { showToast('Selecciona un usuario'); return; }
+  if (password.length < 8) { showToast('La contraseña debe tener al menos 8 caracteres'); return; }
+
+  try {
+    await apiRequest(`/api/auth/users/${encodeURIComponent(user)}/password`, {
+      method: 'PUT',
+      body: JSON.stringify({ password })
+    });
+
+    document.getElementById('password-new-pass').value = '';
+    showToast(`✓ Contraseña actualizada para "${user}"`);
+  } catch (err) {
+    showToast('Error actualizando contraseña: ' + err.message);
+  }
 }
 
 async function exportAll() {
@@ -309,7 +498,7 @@ function doExportExcel() {
 
   // ── AI Stack ──────────────────────────────────────────────
   try {
-    const tools = JSON.parse(localStorage.getItem('ai-stack-v1') || '[]');
+    const tools = readToolsList('ai-stack-v1');
     if (tools.length) {
       const layerNames = {1:'Modelo',2:'Interfaz',3:'Memoria',4:'Herramientas',5:'Agentes',6:'Aplicación'};
       const rows = tools.map(t => ({
@@ -333,7 +522,7 @@ function doExportExcel() {
 
   // ── AI Tools ──────────────────────────────────────────────
   try {
-    const tools = JSON.parse(localStorage.getItem('ai-tools-v1') || '[]');
+    const tools = readToolsList('ai-tools-v1');
     if (tools.length) {
       const layerNames = {1:'Modelo',2:'Interfaz',3:'Memoria',4:'Herramientas',5:'Agentes',6:'Aplicación'};
       const rows = tools.map(t => ({
@@ -357,7 +546,7 @@ function doExportExcel() {
 
   // ── AI Update ─────────────────────────────────────────────
   try {
-    const sources = JSON.parse(localStorage.getItem('ai_update_sources') || '[]');
+    const sources = readArray('ai_update_sources');
     if (sources.length) {
       const rows = sources.map(s => ({
         'ID':          s.id || '',
@@ -380,8 +569,7 @@ function doExportExcel() {
 
   // ── IA Webs ───────────────────────────────────────────────
   try {
-    const webData = JSON.parse(localStorage.getItem('ia-webs-v1') || '{}');
-    const links = webData.links || [];
+    const links = readWebLinks();
     if (links.length) {
       const rows = links.map(l => ({
         'ID':          l.id || '',
@@ -404,7 +592,7 @@ function doExportExcel() {
 
   // ── AI Notas ──────────────────────────────────────────────
   try {
-    const notes = JSON.parse(localStorage.getItem('ai_notas_v1') || '[]');
+    const notes = readArray('ai_notas_v1');
     if (notes.length) {
       const rows = notes.map(n => ({
         'ID':         n.id || '',
@@ -457,7 +645,7 @@ function runGSearch(q) {
 
   // ── AI Stack tools ────────────────────────────────────────
   try {
-    const tools = JSON.parse(localStorage.getItem('ai-stack-v1') || '[]');
+    const tools = readToolsList('ai-stack-v1');
     const layerNames = {1:'L1 Modelo',2:'L2 Interfaz',3:'L3 Memoria',4:'L4 Herramientas',5:'L5 Agentes',6:'L6 Aplicación'};
     tools.forEach(t => {
       const hay = ((t.name||'')+(t.desc||'')+(t.notes||'')+(t.tags||[]).join(' ')).toLowerCase();
@@ -471,7 +659,7 @@ function runGSearch(q) {
 
   // ── AI Tools ──────────────────────────────────────────────
   try {
-    const tools = JSON.parse(localStorage.getItem('ai-tools-v1') || '[]');
+    const tools = readToolsList('ai-tools-v1');
     const layerNames = {1:'L1 Modelo',2:'L2 Interfaz',3:'L3 Memoria',4:'L4 Herramientas',5:'L5 Agentes',6:'L6 Aplicación'};
     tools.forEach(t => {
       const hay = ((t.name||'')+(t.desc||'')+(t.notes||'')+(t.tags||[]).join(' ')).toLowerCase();
@@ -485,7 +673,7 @@ function runGSearch(q) {
 
   // ── AI Update sources ─────────────────────────────────────
   try {
-    const sources = JSON.parse(localStorage.getItem('ai_update_sources') || '[]');
+    const sources = readArray('ai_update_sources');
     const typeLabels = {prensa:'Prensa',blog:'Blog',video:'Vídeo',podcast:'Podcast',persona:'Persona'};
     sources.forEach(s => {
       const hay = ((s.name||'')+(s.desc||'')+(s.notes||'')+(s.type||'')).toLowerCase();
@@ -499,8 +687,7 @@ function runGSearch(q) {
 
   // ── IA Webs links ─────────────────────────────────────────
   try {
-    const webData = JSON.parse(localStorage.getItem('ia-webs-v1') || '{}');
-    const links = webData.links || [];
+    const links = readWebLinks();
     links.forEach(l => {
       const hay = ((l.name||'')+(l.url||'')+(l.desc||'')+(l.notes||'')+(l.tags||[]).join(' ')).toLowerCase();
       if (hay.includes(ql)) results.push({
@@ -513,7 +700,7 @@ function runGSearch(q) {
 
   // ── AI Notas ──────────────────────────────────────────────
   try {
-    const notes = JSON.parse(localStorage.getItem('ai_notas_v1') || '[]');
+    const notes = readArray('ai_notas_v1');
     notes.forEach(n => {
       const hay = ((n.title||'')+(n.content||'')+(n.tags||[]).join(' ')).toLowerCase();
       if (hay.includes(ql)) results.push({

@@ -2031,6 +2031,7 @@ llama3.1:…</div></div>
   </div>
 </div>
 
+<script src="remote-storage.js"></script>
 <script>
 /* ═══════════════════════════════════════════
    STATE — single source of truth
@@ -3082,11 +3083,20 @@ function moveToAIStack(id) {
   
   if (!confirm(`¿Mover "${tool.name}" a AI-Stack? Se añadirá a la capa L${tool.layer}.`)) return;
 
-  // Obtener datos de AI-Stack desde su localStorage
+  // Obtener datos de AI-Stack (soporta formato antiguo array y formato actual objeto)
   let stackTools = [];
+  let stackFavs = [];
   try {
     const stored = localStorage.getItem('ai-stack-v1');
-    if (stored) stackTools = JSON.parse(stored);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) {
+        stackTools = parsed;
+      } else {
+        if (Array.isArray(parsed.tools)) stackTools = parsed.tools;
+        if (Array.isArray(parsed.favs)) stackFavs = parsed.favs;
+      }
+    }
   } catch(e) {}
   
   // Evitar duplicados
@@ -3097,7 +3107,8 @@ function moveToAIStack(id) {
   
   // Añadir a AI-Stack
   stackTools.push(tool);
-  localStorage.setItem('ai-stack-v1', JSON.stringify(stackTools));
+  if (tool.fav && !stackFavs.includes(tool.id)) stackFavs.push(tool.id);
+  localStorage.setItem('ai-stack-v1', JSON.stringify({ tools: stackTools, favs: stackFavs }));
   
   // Eliminar de AI-Tools
   TOOLS = TOOLS.filter(t => t.id !== id);

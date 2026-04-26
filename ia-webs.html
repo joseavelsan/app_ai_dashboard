@@ -264,6 +264,7 @@ textarea.tm-input{resize:vertical;line-height:1.6}
   </div>
 </div>
 
+<script src="remote-storage.js"></script>
 <script>
 /* ── CATEGORIES ─────────────────────────────────────────── */
 const CATS = [
@@ -567,7 +568,7 @@ function deleteLink() {
 
 /* ── EXPORT / IMPORT ────────────────────────────────────── */
 async function exportData() {
-  const data = JSON.stringify({links:LINKS}, null, 2);
+  const data = JSON.stringify({links:LINKS, ext:EXT}, null, 2);
   const filename = `ia-webs-backup-${new Date().toISOString().slice(0,10)}.json`;
   if (window.showSaveFilePicker) {
     try {
@@ -598,7 +599,9 @@ function importData(e) {
       if (!Array.isArray(data.links)) throw new Error('Formato inválido');
       if (!confirm(`¿Importar backup? Se sobreescribirán los ${LINKS.length} enlaces actuales (se importarán ${data.links.length}).`)) return;
       LINKS = data.links;
+      EXT = (data.ext && typeof data.ext === 'object') ? data.ext : {};
       saveState();
+      saveExt();
       renderAll();
     } catch(err) { alert('Error al importar: ' + err.message); }
   };

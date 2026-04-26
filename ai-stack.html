@@ -2111,6 +2111,7 @@ llama3.1:…</div></div>
   </div>
 </div>
 
+<script src="remote-storage.js"></script>
 <script>
 /* ═══════════════════════════════════════════
    STATE — single source of truth
@@ -3156,11 +3157,20 @@ function moveToAITools(id) {
   
   if (!confirm(`¿Mover "${tool.name}" a AI-Tools? Se mantendrá en la Capa L${tool.layer}.`)) return;
 
-  // Obtener datos de AI-Tools desde su localStorage
+  // Obtener datos de AI-Tools (soporta formato antiguo array y formato actual objeto)
   let toolsRepoTools = [];
+  let toolsRepoFavs = [];
   try {
     const stored = localStorage.getItem('ai-tools-v1');
-    if (stored) toolsRepoTools = JSON.parse(stored);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) {
+        toolsRepoTools = parsed;
+      } else {
+        if (Array.isArray(parsed.tools)) toolsRepoTools = parsed.tools;
+        if (Array.isArray(parsed.favs)) toolsRepoFavs = parsed.favs;
+      }
+    }
   } catch(e) {}
   
   // Evitar duplicados
@@ -3171,7 +3181,8 @@ function moveToAITools(id) {
   
   // Añadir a AI-Tools
   toolsRepoTools.push(tool);
-  localStorage.setItem('ai-tools-v1', JSON.stringify(toolsRepoTools));
+  if (tool.fav && !toolsRepoFavs.includes(tool.id)) toolsRepoFavs.push(tool.id);
+  localStorage.setItem('ai-tools-v1', JSON.stringify({ tools: toolsRepoTools, favs: toolsRepoFavs }));
   
   // Eliminar de AI-Stack
   TOOLS = TOOLS.filter(t => t.id !== id);
