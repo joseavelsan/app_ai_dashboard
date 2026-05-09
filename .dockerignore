@@ -1,0 +1,9 @@
+.git
+.claude
+.env
+.env.*
+!.env.example
+backup
+backups
+api/node_modules
+node_modules

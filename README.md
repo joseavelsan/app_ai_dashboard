@@ -9,30 +9,52 @@ Este repositorio ya incluye una arquitectura lista para contenedor:
 - `web` (Nginx): sirve los HTML estáticos
 - `api` (Node + Express): persistencia remota del estado
 - `db` (PostgreSQL): base de datos centralizada
+- `db_backup` (PostgreSQL client): copias automáticas de la base de datos
 
 ### 1) Configura contraseña de base de datos
 
-Edita `docker-compose.yml` y cambia `change_this_password` por una contraseña real
-en:
+Duplica `.env.example` como `.env` y cambia los valores de contraseña por
+secretos reales:
 
-- `db.environment.POSTGRES_PASSWORD`
-- `api.environment.DATABASE_URL`
+- `POSTGRES_PASSWORD`
+- `DATABASE_URL`
 
 ### 2) Configura usuario y contraseña iniciales
 
-También debes cambiar estos valores en `api.environment`:
+También debes cambiar estos valores en `.env`:
 
-- `APP_BASIC_USER` (usuario admin inicial)
-- `APP_BASIC_PASSWORD` (contraseña admin inicial)
+- `APP_BASIC_USER`: usuario admin inicial
+- `APP_BASIC_PASSWORD`: contraseña admin inicial
 
 Ese usuario se crea automáticamente en la base de datos al primer arranque.
 Después podrás gestionar más usuarios desde la propia aplicación.
+
+No subas `.env` a GitHub. El repositorio incluye `.env.example` como plantilla
+segura sin secretos reales.
 
 ### 3) Levanta la aplicación
 
 ```bash
 docker compose up -d --build
 ```
+
+El servicio `db_backup` crea un backup al arrancar y después repite la copia cada
+24 horas. Los archivos se guardan dentro del despliegue en:
+
+```text
+./backups/db/
+```
+
+Por defecto conserva 30 días de backups. Puedes cambiarlo en `.env`:
+
+```env
+BACKUP_INTERVAL_SECONDS=86400
+BACKUP_RETENTION_DAYS=30
+TZ=Europe/Madrid
+```
+
+Los backups son volcados PostgreSQL en formato custom (`.dump`) y cada archivo
+lleva un `.sha256` al lado para comprobar integridad.
 
 ### 4) Accede
 
@@ -58,3 +80,21 @@ Desde ahí puedes:
 La app sincroniza automáticamente las claves de estado entre `localStorage` y la API (`/api/state/...`) mediante `remote-storage.js`.
 
 Eso permite usar la misma información desde varios dispositivos apuntando al mismo NAS.
+
+## Copias de seguridad
+
+Para lanzar una copia manual sin esperar al siguiente ciclo:
+
+```bash
+docker compose run --rm db_backup sh /usr/local/bin/backup-postgres.sh once
+```
+
+Si necesitas restaurar un backup, para primero la API y restaura el dump elegido:
+
+```bash
+docker compose stop api
+docker compose exec -T db pg_restore -U ai_dashboard -d ai_dashboard --clean --if-exists < backups/db/ai_dashboard_YYYYMMDD-HHMMSS.dump
+docker compose start api
+```
+
+Antes de restaurar, conserva una copia del estado actual.
