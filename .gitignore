@@ -40,6 +40,6 @@ Thumbs.db
 docker-compose.override.yml
 
 # Misc
-backup/
+Backup Manual/
 temp/
 *.tmp

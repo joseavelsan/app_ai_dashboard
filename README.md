@@ -83,6 +83,9 @@ Eso permite usar la misma información desde varios dispositivos apuntando al mi
 
 ## Copias de seguridad
 
+La carpeta `backups/` queda reservada para copias automáticas creadas por Docker.
+La carpeta `Backup Manual/` queda reservada para copias puntuales hechas a mano.
+
 Para lanzar una copia manual sin esperar al siguiente ciclo:
 
 ```bash
